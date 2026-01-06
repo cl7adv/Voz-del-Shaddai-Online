@@ -5,51 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio El Shaddai | Final Fix</title>
     <style>
-        body { background: #0a0a0a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; overflow: hidden; }
+        body { background: #0a0a0a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; color: white; overflow: hidden; }
         
-        /* Cinemática de Entrada */
-        #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #222 0%, #000 100%); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s ease-in-out; }
-        .intro-btn { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 18px 45px; font-size: 1.2rem; cursor: pointer; letter-spacing: 4px; box-shadow: 0 0 20px #00ff00; border-radius: 50px; transition: 0.3s; font-weight: bold; }
-        .intro-btn:hover { background: #00ff00; color: #000; }
+        #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
+        .intro-btn { background: transparent; color: #00ff00; border: 2px solid #00ff00; padding: 15px 40px; font-size: 1.2rem; cursor: pointer; letter-spacing: 3px; box-shadow: 0 0 15px #00ff00; border-radius: 50px; }
         
-        /* Cuerpo Radio */
-        .radio-body { background: #1e1e1e; padding: 40px; border-radius: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); display: flex; align-items: center; border: 4px solid #333; opacity: 0; transform: translateY(20px); transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .radio-visible { opacity: 1; transform: translateY(0); }
+        .radio-body { background: #1a1a1a; padding: 40px; border-radius: 50px; box-shadow: 0 20px 60px #000; display: flex; align-items: center; border: 4px solid #333; opacity: 0; transition: 1s; }
+        .radio-visible { opacity: 1; }
         
-        .speaker { width: 85px; height: 210px; background: radial-gradient(circle, #252525 2px, #111 2.5px); background-size: 7px 7px; border-radius: 20px; margin: 0 20px; border: 1px solid #444; box-shadow: inset 0 0 15px #000; }
+        .speaker { width: 80px; height: 210px; background: radial-gradient(circle, #222 2px, #111 2.5px); background-size: 7px 7px; border-radius: 20px; margin: 0 20px; border: 1px solid #333; }
         
         .panel { width: 320px; text-align: center; }
-        .screen { background: #051a05; color: #00ff00; padding: 20px; border-radius: 12px; margin-bottom: 25px; border: 2px solid #2d2d2d; min-height: 70px; display: flex; align-items: center; justify-content: center; font-family: 'Courier New', monospace; box-shadow: inset 0 0 10px #000; font-size: 0.9rem; line-height: 1.4; }
+        .screen { background: #051a05; color: #00ff00; padding: 20px; border-radius: 12px; margin-bottom: 25px; border: 2px solid #2d2d2d; min-height: 60px; display: flex; align-items: center; justify-content: center; font-family: monospace; box-shadow: inset 0 0 10px #000; }
 
         .controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 25px; }
-        .btn { width: 55px; height: 55px; border-radius: 50%; border: none; background: linear-gradient(145deg, #2e2e2e, #1a1a1a); color: #d4af37; cursor: pointer; font-size: 22px; box-shadow: 4px 4px 10px #000; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn:active { transform: scale(0.9); box-shadow: 1px 1px 5px #000; }
-        .play { width: 75px; height: 75px; color: #00ff00; font-size: 30px; border: 2px solid #00ff001a; }
+        .btn { width: 55px; height: 55px; border-radius: 50%; border: none; background: #222; color: #d4af37; cursor: pointer; font-size: 22px; box-shadow: 4px 4px 10px #000; }
+        .play { width: 75px; height: 75px; color: #00ff00; font-size: 30px; }
         
-        input[type=range] { width: 90%; accent-color: #00ff00; cursor: pointer; height: 6px; border-radius: 5px; }
+        input[type=range] { width: 90%; accent-color: #00ff00; }
     </style>
 </head>
 <body>
 
     <div id="intro-overlay">
-        <h1 style="color: #d4af37; margin-bottom: 30px; letter-spacing: 5px;">EL SHADDAI</h1>
-        <button id="startBtn" class="intro-btn">POWER ON</button>
+        <h1 style="color: #d4af37; margin-bottom: 20px;">RADIO EL SHADDAI</h1>
+        <button id="startBtn" class="intro-btn">CONECTAR</button>
     </div>
 
     <div class="radio-body" id="radioBody">
         <div class="speaker"></div>
         <div class="panel">
-            <img src="logo.png" alt="RADIO" style="max-height: 50px; margin-bottom: 20px;" onerror="this.style.display='none'">
             <div class="screen">
-                <div id="status">SISTEMA INICIALIZANDO...</div>
+                <div id="status">INICIALIZANDO...</div>
             </div>
             <div class="controls">
-                <button id="prevBtn" class="btn" title="Anterior">⏮</button>
-                <button id="playBtn" class="btn play" title="Play/Pausa">▶</button>
-                <button id="nextBtn" class="btn" title="Siguiente">⏭</button>
+                <button id="prevBtn" class="btn">⏮</button>
+                <button id="playBtn" class="btn play">▶</button>
+                <button id="nextBtn" class="btn">⏭</button>
             </div>
             <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7">
-            <p style="font-size: 10px; color: #666; margin-top: 15px;">VOLUME CONTROL</p>
         </div>
         <div class="speaker"></div>
     </div>
@@ -62,7 +56,6 @@
         let listaMusica = [];
         let indiceActual = 0;
         const audio = new Audio();
-        audio.crossOrigin = "anonymous"; // Evita problemas de CORS
         
         const status = document.getElementById('status');
         const playBtn = document.getElementById('playBtn');
@@ -70,22 +63,23 @@
         const intro = document.getElementById('intro-overlay');
 
         async function obtenerMusica() {
+            // Usamos la API oficial de GitHub para obtener los objetos de archivo completos
+            const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`;
             try {
-                // Usamos la API de GitHub para listar archivos
-                const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`;
                 const response = await fetch(url);
                 const archivos = await response.json();
                 
-                listaMusica = archivos.filter(file => file.name.toLowerCase().match(/\.(mp3|m4a|mp4|wav)$/));
+                // Filtramos y guardamos el objeto completo (que incluye download_url)
+                listaMusica = archivos.filter(file => file.name.match(/\.(mp3|m4a|mp4|wav)$/i));
                 
                 if (listaMusica.length > 0) {
-                    status.innerText = "CONEXIÓN EXITOSA\n" + listaMusica.length + " TEMAS CARGADOS";
+                    status.innerText = "SISTEMA LISTO\n" + listaMusica.length + " AUDIOS";
                     indiceActual = Math.floor(Math.random() * listaMusica.length);
                 } else {
-                    status.innerText = "ERROR: NO SE ENCONTRÓ MÚSICA EN LA CARPETA";
+                    status.innerText = "CARPETA VACÍA";
                 }
             } catch (e) {
-                status.innerText = "ERROR DE SINCRONIZACIÓN CON GITHUB";
+                status.innerText = "ERROR DE CONEXIÓN";
             }
         }
 
@@ -94,23 +88,19 @@
             
             const tema = listaMusica[indiceActual];
             
-            // MÉTODO JS DELIVR (Mucho más estable para GitHub)
-            // Estructura: https://cdn.jsdelivr.net/gh/usuario/repo/carpeta/archivo
-            const urlFinal = `https://cdn.jsdelivr.net/gh/${usuario}/${repo}/${carpeta}/${encodeURIComponent(tema.name)}`;
-            
-            audio.src = urlFinal;
+            // USAR DOWNLOAD_URL DIRECTO: Es la forma más segura que ofrece GitHub
+            // Añadimos un timestamp para evitar caché del navegador que cause 404
+            audio.src = tema.download_url + "?t=" + new Date().getTime();
             audio.load();
             
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    status.innerText = "SONANDO:\n" + tema.name.replace(/\.[^/.]+$/, "");
-                }).catch(error => {
-                    console.error("Error Audio:", error);
-                    status.innerText = "ERROR DE CARGA\nSALTANDO TEMA...";
-                    setTimeout(siguienteTema, 2000); // Salta al siguiente si falla
-                });
-            }
+            audio.play().then(() => {
+                status.innerText = "EN VIVO:\n" + tema.name.slice(0, 30);
+                playBtn.innerText = "⏸";
+            }).catch(error => {
+                console.error("Fallo de audio:", error);
+                status.innerText = "ERROR DE CARGA...\nSALTANDO TEMA";
+                setTimeout(siguienteTema, 2000);
+            });
         }
 
         function siguienteTema() {
@@ -123,28 +113,27 @@
             reproducir();
         }
 
-        // --- MANEJO DE ESTADOS VISUALES ---
-        audio.onplay = () => playBtn.innerText = "⏸";
-        audio.onpause = () => playBtn.innerText = "▶";
-        audio.onended = () => siguienteTema();
-        audio.onwaiting = () => status.innerText = "BUFFERING...";
-
         // --- CONTROLES ---
+        audio.onended = siguienteTema;
+
         document.getElementById('startBtn').onclick = () => {
             intro.style.opacity = '0';
             setTimeout(() => {
                 intro.style.visibility = 'hidden';
                 radioBody.classList.add('radio-visible');
                 reproducir();
-            }, 800);
+            }, 600);
         };
 
         playBtn.onclick = () => {
             if (audio.paused) {
                 if (!audio.src) reproducir();
                 else audio.play();
+                playBtn.innerText = "⏸";
             } else {
                 audio.pause();
+                playBtn.innerText = "▶";
+                status.innerText = "PAUSA";
             }
         };
 
@@ -152,7 +141,6 @@
         document.getElementById('prevBtn').onclick = anteriorTema;
         document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
 
-        // Iniciar carga de datos
         obtenerMusica();
     </script>
 </body>
