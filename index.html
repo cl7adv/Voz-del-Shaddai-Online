@@ -1,4 +1,6 @@
 <script>
+window.onload = function() {
+
     const usuario = "cl7adv";
     const repo = "Voz-del-Shaddai-Online";
     const carpeta = "musica";
@@ -89,4 +91,6 @@
     document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
 
     obtenerMusica();
+
+}; // FIN window.onload
 </script>
