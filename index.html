@@ -3,49 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio El Shaddai | Fix</title>
+    <title>Radio El Shaddai | Final Fix</title>
     <style>
-        body { background: #050505; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Courier New', monospace; color: white; overflow: hidden; }
+        body { background: #0a0a0a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; overflow: hidden; }
         
-        /* Overlay de entrada */
-        #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s; }
-        .intro-btn { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 15px 40px; font-size: 20px; cursor: pointer; letter-spacing: 3px; box-shadow: 0 0 15px #00ff00; }
+        /* Cinemática de Entrada */
+        #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #222 0%, #000 100%); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s ease-in-out; }
+        .intro-btn { background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 18px 45px; font-size: 1.2rem; cursor: pointer; letter-spacing: 4px; box-shadow: 0 0 20px #00ff00; border-radius: 50px; transition: 0.3s; font-weight: bold; }
+        .intro-btn:hover { background: #00ff00; color: #000; }
         
-        /* Estructura Radio */
-        .radio-body { background: #1a1a1a; padding: 40px; border-radius: 40px; box-shadow: 0 0 50px #000; display: flex; align-items: center; border: 4px solid #333; opacity: 0; transition: 1s; }
-        .radio-visible { opacity: 1; }
+        /* Cuerpo Radio */
+        .radio-body { background: #1e1e1e; padding: 40px; border-radius: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); display: flex; align-items: center; border: 4px solid #333; opacity: 0; transform: translateY(20px); transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .radio-visible { opacity: 1; transform: translateY(0); }
         
-        .speaker { width: 80px; height: 200px; background: radial-gradient(circle, #222 2px, #111 2.5px); background-size: 6px 6px; border-radius: 15px; margin: 0 20px; border: 1px solid #333; }
+        .speaker { width: 85px; height: 210px; background: radial-gradient(circle, #252525 2px, #111 2.5px); background-size: 7px 7px; border-radius: 20px; margin: 0 20px; border: 1px solid #444; box-shadow: inset 0 0 15px #000; }
         
-        .panel { width: 300px; text-align: center; }
-        .screen { background: #001100; color: #00ff00; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 2px solid #222; min-height: 60px; display: flex; align-items: center; justify-content: center; font-size: 0.85em; }
+        .panel { width: 320px; text-align: center; }
+        .screen { background: #051a05; color: #00ff00; padding: 20px; border-radius: 12px; margin-bottom: 25px; border: 2px solid #2d2d2d; min-height: 70px; display: flex; align-items: center; justify-content: center; font-family: 'Courier New', monospace; box-shadow: inset 0 0 10px #000; font-size: 0.9rem; line-height: 1.4; }
 
-        .controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; }
-        .btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #222; color: #d4af37; cursor: pointer; font-size: 20px; box-shadow: 2px 2px 5px #000; }
-        .play { width: 65px; height: 65px; color: #00ff00; font-size: 25px; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .btn { width: 55px; height: 55px; border-radius: 50%; border: none; background: linear-gradient(145deg, #2e2e2e, #1a1a1a); color: #d4af37; cursor: pointer; font-size: 22px; box-shadow: 4px 4px 10px #000; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn:active { transform: scale(0.9); box-shadow: 1px 1px 5px #000; }
+        .play { width: 75px; height: 75px; color: #00ff00; font-size: 30px; border: 2px solid #00ff001a; }
         
-        input[type=range] { width: 100%; accent-color: #d4af37; cursor: pointer; }
+        input[type=range] { width: 90%; accent-color: #00ff00; cursor: pointer; height: 6px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
     <div id="intro-overlay">
-        <button id="startBtn" class="intro-btn">INICIAR TRANSMISIÓN</button>
+        <h1 style="color: #d4af37; margin-bottom: 30px; letter-spacing: 5px;">EL SHADDAI</h1>
+        <button id="startBtn" class="intro-btn">POWER ON</button>
     </div>
 
     <div class="radio-body" id="radioBody">
         <div class="speaker"></div>
         <div class="panel">
-            <h2 style="color:#d4af37; margin-top:0;">EL SHADDAI</h2>
+            <img src="logo.png" alt="RADIO" style="max-height: 50px; margin-bottom: 20px;" onerror="this.style.display='none'">
             <div class="screen">
-                <div id="status">CONECTANDO...</div>
+                <div id="status">SISTEMA INICIALIZANDO...</div>
             </div>
             <div class="controls">
-                <button id="prevBtn" class="btn">⏮</button>
-                <button id="playBtn" class="btn play">▶</button>
-                <button id="nextBtn" class="btn">⏭</button>
+                <button id="prevBtn" class="btn" title="Anterior">⏮</button>
+                <button id="playBtn" class="btn play" title="Play/Pausa">▶</button>
+                <button id="nextBtn" class="btn" title="Siguiente">⏭</button>
             </div>
             <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7">
+            <p style="font-size: 10px; color: #666; margin-top: 15px;">VOLUME CONTROL</p>
         </div>
         <div class="speaker"></div>
     </div>
@@ -57,31 +61,31 @@
 
         let listaMusica = [];
         let indiceActual = 0;
-        let sistemaIniciado = false;
         const audio = new Audio();
+        audio.crossOrigin = "anonymous"; // Evita problemas de CORS
         
         const status = document.getElementById('status');
         const playBtn = document.getElementById('playBtn');
         const radioBody = document.getElementById('radioBody');
         const intro = document.getElementById('intro-overlay');
 
-        // Obtener lista desde GitHub
         async function obtenerMusica() {
             try {
+                // Usamos la API de GitHub para listar archivos
                 const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`;
                 const response = await fetch(url);
                 const archivos = await response.json();
                 
-                listaMusica = archivos.filter(file => file.name.match(/\.(mp3|m4a|mp4|wav)$/i));
+                listaMusica = archivos.filter(file => file.name.toLowerCase().match(/\.(mp3|m4a|mp4|wav)$/));
                 
                 if (listaMusica.length > 0) {
-                    status.innerText = "RADIO ONLINE - " + listaMusica.length + " TEMAS";
+                    status.innerText = "CONEXIÓN EXITOSA\n" + listaMusica.length + " TEMAS CARGADOS";
                     indiceActual = Math.floor(Math.random() * listaMusica.length);
                 } else {
-                    status.innerText = "ERROR: CARPETA VACÍA";
+                    status.innerText = "ERROR: NO SE ENCONTRÓ MÚSICA EN LA CARPETA";
                 }
             } catch (e) {
-                status.innerText = "ERROR DE SERVIDOR";
+                status.innerText = "ERROR DE SINCRONIZACIÓN CON GITHUB";
             }
         }
 
@@ -89,71 +93,66 @@
             if (listaMusica.length === 0) return;
             
             const tema = listaMusica[indiceActual];
-            // Usamos download_url que es el enlace directo más seguro de la API
-            audio.src = tema.download_url;
-            audio.load(); // Forzar carga del nuevo recurso
             
-            audio.play().catch(error => {
-                console.log("Error al reproducir:", error);
-                status.innerText = "ERROR: RE-INTENTANDO...";
-                setTimeout(reproducir, 2000); // Reintento si falla
-            });
+            // MÉTODO JS DELIVR (Mucho más estable para GitHub)
+            // Estructura: https://cdn.jsdelivr.net/gh/usuario/repo/carpeta/archivo
+            const urlFinal = `https://cdn.jsdelivr.net/gh/${usuario}/${repo}/${carpeta}/${encodeURIComponent(tema.name)}`;
+            
+            audio.src = urlFinal;
+            audio.load();
+            
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    status.innerText = "SONANDO:\n" + tema.name.replace(/\.[^/.]+$/, "");
+                }).catch(error => {
+                    console.error("Error Audio:", error);
+                    status.innerText = "ERROR DE CARGA\nSALTANDO TEMA...";
+                    setTimeout(siguienteTema, 2000); // Salta al siguiente si falla
+                });
+            }
         }
 
-        // --- MANEJO DE EVENTOS ---
-
-        audio.onplay = () => {
-            playBtn.innerText = "Pause"; // Usamos texto o icono ⏸
-            status.innerText = "SONANDO: " + listaMusica[indiceActual].name.slice(0, 30);
-        };
-
-        audio.onpause = () => {
-            playBtn.innerText = "▶";
-            if (sistemaIniciado) status.innerText = "PAUSA";
-        };
-
-        audio.onended = () => {
+        function siguienteTema() {
             indiceActual = (indiceActual + 1) % listaMusica.length;
             reproducir();
-        };
+        }
+
+        function anteriorTema() {
+            indiceActual = (indiceActual - 1 + listaMusica.length) % listaMusica.length;
+            reproducir();
+        }
+
+        // --- MANEJO DE ESTADOS VISUALES ---
+        audio.onplay = () => playBtn.innerText = "⏸";
+        audio.onpause = () => playBtn.innerText = "▶";
+        audio.onended = () => siguienteTema();
+        audio.onwaiting = () => status.innerText = "BUFFERING...";
 
         // --- CONTROLES ---
-
         document.getElementById('startBtn').onclick = () => {
-            sistemaIniciado = true;
             intro.style.opacity = '0';
             setTimeout(() => {
                 intro.style.visibility = 'hidden';
                 radioBody.classList.add('radio-visible');
                 reproducir();
-            }, 600);
+            }, 800);
         };
 
         playBtn.onclick = () => {
-            if (!audio.src) {
-                reproducir();
-            } else if (audio.paused) {
-                audio.play();
+            if (audio.paused) {
+                if (!audio.src) reproducir();
+                else audio.play();
             } else {
                 audio.pause();
             }
         };
 
-        document.getElementById('nextBtn').onclick = () => {
-            indiceActual = (indiceActual + 1) % listaMusica.length;
-            reproducir();
-        };
+        document.getElementById('nextBtn').onclick = siguienteTema;
+        document.getElementById('prevBtn').onclick = anteriorTema;
+        document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
 
-        document.getElementById('prevBtn').onclick = () => {
-            indiceActual = (indiceActual - 1 + listaMusica.length) % listaMusica.length;
-            reproducir();
-        };
-
-        document.getElementById('volume').oninput = (e) => {
-            audio.volume = e.target.value;
-        };
-
-        // Cargar datos al abrir
+        // Iniciar carga de datos
         obtenerMusica();
     </script>
 </body>
