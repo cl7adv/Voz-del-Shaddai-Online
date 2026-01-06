@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Fe y Esperanza | Tu Emisora Cristiana</title>
+    <style>
+        /* --- ESTILOS (CSS) --- */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22; /* Color dorado/naranja */
+            --text-color: #ecf0f1;
+            --bg-gradient: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        .radio-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-area {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        p.slogan {
+            font-size: 14px;
+            opacity: 0.8;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-play {
+            background: var(--accent-color);
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.6);
+        }
+
+        .status-indicator {
+            margin-top: 15px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .playing .dot {
+            background-color: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+        }
+
+        .volume-control {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="radio-container">
+        <div class="logo-area">🕊️</div> 
+        
+        <h1>Radio Fe y Esperanza</h1>
+        <p class="slogan">"Música que edifica tu alma"</p>
+
+        <div class="player-controls">
+            <button id="playBtn" class="btn-play">▶</button>
+            
+            <div class="status-indicator" id="statusText">
+                <span class="dot"></span> <span id="textState">OFF AIR</span>
+            </div>
+
+            <div class="volume-control">
+                <label for="volume">Volumen</label><br>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.8">
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2024 Emisora Cristiana
+        </footer>
+    </div>
+
+    <script>
+        /* --- LÓGICA (JAVASCRIPT) --- */
+        
+        // IMPORTANTE: AQUÍ DEBES PONER TU ENLACE DE STREAMING REAL
+        // Si no tienes uno, este es un enlace de prueba genérico.
+        const streamUrl = "https://stream.zeno.fm/vt9k3681438uv"; 
+        
+        const audio = new Audio(streamUrl);
+        const playBtn = document.getElementById('playBtn');
+        const statusText = document.getElementById('textState');
+        const container = document.querySelector('.status-indicator');
+        const volumeSlider = document.getElementById('volume');
+        
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playBtn.innerHTML = "⏸"; // Icono de pausa
+                    statusText.innerText = "EN VIVO";
+                    container.classList.add('playing');
+                }).catch(error => {
+                    console.log("Error al reproducir:", error);
+                    alert("No se pudo conectar con la emisora. Verifica la conexión.");
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                playBtn.innerHTML = "▶"; // Icono de play
+                statusText.innerText = "PAUSA";
+                container.classList.remove('playing');
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+    </script>
+</body>
+</html>
