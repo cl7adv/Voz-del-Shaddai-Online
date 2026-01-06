@@ -3,196 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio El Shaddai | La Voz del Todopoderoso</title>
+    <title>Radio El Shaddai | 24/7 Nativo</title>
     <style>
-        body {
-            background: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        /* Estructura de la Radio Física */
-        .radio-body {
-            background: #222;
-            display: flex;
-            padding: 25px;
-            border-radius: 40px;
-            box-shadow: 15px 15px 40px #000, -5px -5px 15px #333;
-            border: 3px solid #333;
-            align-items: center;
-        }
-
-        /* Bafles con diseño de rejilla */
-        .speaker {
-            width: 90px;
-            height: 200px;
-            background: radial-gradient(circle, #111 1px, transparent 1.5px);
-            background-size: 4px 4px;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            border: 1px solid #111;
-            margin: 0 10px;
-        }
-
-        .woofer {
-            width: 60px;
-            height: 60px;
-            background: #000;
-            border-radius: 50%;
-            border: 3px solid #1a1a1a;
-            box-shadow: inset 0 0 10px #000;
-        }
-
-        /* Panel Central */
-        .panel {
-            width: 260px;
-            text-align: center;
-        }
-
-        .logo-img {
-            width: 100%;
-            max-height: 50px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-
-        .screen {
-            background: #0a1f0a;
-            color: #00ff00;
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            box-shadow: inset 0 0 10px #000;
-            margin-bottom: 15px;
-            border: 2px solid #333;
-        }
-
-        #status { font-size: 13px; margin: 0; font-weight: bold; }
-
-        /* Botones Neumórficos */
-        .btns {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            background: #222;
-            color: #d4af37;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 4px 4px 8px #111, -2px -2px 8px #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.2s;
-        }
-
-        .btn:active { box-shadow: inset 2px 2px 5px #111; transform: scale(0.95); }
-
-        .play { width: 60px; height: 60px; font-size: 24px; color: #00ff00; }
-
-        /* Volumen */
-        input[type=range] {
-            width: 90%;
-            accent-color: #d4af37;
-            cursor: pointer;
-        }
+        body { background: #121212; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        .radio-container { background: #222; padding: 30px; border-radius: 50px; box-shadow: 10px 10px 30px #000; display: flex; align-items: center; border: 3px solid #333; }
+        .speaker { width: 80px; height: 180px; background: radial-gradient(circle, #111 1px, transparent 1.5px); background-size: 5px 5px; border-radius: 20px; margin: 0 15px; border: 1px solid #111; }
+        .panel { width: 250px; text-align: center; }
+        .screen { background: #0a1f0a; color: #00ff00; padding: 15px; border-radius: 10px; font-family: monospace; margin-bottom: 20px; border: 2px solid #333; min-height: 40px; }
+        .logo-img { width: 100%; max-height: 50px; object-fit: contain; margin-bottom: 10px; }
+        .btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #333; color: #d4af37; cursor: pointer; font-size: 20px; box-shadow: 3px 3px 5px #111; margin: 5px; }
+        .play { width: 65px; height: 65px; color: #00ff00; }
+        input[type=range] { width: 100%; accent-color: #d4af37; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="radio-body">
-        <div class="speaker"><div class="woofer"></div><div class="woofer"></div></div>
-
+    <div class="radio-container">
+        <div class="speaker"></div>
         <div class="panel">
-            <img src="logo.png" alt="El Shaddai" class="logo-img">
-            <div class="screen"><p id="status">SISTEMA APAGADO</p></div>
-
-            <div class="btns">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <div class="screen"><p id="status">RADIO EL SHADDAI</p></div>
+            <div>
                 <button id="prevBtn" class="btn">⏮</button>
                 <button id="playBtn" class="btn play">▶</button>
                 <button id="nextBtn" class="btn">⏭</button>
             </div>
-
             <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7">
         </div>
-
-        <div class="speaker"><div class="woofer"></div><div class="woofer"></div></div>
+        <div class="speaker"></div>
     </div>
 
     <script>
-        // --- CONFIGURACIÓN ---
-        const totalCanciones = 10; // Pon aquí el número exacto de canciones que tienes
-        let indiceActual = Math.floor(Math.random() * totalCanciones) + 1; // Empieza al azar
-        
+        const totalCanciones = 10; // ASEGÚRATE DE TENER ESTA CANTIDAD
+        let indiceActual = 1;
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const status = document.getElementById('status');
-        const volumeControl = document.getElementById('volume');
 
-        // --- ESTABILIZADOR ---
+        // Estabilizador de volumen
         let audioCtx, source, gainNode;
 
-        function initAudio() {
+        function cargarCancion(index) {
+            // RUTA RELATIVA PARA GITHUB PAGES
+            audio.src = `musica/${index}.mp3`; 
+            audio.load();
+        }
+
+        function reproducir() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 source = audioCtx.createMediaElementSource(audio);
                 gainNode = audioCtx.createGain();
-                gainNode.gain.value = volumeControl.value;
                 source.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
             }
-        }
-
-        function playRadio() {
-            initAudio();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             
-            audio.src = `musica/${indiceActual}.mp3`;
             audio.play().then(() => {
                 status.innerText = "REPRODUCIENDO #" + indiceActual;
                 playBtn.innerText = "⏸";
-            }).catch(e => {
-                status.innerText = "ERROR: ARCHIVO NO HALLADO";
+            }).catch(err => {
+                status.innerText = "ERROR: REVISA CARPETA MUSICA";
+                console.error(err);
             });
         }
 
         playBtn.addEventListener('click', () => {
-            if (audio.paused) { playRadio(); } 
-            else { audio.pause(); playBtn.innerText = "▶"; status.innerText = "PAUSA"; }
+            if (audio.paused) {
+                if(!audio.src) cargarCancion(indiceActual);
+                reproducir();
+            } else {
+                audio.pause();
+                playBtn.innerText = "▶";
+                status.innerText = "PAUSA";
+            }
         });
 
         document.getElementById('nextBtn').addEventListener('click', () => {
             indiceActual = (indiceActual >= totalCanciones) ? 1 : indiceActual + 1;
-            playRadio();
+            cargarCancion(indiceActual);
+            reproducir();
         });
 
         document.getElementById('prevBtn').addEventListener('click', () => {
             indiceActual = (indiceActual <= 1) ? totalCanciones : indiceActual - 1;
-            playRadio();
+            cargarCancion(indiceActual);
+            reproducir();
         });
 
-        volumeControl.addEventListener('input', (e) => {
-            if (gainNode) gainNode.gain.value = e.target.value;
+        document.getElementById('volume').addEventListener('input', (e) => {
+            if(gainNode) gainNode.gain.value = e.target.value;
         });
 
         audio.onended = () => {
             indiceActual = Math.floor(Math.random() * totalCanciones) + 1;
-            playRadio();
+            cargarCancion(indiceActual);
+            reproducir();
         };
     </script>
 </body>
