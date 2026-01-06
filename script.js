@@ -1,53 +1,70 @@
-const totalCanciones = 10; // Ajusta según tus archivos
+// CONFIGURACIÓN
+const totalCanciones = 10; // ¡Cambia esto al número real de canciones!
 let indiceActual = 1;
 
 const audio = new Audio();
 const playBtn = document.getElementById('playBtn');
 const status = document.getElementById('status');
+const volumeControl = document.getElementById('volume');
 
-// --- SISTEMA DE ESTABILIZACIÓN (WEB AUDIO API) ---
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const source = audioContext.createMediaElementSource(audio);
-const gainNode = audioContext.createGain();
+// --- SISTEMA DE AUDIO PROFESIONAL (ESTABILIZADOR) ---
+let audioContext, source, gainNode;
 
-// Aquí fijamos el "techo" de volumen (0.7 es un nivel seguro y uniforme)
-gainNode.gain.value = 0.7; 
-
-source.connect(gainNode);
-gainNode.connect(audioContext.destination);
-// ------------------------------------------------
-
-function reproducirSiguiente() {
-    // Para que el audio funcione en navegadores modernos
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
+function inicializarAudio() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        source = audioContext.createMediaElementSource(audio);
+        gainNode = audioContext.createGain();
+        
+        // Estabilizador: Normalizamos a 0.7 para que nada suene muy fuerte
+        gainNode.gain.value = 0.7; 
+        
+        source.connect(gainNode);
+        gainNode.connect(audioContext.destination);
     }
+}
+
+function reproducirMusica() {
+    inicializarAudio();
+    if (audioContext.state === 'suspended') audioContext.resume();
 
     audio.src = `musica/${indiceActual}.mp3`;
     audio.load();
-    audio.play().catch(e => console.log("Clic para iniciar"));
     
-    status.innerText = `Sintonizando: Alabanza #${indiceActual}`;
+    // Mensaje de estado
+    status.innerText = "Sintonizando Bendición...";
+    
+    audio.play().then(() => {
+        status.innerText = "Radio El Shaddai: EN VIVO";
+    }).catch(err => {
+        status.innerText = "Error de conexión";
+    });
 
+    // Al terminar, elige una canción al azar
     audio.onended = () => {
-        // Elegir la siguiente canción (Orden Aleatorio para que sea real)
         indiceActual = Math.floor(Math.random() * totalCanciones) + 1;
-        reproducirSiguiente();
+        reproducirMusica();
     };
 }
 
 playBtn.addEventListener('click', () => {
     if (audio.paused) {
-        reproducirSiguiente();
+        // MENSAJE DE BIENVENIDA (Opcional: puedes quitar el alert)
+        if (audio.src === "") {
+            alert("Bienvenido a Radio El Shaddai. La música comenzará ahora.");
+        }
+        reproducirMusica();
         playBtn.innerText = "⏸ PAUSAR";
     } else {
         audio.pause();
         playBtn.innerText = "▶ REPRODUCIR";
-        status.innerText = "Radio El Shaddai en Pausa";
+        status.innerText = "Radio en Pausa";
     }
 });
 
-// Control de volumen manual que respeta el estabilizador
-document.getElementById('volume').addEventListener('input', (e) => {
-    gainNode.gain.value = e.target.value;
+// Control de volumen manual ligado al estabilizador
+volumeControl.addEventListener('input', (e) => {
+    if (gainNode) {
+        gainNode.gain.value = e.target.value;
+    }
 });
