@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio El Shaddai | 24/7 Nativo</title>
+    <title>Radio El Shaddai | Automática</title>
     <style>
-        body { background: #121212; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
-        .radio-container { background: #222; padding: 30px; border-radius: 50px; box-shadow: 10px 10px 30px #000; display: flex; align-items: center; border: 3px solid #333; }
+        body { background: #121212; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; color: white; }
+        .radio-body { background: #222; padding: 30px; border-radius: 50px; box-shadow: 10px 10px 30px #000; display: flex; align-items: center; border: 3px solid #333; }
         .speaker { width: 80px; height: 180px; background: radial-gradient(circle, #111 1px, transparent 1.5px); background-size: 5px 5px; border-radius: 20px; margin: 0 15px; border: 1px solid #111; }
-        .panel { width: 250px; text-align: center; }
-        .screen { background: #0a1f0a; color: #00ff00; padding: 15px; border-radius: 10px; font-family: monospace; margin-bottom: 20px; border: 2px solid #333; min-height: 40px; }
+        .panel { width: 280px; text-align: center; }
+        .screen { background: #0a1f0a; color: #00ff00; padding: 15px; border-radius: 10px; font-family: monospace; margin-bottom: 20px; border: 2px solid #333; min-height: 50px; overflow: hidden; }
         .logo-img { width: 100%; max-height: 50px; object-fit: contain; margin-bottom: 10px; }
         .btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #333; color: #d4af37; cursor: pointer; font-size: 20px; box-shadow: 3px 3px 5px #111; margin: 5px; }
         .play { width: 65px; height: 65px; color: #00ff00; }
@@ -18,11 +18,13 @@
 </head>
 <body>
 
-    <div class="radio-container">
+    <div class="radio-body">
         <div class="speaker"></div>
         <div class="panel">
             <img src="logo.png" alt="Logo" class="logo-img">
-            <div class="screen"><p id="status">RADIO EL SHADDAI</p></div>
+            <div class="screen">
+                <p id="status">CARGANDO REPOSITORIO...</p>
+            </div>
             <div>
                 <button id="prevBtn" class="btn">⏮</button>
                 <button id="playBtn" class="btn play">▶</button>
@@ -34,44 +36,62 @@
     </div>
 
     <script>
-        const totalCanciones = 10; // ASEGÚRATE DE TENER ESTA CANTIDAD
-        let indiceActual = 1;
+        // CONFIGURACIÓN DE TU REPOSITORIO
+        const usuario = "cl7adv";
+        const repo = "Voz-del-Shaddai-Online";
+        const carpeta = "musica";
+
+        let listaMusica = [];
+        let indiceActual = 0;
         const audio = new Audio();
-        const playBtn = document.getElementById('playBtn');
         const status = document.getElementById('status');
+        const playBtn = document.getElementById('playBtn');
 
-        // Estabilizador de volumen
-        let audioCtx, source, gainNode;
+        // 1. ESCANEAR CARPETA AUTOMÁTICAMENTE
+        async function obtenerMusica() {
+            const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`;
+            try {
+                const response = await fetch(url);
+                const archivos = await response.json();
+                
+                // Filtramos solo archivos de audio/video
+                listaMusica = archivos.filter(file => 
+                    file.name.endsWith('.mp3') || 
+                    file.name.endsWith('.mp4') || 
+                    file.name.endsWith('.m4a')
+                );
 
-        function cargarCancion(index) {
-            // RUTA RELATIVA PARA GITHUB PAGES
-            audio.src = `musica/${index}.mp3`; 
-            audio.load();
+                if (listaMusica.length > 0) {
+                    status.innerText = "RADIO LISTA: " + listaMusica.length + " TEMAS";
+                    indiceActual = Math.floor(Math.random() * listaMusica.length);
+                } else {
+                    status.innerText = "CARPETA 'musica' VACÍA";
+                }
+            } catch (error) {
+                status.innerText = "ERROR AL CONECTAR CON GITHUB";
+            }
         }
 
         function reproducir() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                source = audioCtx.createMediaElementSource(audio);
-                gainNode = audioCtx.createGain();
-                source.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-            }
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (listaMusica.length === 0) return;
+            
+            const item = listaMusica[indiceActual];
+            // Usamos la URL raw para que GitHub entregue el archivo real
+            audio.src = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${carpeta}/${item.name}`;
             
             audio.play().then(() => {
-                status.innerText = "REPRODUCIENDO #" + indiceActual;
+                status.innerText = "SONANDO: " + item.name;
                 playBtn.innerText = "⏸";
-            }).catch(err => {
-                status.innerText = "ERROR: REVISA CARPETA MUSICA";
-                console.error(err);
+            }).catch(e => {
+                status.innerText = "HAZ CLIC EN PLAY PARA ESCUCHAR";
             });
         }
 
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                if(!audio.src) cargarCancion(indiceActual);
-                reproducir();
+                if (!audio.src) reproducir();
+                else audio.play();
+                playBtn.innerText = "⏸";
             } else {
                 audio.pause();
                 playBtn.innerText = "▶";
@@ -80,26 +100,26 @@
         });
 
         document.getElementById('nextBtn').addEventListener('click', () => {
-            indiceActual = (indiceActual >= totalCanciones) ? 1 : indiceActual + 1;
-            cargarCancion(indiceActual);
+            indiceActual = (indiceActual + 1) % listaMusica.length;
             reproducir();
         });
 
         document.getElementById('prevBtn').addEventListener('click', () => {
-            indiceActual = (indiceActual <= 1) ? totalCanciones : indiceActual - 1;
-            cargarCancion(indiceActual);
+            indiceActual = (indiceActual - 1 + listaMusica.length) % listaMusica.length;
             reproducir();
-        });
-
-        document.getElementById('volume').addEventListener('input', (e) => {
-            if(gainNode) gainNode.gain.value = e.target.value;
         });
 
         audio.onended = () => {
-            indiceActual = Math.floor(Math.random() * totalCanciones) + 1;
-            cargarCancion(indiceActual);
+            indiceActual = Math.floor(Math.random() * listaMusica.length);
             reproducir();
         };
+
+        document.getElementById('volume').addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
+        // Iniciar escaneo al cargar
+        obtenerMusica();
     </script>
 </body>
 </html>
