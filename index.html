@@ -63,13 +63,11 @@
         const intro = document.getElementById('intro-overlay');
 
         async function obtenerMusica() {
-            // Usamos la API oficial de GitHub para obtener los objetos de archivo completos
             const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`;
             try {
                 const response = await fetch(url);
                 const archivos = await response.json();
                 
-                // Filtramos y guardamos el objeto completo (que incluye download_url)
                 listaMusica = archivos.filter(file => file.name.match(/\.(mp3|m4a|mp4|wav)$/i));
                 
                 if (listaMusica.length > 0) {
@@ -87,10 +85,11 @@
             if (listaMusica.length === 0) return;
             
             const tema = listaMusica[indiceActual];
-            
-            // USAR DOWNLOAD_URL DIRECTO: Es la forma más segura que ofrece GitHub
-            // Añadimos un timestamp para evitar caché del navegador que cause 404
-            audio.src = tema.download_url + "?t=" + new Date().getTime();
+
+            // Usar jsDelivr en lugar de download_url
+            const urlJsDelivr = `https://cdn.jsdelivr.net/gh/${usuario}/${repo}/${carpeta}/${tema.name}`;
+
+            audio.src = urlJsDelivr;
             audio.load();
             
             audio.play().then(() => {
@@ -113,7 +112,6 @@
             reproducir();
         }
 
-        // --- CONTROLES ---
         audio.onended = siguienteTema;
 
         document.getElementById('startBtn').onclick = () => {
