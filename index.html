@@ -3,35 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio El Shaddai | La Voz del Todopoderoso</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Radio El Shaddai | Equipo de Sonido</title>
+    <style>
+        /* --- ESTILOS (CSS) --- */
+        body {
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .radio-physical-body {
+            background: #2a2a2a;
+            display: flex;
+            padding: 30px;
+            border-radius: 50px;
+            box-shadow: 20px 20px 60px #0e0e0e, -5px -5px 20px #3a3a3a;
+            border: 4px solid #333;
+            align-items: center;
+        }
+
+        /* Bafles */
+        .speaker-grill {
+            width: 100px;
+            height: 220px;
+            background: radial-gradient(circle, #222 1.5px, transparent 1.5px);
+            background-size: 5px 5px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            margin: 0 15px;
+            border: 2px solid #111;
+            padding: 10px 0;
+        }
+
+        .woofer {
+            width: 70px;
+            height: 70px;
+            background: #111;
+            border-radius: 50%;
+            border: 4px solid #222;
+            box-shadow: inset 0 0 15px #000;
+        }
+
+        /* Panel Central */
+        .control-panel {
+            width: 280px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .radio-display-logo {
+            width: 100%;
+            max-height: 60px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .digital-screen {
+            background: #0d2c0d; 
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            box-shadow: inset 0 0 15px #000;
+            margin-bottom: 20px;
+            border: 3px solid #444;
+            min-height: 60px;
+        }
+
+        #status { margin: 0 0 10px 0; font-weight: bold; font-size: 14px; }
+
+        /* Ondas de Sonido */
+        .wave-container {
+            display: none;
+            justify-content: center;
+            gap: 4px;
+            height: 20px;
+        }
+
+        .playing .wave-container { display: flex; }
+
+        .wave-container span {
+            width: 4px;
+            background: #00ff00;
+            animation: waveAnim 0.5s infinite alternate;
+        }
+
+        @keyframes waveAnim {
+            from { height: 4px; }
+            to { height: 20px; }
+        }
+
+        /* Botones */
+        .physical-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .round-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: #2a2a2a;
+            color: #d4af37;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 4px 4px 8px #1a1a1a, -2px -2px 8px #3a3a3a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .round-btn:active {
+            box-shadow: inset 2px 2px 5px #111, inset -2px -2px 5px #444;
+            transform: scale(0.95);
+        }
+
+        .play-main {
+            width: 65px;
+            height: 65px;
+            font-size: 26px;
+            color: #00ff00;
+            margin-top: -10px;
+        }
+
+        /* Volumen */
+        .knob-container {
+            color: #888;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        input[type=range] {
+            width: 80%;
+            margin-top: 10px;
+            accent-color: #d4af37;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="glass-card">
-            <img src="logo.png" alt="Radio El Shaddai" class="logo-banner">
+
+    <div class="radio-physical-body">
+        <div class="speaker-grill">
+            <div class="woofer"></div>
+            <div class="woofer" style="width: 50px; height: 50px;"></div>
+        </div>
+
+        <div class="control-panel">
+            <img src="logo.png" alt="Radio El Shaddai" class="radio-display-logo">
             
-            <h1 class="shaddai-title">EL SHADDAI</h1>
-            <p id="status" class="status-text">Presiona Play para sintonizar</p>
-            
-            <div class="controls">
-                <button id="playBtn" class="main-button">▶ REPRODUCIR</button>
-                
-                <div class="volume-section">
-                    <span class="icon">🔈</span>
-                    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7">
-                    <span class="icon">🔊</span>
+            <div class="digital-screen" id="screen">
+                <p id="status">SISTEMA OFF</p>
+                <div class="wave-container">
+                    <span style="animation-delay: 0.1s"></span>
+                    <span style="animation-delay: 0.3s"></span>
+                    <span style="animation-delay: 0.2s"></span>
+                    <span style="animation-delay: 0.4s"></span>
+                    <span style="animation-delay: 0.1s"></span>
                 </div>
             </div>
 
-            <div class="equalizer">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+            <div class="physical-buttons">
+                <button title="Anterior" id="prevBtn" class="round-btn">⏮</button>
+                <button title="Encender/Pausa" id="playBtn" class="round-btn play-main">▶</button>
+                <button title="Siguiente" id="nextBtn" class="round-btn">⏭</button>
+            </div>
+
+            <div class="knob-container">
+                <label>VOLUME CONTROL</label><br>
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7">
             </div>
         </div>
+
+        <div class="speaker-grill">
+            <div class="woofer"></div>
+            <div class="woofer" style="width: 50px; height: 50px;"></div>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        /* --- LÓGICA (JAVASCRIPT) --- */
+        
+        // 1. CONFIGURACIÓN: Cambia este número al total de canciones en tu carpeta 'musica'
+        const totalCanciones = 10; 
+        let indiceActual = 1;
+        
+        const audio = new Audio();
+        const playBtn = document.getElementById('playBtn');
+        const status = document.getElementById('status');
+        const screen = document.getElementById('screen');
+        const volumeControl = document.getElementById('volume');
+
+        // 2. ESTABILIZADOR DE VOLUMEN (Web Audio API)
+        let audioCtx, source, gainNode;
+
+        function setupAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                source = audioCtx.createMediaElementSource(audio);
+                gainNode = audioCtx.createGain();
+                gainNode.gain.value = volumeControl.value; // Nivel inicial
+                source.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+            }
+        }
+
+        function reproducir() {
+            setupAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            audio.src = `musica/${indiceActual}.mp3`;
+            audio.play().then(() => {
+                status.innerText = "REPRODUCIENDO #" + indiceActual;
+                screen.classList.add('playing');
+                playBtn.innerText = "⏸";
+            }).catch(e => {
+                status.innerText = "ERROR DE CARGA";
+                console.log("Asegúrate de tener la carpeta 'musica' con archivos .mp3");
+            });
+        }
+
+        // Botón Play / Pausa
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                reproducir();
+            } else {
+                audio.pause();
+                playBtn.innerText = "▶";
+                status.innerText = "SISTEMA EN PAUSA";
+                screen.classList.remove('playing');
+            }
+        });
+
+        // Botón Siguiente
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            indiceActual = (indiceActual >= totalCanciones) ? 1 : indiceActual + 1;
+            reproducir();
+        });
+
+        // Botón Anterior
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            indiceActual = (indiceActual <= 1) ? totalCanciones : indiceActual - 1;
+            reproducir();
+        });
+
+        // Control de Volumen con el Estabilizador
+        volumeControl.addEventListener('input', (e) => {
+            if (gainNode) gainNode.gain.value = e.target.value;
+        });
+
+        // Al terminar una canción, salta a otra al azar (Modo Radio 24/7)
+        audio.onended = () => {
+            indiceActual = Math.floor(Math.random() * totalCanciones) + 1;
+            reproducir();
+        };
+    </script>
 </body>
 </html>
