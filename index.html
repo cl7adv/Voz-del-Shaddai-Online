@@ -5,620 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATRIX RADIO - Voz del Shaddai</title>
     <style>
-        /* RESET Y VARIABLES MATRIX */
-        :root {
-            --matrix-green: #00ff41;
-            --matrix-dark: #0a0a0a;
-            --matrix-light: #003b00;
-            --neon-blue: #4cc9f0;
-            --neon-purple: #7209b7;
-            --glow-green: rgba(0, 255, 65, 0.7);
-            --glow-blue: rgba(76, 201, 240, 0.7);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', 'Consolas', monospace;
-        }
-
-        body {
-            background: var(--matrix-dark);
-            color: var(--matrix-green);
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* EFECTO MATRIX RAIN BACKGROUND */
-        #matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.3;
-        }
-
-        /* PANTALLA DE INICIO MATRIX */
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.8s ease;
-        }
-
-        .matrix-terminal {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--matrix-green);
-            border-radius: 0;
-            padding: 30px;
-            width: 90%;
-            max-width: 800px;
-            box-shadow: 0 0 30px var(--glow-green);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .terminal-header {
-            border-bottom: 1px solid var(--matrix-green);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .terminal-title {
-            font-size: 1.8rem;
-            color: var(--matrix-green);
-            text-shadow: 0 0 10px var(--glow-green);
-        }
-
-        .blinking-cursor {
-            animation: blink 1s infinite;
-            color: var(--matrix-green);
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .matrix-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 15px 0;
-            color: #00ff9d;
-        }
-
-        .ascii-art {
-            color: var(--matrix-green);
-            font-size: 0.8rem;
-            line-height: 1.2;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        /* BOTÓN MATRIX */
-        #startBtn {
-            background: transparent;
-            color: var(--matrix-green);
-            border: 2px solid var(--matrix-green);
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        #startBtn:hover {
-            background: var(--matrix-green);
-            color: var(--matrix-dark);
-            box-shadow: 0 0 20px var(--glow-green);
-            transform: translateY(-3px);
-        }
-
-        /* SISTEMA PRINCIPAL MATRIX */
-        .radio-container {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            padding: 20px;
-        }
-
-        .radio-visible {
-            display: block;
-            opacity: 1;
-        }
-
-        /* CABECERA MATRIX */
-        .matrix-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--matrix-green);
-            margin-bottom: 30px;
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            color: var(--matrix-green);
-            text-shadow: 0 0 15px var(--glow-green);
-            letter-spacing: 3px;
-        }
-
-        .header-subtitle {
-            font-size: 1rem;
-            color: #00ff9d;
-            opacity: 0.8;
-        }
-
-        /* PANEL DE CONTROL MATRIX */
-        .control-panel {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        @media (max-width: 768px) {
-            .control-panel {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* STATUS TERMINAL */
-        .status-terminal {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid var(--matrix-green);
-            padding: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .terminal-label {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--matrix-dark);
-            padding: 0 15px;
-            color: var(--matrix-green);
-            font-size: 0.9rem;
-        }
-
-        #status {
-            font-size: 1.6rem;
-            line-height: 1.4;
-            color: var(--matrix-green);
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            white-space: pre-line;
-            text-shadow: 0 0 10px var(--glow-green);
-        }
-
-        /* VISUALIZADOR DE AUDIO */
-        .audio-visualizer {
-            height: 100px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 3px;
-            margin: 30px 0;
-        }
-
-        .audio-bar {
-            width: 8px;
-            background: linear-gradient(to top, var(--matrix-green), #00ff9d);
-            border-radius: 2px;
-            transition: height 0.1s ease;
-            box-shadow: 0 0 8px var(--glow-green);
-        }
-
-        /* CONTROLES MATRIX */
-        .matrix-controls {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .matrix-btn {
-            background: transparent;
-            border: 1px solid var(--matrix-green);
-            color: var(--matrix-green);
-            padding: 15px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .matrix-btn:hover {
-            background: var(--matrix-green);
-            color: var(--matrix-dark);
-            box-shadow: 0 0 20px var(--glow-green);
-            transform: scale(1.05);
-        }
-
-        .matrix-btn.active {
-            background: var(--matrix-green);
-            color: var(--matrix-dark);
-            box-shadow: 0 0 15px var(--glow-green);
-        }
-
-        /* VOLUMEN MATRIX */
-        .volume-slider {
-            margin: 30px 0;
-        }
-
-        .volume-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: var(--matrix-green);
-            font-size: 0.9rem;
-        }
-
-        #volume {
-            width: 100%;
-            height: 6px;
-            -webkit-appearance: none;
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid var(--matrix-green);
-            border-radius: 0;
-            outline: none;
-        }
-
-        #volume::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--matrix-green);
-            border-radius: 0;
-            cursor: pointer;
-            box-shadow: 0 0 10px var(--glow-green);
-        }
-
-        /* LISTA DE CANCIONES MATRIX */
-        .playlist-terminal {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid var(--matrix-green);
-            padding: 20px;
-            margin-top: 30px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .playlist-title {
-            color: var(--matrix-green);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid var(--matrix-green);
-            padding-bottom: 5px;
-        }
-
-        .playlist-item {
-            padding: 10px;
-            border-bottom: 1px dotted rgba(0, 255, 65, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #00ff9d;
-        }
-
-        .playlist-item:hover {
-            background: rgba(0, 255, 65, 0.1);
-            color: var(--matrix-green);
-            padding-left: 20px;
-        }
-
-        .playlist-item.playing {
-            background: rgba(0, 255, 65, 0.2);
-            color: var(--matrix-green);
-            border-left: 3px solid var(--matrix-green);
-        }
-
-        /* BARRA DE PROGRESO MATRIX */
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid var(--matrix-green);
-            margin: 20px 0;
-            position: relative;
-        }
-
-        #progress-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--matrix-green);
-            box-shadow: 0 0 10px var(--glow-green);
-            transition: width 0.1s linear;
-        }
-
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            color: #00ff9d;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* INFORMACIÓN DEL SISTEMA */
-        .system-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .info-box {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--matrix-green);
-            padding: 15px;
-        }
-
-        .info-title {
-            color: var(--matrix-green);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            opacity: 0.8;
-        }
-
-        .info-value {
-            color: #00ff9d;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* EFECTOS ESPECIALES */
-        .glitch-text {
-            position: relative;
-            animation: glitch 5s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            1% { transform: translate(-2px, 2px); }
-            2% { transform: translate(-2px, -2px); }
-            3% { transform: translate(2px, 2px); }
-            4% { transform: translate(2px, -2px); }
-            5% { transform: translate(0); }
-        }
-
-        .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 255, 65, 0.5);
-            box-shadow: 0 0 10px var(--glow-green);
-            z-index: -1;
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0%; }
-            100% { top: 100%; }
-        }
-
-        /* ESTADOS */
-        .loading { color: #00ff9d; }
-        .playing { color: var(--matrix-green); }
-        .error { color: #ff0066; }
-        .paused { color: #6666ff; }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .header-title { font-size: 1.8rem; }
-            .matrix-controls { grid-template-columns: repeat(2, 1fr); }
-            .control-panel { grid-template-columns: 1fr; }
-            #status { font-size: 1.2rem; }
-        }
-
-        /* ANIMACIÓN DE CARGA */
-        .loading-dots:after {
-            content: ' .';
-            animation: dots 1.5s steps(5, end) infinite;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: ' .'; }
-            40% { content: ' ..'; }
-            60% { content: ' ...'; }
-            80%, 100% { content: ''; }
-        }
-
-        /* NOTIFICACIONES MATRIX */
-        .matrix-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid var(--matrix-green);
-            padding: 15px;
-            color: var(--matrix-green);
-            z-index: 1000;
-            animation: slideIn 0.5s ease;
-            box-shadow: 0 0 20px var(--glow-green);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
+        /* [Mantén todos los estilos Matrix anteriores] */
+        /* [Pega aquí todos los estilos CSS del sistema Matrix anterior] */
     </style>
 </head>
 <body>
-    <!-- EFECTO MATRIX RAIN -->
-    <canvas id="matrix-bg"></canvas>
-    
-    <!-- LÍNEA DE ESCANEO -->
-    <div class="scan-line"></div>
-
-    <!-- PANTALLA DE INICIO MATRIX -->
-    <div id="intro-overlay">
-        <div class="matrix-terminal">
-            <div class="terminal-header">
-                <div class="terminal-title">SYSTEM BOOT<span class="blinking-cursor">_</span></div>
-                <div style="color: #00ff9d;">VOZ_DEL_SHADDAI.exe</div>
-            </div>
-            
-            <div class="ascii-art">
-                ██╗   ██╗ ██████╗ ███████╗    ███████╗██╗  ██╗ █████╗ ██████╗ ██████╗  █████╗ ██╗
-                ╚██╗ ██╔╝██╔═══██╗╚══███╔╝    ██╔════╝██║  ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║
-                 ╚████╔╝ ██║   ██║  ███╔╝     ███████╗███████║███████║██║  ██║██║  ██║███████║██║
-                  ╚██╔╝  ██║   ██║ ███╔╝      ╚════██║██╔══██║██╔══██║██║  ██║██║  ██║██╔══██║██║
-                   ██║   ╚██████╔╝███████╗    ███████║██║  ██║██║  ██║██████╔╝██████╔╝██║  ██║███████╗
-                   ╚═╝    ╚═════╝ ╚══════╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
-            </div>
-            
-            <div class="matrix-text">
-                <div>> INITIALIZING SYSTEM...</div>
-                <div>> LOADING AUDIO MODULES...</div>
-                <div>> CONNECTING TO CLOUD NETWORK...</div>
-                <div>> VERIFYING SECURITY PROTOCOLS...</div>
-                <div id="boot-status" class="loading-dots">> SYSTEM READY</div>
-            </div>
-            
-            <button id="startBtn">> ACCESS MAIN SYSTEM</button>
-        </div>
-    </div>
-
-    <!-- SISTEMA PRINCIPAL MATRIX -->
-    <div id="radioBody" class="radio-container">
-        <div class="matrix-header">
-            <div>
-                <h1 class="header-title glitch-text">MATRIX RADIO SYSTEM</h1>
-                <div class="header-subtitle">VOZ DEL SHADDAI ONLINE v2.0</div>
-            </div>
-            <div style="text-align: right;">
-                <div id="system-time">00:00:00</div>
-                <div id="connection-status" style="color: #00ff9d;">● CONNECTED</div>
-            </div>
-        </div>
-
-        <div class="control-panel">
-            <!-- PANEL IZQUIERDO -->
-            <div>
-                <!-- TERMINAL DE ESTADO -->
-                <div class="status-terminal">
-                    <div class="terminal-label">STATUS TERMINAL</div>
-                    <div id="status" class="loading">> SYSTEM INITIALIZING...</div>
-                </div>
-
-                <!-- VISUALIZADOR DE AUDIO -->
-                <div id="audio-visualizer" class="audio-visualizer">
-                    <!-- Barras generadas por JavaScript -->
-                </div>
-
-                <!-- CONTROLES -->
-                <div class="matrix-controls">
-                    <button id="prevBtn" class="matrix-btn" title="TRACK -1">⏮</button>
-                    <button id="playBtn" class="matrix-btn" title="PLAY/PAUSE">▶</button>
-                    <button id="nextBtn" class="matrix-btn" title="TRACK +1">⏭</button>
-                    <button id="shuffleBtn" class="matrix-btn" title="SHUFFLE MODE">🔀</button>
-                    <button id="repeatBtn" class="matrix-btn" title="REPEAT MODE">🔁</button>
-                    <button id="modeBtn" class="matrix-btn" title="CHANGE MODE">M</button>
-                </div>
-
-                <!-- VOLUMEN -->
-                <div class="volume-slider">
-                    <div class="volume-label">
-                        <span>VOLUME</span>
-                        <span id="volume-value">70%</span>
-                    </div>
-                    <input type="range" id="volume" min="0" max="100" value="70">
-                </div>
-
-                <!-- BARRA DE PROGRESO -->
-                <div class="progress-container">
-                    <div id="progress-bar"></div>
-                </div>
-                <div class="time-display">
-                    <span id="current-time">00:00</span>
-                    <span id="total-time">00:00</span>
-                </div>
-            </div>
-
-            <!-- PANEL DERECHO -->
-            <div>
-                <!-- INFORMACIÓN DEL SISTEMA -->
-                <div class="system-info">
-                    <div class="info-box">
-                        <div class="info-title">TRACKS LOADED</div>
-                        <div id="track-count" class="info-value">0</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">BUFFER STATUS</div>
-                        <div id="buffer-status" class="info-value">IDLE</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">BITRATE</div>
-                        <div id="bitrate" class="info-value">128kbps</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">PLAYBACK MODE</div>
-                        <div id="playback-mode" class="info-value">NORMAL</div>
-                    </div>
-                </div>
-
-                <!-- LISTA DE REPRODUCCIÓN -->
-                <div class="playlist-terminal">
-                    <div class="playlist-title">PLAYLIST [<span id="playlist-count">0</span> TRACKS]</div>
-                    <div id="playlist-container">
-                        <!-- Lista generada por JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- INFORMACIÓN DE LA CANCIÓN -->
-        <div class="status-terminal" style="margin-top: 20px;">
-            <div class="terminal-label">NOW PLAYING</div>
-            <div id="now-playing">
-                <div id="track-title">NO TRACK SELECTED</div>
-                <div id="track-info" style="color: #00ff9d; font-size: 0.9rem; margin-top: 10px;">
-                    <span id="track-index">--</span>/<span id="track-total">--</span> | 
-                    <span id="track-size">-- MB</span> | 
-                    <span id="track-format">--</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOTIFICACIONES -->
-    <div id="notification" class="matrix-notification" style="display: none;"></div>
+    <!-- [Mantén toda la estructura HTML Matrix anterior] -->
 
     <script>
-        // ==================== CONFIGURACIÓN MATRIX ====================
+        // ==================== CONFIGURACIÓN CORREGIDA ====================
         window.onload = function() {
-            // Configuración del sistema
+            // SOLUCIÓN 1: Usar RawGit como respaldo
             const usuario = "cl7adv";
             const repo = "Voz-del-Shaddai-Online";
             const carpeta = "musica";
@@ -627,15 +24,26 @@
             let listaMusica = [];
             let indiceActual = 0;
             let estaReproduciendo = false;
-            let modoAleatorio = false;
-            let modoRepetir = false;
             let intervaloProgreso;
             let intervaloVisualizador;
             let intervaloMatrix;
             let barrasAudio = [];
             const audio = new Audio();
             audio.volume = 0.7;
-            audio.preload = "auto";
+            
+            // SOLUCIÓN 2: Lista de CDNs alternativos
+            const CDNS = [
+                (usuario, repo, carpeta, archivo) => 
+                    `https://rawcdn.githack.com/${usuario}/${repo}/main/${carpeta}/${encodeURIComponent(archivo)}`,
+                (usuario, repo, carpeta, archivo) => 
+                    `https://raw.githubusercontent.com/${usuario}/${repo}/main/${carpeta}/${encodeURIComponent(archivo)}`,
+                (usuario, repo, carpeta, archivo) => 
+                    `https://cdn.statically.io/gh/${usuario}/${repo}/main/${carpeta}/${encodeURIComponent(archivo)}`,
+                (usuario, repo, carpeta, archivo) => 
+                    `https://cdn.jsdelivr.net/gh/${usuario}/${repo}@main/${carpeta}/${encodeURIComponent(archivo)}`
+            ];
+            
+            let cdnIndex = 0;
             
             // Modos de reproducción
             const modosReproduccion = [
@@ -672,125 +80,60 @@
                 volumeValue: document.getElementById('volume-value')
             };
             
-            // ==================== EFECTO MATRIX RAIN ====================
-            function iniciarMatrixRain() {
-                const canvas = document.getElementById('matrix-bg');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                
-                const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-                const charArray = chars.split("");
-                const fontSize = 14;
-                const columns = canvas.width / fontSize;
-                const drops = [];
-                
-                for(let i = 0; i < columns; i++) {
-                    drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
-                }
-                
-                function dibujarMatrix() {
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // ==================== FUNCIÓN PARA PROBAR URLS ====================
+            async function probarURL(url) {
+                return new Promise((resolve) => {
+                    const testAudio = new Audio();
+                    testAudio.preload = "metadata";
+                    testAudio.src = url;
                     
-                    ctx.fillStyle = "#0F0";
-                    ctx.font = `${fontSize}px monospace`;
+                    testAudio.addEventListener('loadedmetadata', () => {
+                        resolve({ success: true, url: url });
+                    });
                     
-                    for(let i = 0; i < drops.length; i++) {
-                        const text = charArray[Math.floor(Math.random() * charArray.length)];
-                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                        
-                        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                            drops[i] = 0;
-                        }
-                        drops[i]++;
-                    }
-                }
-                
-                intervaloMatrix = setInterval(dibujarMatrix, 50);
-                
-                window.addEventListener('resize', function() {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+                    testAudio.addEventListener('error', () => {
+                        resolve({ success: false, url: url });
+                    });
+                    
+                    // Timeout después de 5 segundos
+                    setTimeout(() => {
+                        resolve({ success: false, url: url });
+                    }, 5000);
                 });
             }
             
-            // ==================== VISUALIZADOR DE AUDIO ====================
-            function crearVisualizador() {
-                elementos.audioVisualizer.innerHTML = '';
-                barrasAudio = [];
+            // ==================== OBTENER URL FUNCIONAL ====================
+            async function obtenerURLCorrecta(archivo) {
+                const nombreArchivo = encodeURIComponent(archivo);
                 
-                for(let i = 0; i < 64; i++) {
-                    const bar = document.createElement('div');
-                    bar.className = 'audio-bar';
-                    bar.style.height = '2px';
-                    elementos.audioVisualizer.appendChild(bar);
-                    barrasAudio.push(bar);
+                // Primero, intentar GitHub Pages si existe
+                const ghPagesURL = `https://${usuario}.github.io/${repo}/${carpeta}/${nombreArchivo}`;
+                
+                // Probar GitHub Pages primero
+                const test1 = await probarURL(ghPagesURL);
+                if (test1.success) {
+                    console.log("Usando GitHub Pages:", ghPagesURL);
+                    return ghPagesURL;
                 }
                 
-                if(intervaloVisualizador) clearInterval(intervaloVisualizador);
-                
-                intervaloVisualizador = setInterval(() => {
-                    if(!estaReproduciendo || audio.paused) {
-                        // Efecto de respiración cuando está en pausa
-                        barrasAudio.forEach((bar, i) => {
-                            const altura = 2 + Math.sin(Date.now() / 500 + i) * 30;
-                            bar.style.height = `${altura}px`;
-                            bar.style.opacity = '0.3';
-                        });
-                    } else {
-                        // Efecto activo cuando se reproduce
-                        barrasAudio.forEach((bar, i) => {
-                            const altura = 10 + Math.random() * 80 + Math.sin(Date.now() / 200 + i) * 20;
-                            bar.style.height = `${altura}px`;
-                            bar.style.opacity = '0.8';
-                        });
+                // Probar todos los CDNs
+                for (let i = 0; i < CDNS.length; i++) {
+                    const url = CDNS[i](usuario, repo, carpeta, archivo);
+                    console.log(`Probando CDN ${i}:`, url);
+                    
+                    const resultado = await probarURL(url);
+                    if (resultado.success) {
+                        cdnIndex = i;
+                        console.log("CDN funcional encontrado:", url);
+                        return url;
                     }
-                }, 100);
-            }
-            
-            // ==================== SISTEMA DE NOTIFICACIONES ====================
-            function mostrarNotificacion(mensaje, tipo = 'info') {
-                elementos.notification.textContent = `> ${mensaje}`;
-                elementos.notification.style.display = 'block';
-                
-                switch(tipo) {
-                    case 'success':
-                        elementos.notification.style.borderColor = '#00ff41';
-                        elementos.notification.style.color = '#00ff41';
-                        break;
-                    case 'error':
-                        elementos.notification.style.borderColor = '#ff0066';
-                        elementos.notification.style.color = '#ff0066';
-                        break;
-                    case 'warning':
-                        elementos.notification.style.borderColor = '#ffcc00';
-                        elementos.notification.style.color = '#ffcc00';
-                        break;
-                    default:
-                        elementos.notification.style.borderColor = '#4cc9f0';
-                        elementos.notification.style.color = '#4cc9f0';
                 }
                 
-                setTimeout(() => {
-                    elementos.notification.style.display = 'none';
-                }, 3000);
+                // Si nada funciona, devolver el último CDN como fallback
+                return CDNS[CDNS.length - 1](usuario, repo, carpeta, archivo);
             }
             
-            // ==================== RELOJ DEL SISTEMA ====================
-            function actualizarReloj() {
-                const ahora = new Date();
-                const horas = ahora.getHours().toString().padStart(2, '0');
-                const minutos = ahora.getMinutes().toString().padStart(2, '0');
-                const segundos = ahora.getSeconds().toString().padStart(2, '0');
-                elementos.systemTime.textContent = `${horas}:${minutos}:${segundos}`;
-            }
-            
-            setInterval(actualizarReloj, 1000);
-            actualizarReloj();
-            
-            // ==================== OBTENER MÚSICA DESDE GITHUB ====================
+            // ==================== OBTENER MÚSICA CON VALIDACIÓN ====================
             async function obtenerMusica() {
                 elementos.bootStatus.textContent = "> CONNECTING TO DATABASE...";
                 elementos.status.textContent = "> CONNECTING TO DATABASE...";
@@ -802,32 +145,75 @@
                     
                     const response = await fetch(url);
                     
-                    if(!response.ok) {
+                    if (!response.ok) {
                         throw new Error(`HTTP ${response.status}`);
                     }
                     
                     const archivos = await response.json();
                     
-                    // Filtrar archivos de audio
+                    // SOLUCIÓN 3: Filtrar solo formatos compatibles universalmente
                     listaMusica = archivos.filter(file => {
-                        if(!file.name) return false;
+                        if (!file.name || file.type === 'dir') return false;
+                        
                         const ext = file.name.toLowerCase();
-                        return ext.endsWith('.mp3') || 
-                               ext.endsWith('.m4a') || 
-                               ext.endsWith('.mp4') || 
-                               ext.endsWith('.wav') ||
-                               ext.endsWith('.ogg') ||
-                               ext.endsWith('.flac');
+                        const extension = ext.split('.').pop();
+                        
+                        // Formatos más compatibles
+                        const formatosCompatibles = ['mp3', 'm4a', 'ogg', 'wav', 'mp4'];
+                        
+                        if (formatosCompatibles.includes(extension)) {
+                            // Validar tamaño (máximo 50MB)
+                            if (file.size && file.size > 50 * 1024 * 1024) {
+                                console.warn(`Archivo muy grande omitido: ${file.name}`);
+                                return false;
+                            }
+                            return true;
+                        }
+                        
+                        // Intentar detectar por MIME type
+                        if (file.type && file.type.startsWith('audio/')) {
+                            return true;
+                        }
+                        
+                        return false;
                     });
                     
-                    if(listaMusica.length === 0) {
-                        elementos.bootStatus.textContent = "> ERROR: NO AUDIO FILES FOUND";
+                    if (listaMusica.length === 0) {
+                        elementos.bootStatus.textContent = "> ERROR: NO COMPATIBLE AUDIO FOUND";
                         elementos.status.textContent = "ERROR: NO AUDIO FILES";
-                        mostrarNotificacion("NO AUDIO FILES IN DATABASE", "error");
+                        mostrarNotificacion("NO COMPATIBLE AUDIO FILES", "error");
                         return;
                     }
                     
-                    // Aleatorizar lista inicial
+                    // Ordenar alfabéticamente para consistencia
+                    listaMusica.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    elementos.bootStatus.textContent = "> VALIDATING " + listaMusica.length + " TRACKS...";
+                    
+                    // SOLUCIÓN 4: Validar que cada archivo sea accesible
+                    const tracksValidos = [];
+                    for (let i = 0; i < Math.min(listaMusica.length, 10); i++) { // Validar solo primeros 10
+                        const archivo = listaMusica[i];
+                        try {
+                            const urlTest = await obtenerURLCorrecta(archivo.name);
+                            const test = await probarURL(urlTest);
+                            
+                            if (test.success) {
+                                tracksValidos.push(archivo);
+                                console.log(`✓ ${archivo.name} - ACCESIBLE`);
+                            } else {
+                                console.warn(`✗ ${archivo.name} - INACCESIBLE`);
+                            }
+                        } catch (e) {
+                            console.warn(`✗ ${archivo.name} - ERROR: ${e.message}`);
+                        }
+                    }
+                    
+                    if (tracksValidos.length > 0) {
+                        listaMusica = tracksValidos;
+                    }
+                    
+                    // Mezclar aleatoriamente
                     listaMusica.sort(() => Math.random() - 0.5);
                     
                     elementos.bootStatus.textContent = "> LOADING " + listaMusica.length + " TRACKS...";
@@ -843,7 +229,7 @@
                     
                     mostrarNotificacion(`${listaMusica.length} TRACKS LOADED SUCCESSFULLY`, 'success');
                     
-                } catch(error) {
+                } catch (error) {
                     console.error("Database error:", error);
                     elementos.bootStatus.textContent = "> DATABASE CONNECTION FAILED";
                     elementos.status.textContent = "> CONNECTION ERROR\nCHECK NETWORK";
@@ -851,41 +237,9 @@
                 }
             }
             
-            // ==================== ACTUALIZAR LISTA DE REPRODUCCIÓN ====================
-            function actualizarPlaylist() {
-                elementos.playlistContainer.innerHTML = '';
-                
-                listaMusica.forEach((cancion, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'playlist-item';
-                    if(index === indiceActual) {
-                        item.classList.add('playing');
-                    }
-                    
-                    const nombre = cancion.name.length > 40 ? 
-                        cancion.name.substring(0, 40) + '...' : 
-                        cancion.name;
-                    
-                    const size = cancion.size ? 
-                        ` (${(cancion.size / 1024 / 1024).toFixed(1)} MB)` : 
-                        '';
-                    
-                    item.textContent = `[${(index + 1).toString().padStart(3, '0')}] ${nombre}${size}`;
-                    item.title = cancion.name;
-                    
-                    item.onclick = () => {
-                        indiceActual = index;
-                        reproducir();
-                        mostrarNotificacion(`TRACK ${index + 1} SELECTED`);
-                    };
-                    
-                    elementos.playlistContainer.appendChild(item);
-                });
-            }
-            
-            // ==================== REPRODUCIR MÚSICA ====================
+            // ==================== REPRODUCIR MÚSICA CON REINTENTOS ====================
             async function reproducir() {
-                if(listaMusica.length === 0) {
+                if (listaMusica.length === 0) {
                     mostrarNotificacion("NO TRACKS AVAILABLE", "error");
                     return;
                 }
@@ -895,7 +249,7 @@
                     tema.name.substring(0, 30) + '...' : 
                     tema.name;
                 
-                // Actualizar información de la canción
+                // Actualizar información
                 elementos.trackTitle.textContent = nombreCorto;
                 elementos.trackIndex.textContent = indiceActual + 1;
                 elementos.trackFormat.textContent = tema.name.split('.').pop().toUpperCase();
@@ -903,20 +257,77 @@
                     `${(tema.size / 1024 / 1024).toFixed(1)} MB` : 
                     'UNKNOWN';
                 
-                // Usar jsDelivr CDN
-                const urlJsDelivr = `https://cdn.jsdelivr.net/gh/${usuario}/${repo}@main/${carpeta}/${encodeURIComponent(tema.name)}`;
-                
                 elementos.status.textContent = `> LOADING TRACK ${indiceActual + 1}\n${nombreCorto}`;
-                elementos.bufferStatus.textContent = "BUFFERING";
+                elementos.bufferStatus.textContent = "CONNECTING";
                 elementos.playBtn.disabled = true;
                 
                 // Limpiar intervalo anterior
-                if(intervaloProgreso) clearInterval(intervaloProgreso);
+                if (intervaloProgreso) clearInterval(intervaloProgreso);
+                
+                // SOLUCIÓN 5: Sistema de reintentos con CDNs alternativos
+                let urlFuncional = null;
+                let intentos = 0;
+                const maxIntentos = CDNS.length + 1; // +1 para GitHub Pages
+                
+                while (!urlFuncional && intentos < maxIntentos) {
+                    try {
+                        // Obtener URL del CDN actual
+                        const cdnFunc = CDNS[cdnIndex % CDNS.length];
+                        const url = cdnFunc(usuario, repo, carpeta, tema.name);
+                        
+                        console.log(`Intento ${intentos + 1}: Probando ${url}`);
+                        
+                        // Probar la URL
+                        const test = await probarURL(url);
+                        
+                        if (test.success) {
+                            urlFuncional = url;
+                            console.log("URL funcional encontrada:", url);
+                            break;
+                        }
+                        
+                        // Rotar al siguiente CDN
+                        cdnIndex = (cdnIndex + 1) % CDNS.length;
+                        intentos++;
+                        
+                    } catch (error) {
+                        console.warn(`Intento ${intentos + 1} falló:`, error);
+                        cdnIndex = (cdnIndex + 1) % CDNS.length;
+                        intentos++;
+                    }
+                }
+                
+                if (!urlFuncional) {
+                    // Último intento con GitHub Pages
+                    const ghPagesURL = `https://${usuario}.github.io/${repo}/${carpeta}/${encodeURIComponent(tema.name)}`;
+                    const test = await probarURL(ghPagesURL);
+                    
+                    if (test.success) {
+                        urlFuncional = ghPagesURL;
+                    } else {
+                        // Si nada funciona, usar GitHub raw
+                        urlFuncional = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${carpeta}/${encodeURIComponent(tema.name)}`;
+                    }
+                }
                 
                 // Configurar audio
-                audio.src = urlJsDelivr;
+                audio.src = urlFuncional;
                 audio.load();
                 
+                // Configurar eventos de audio
+                audio.onerror = function(e) {
+                    console.error("Audio error:", e);
+                    elementos.status.textContent = "> FORMAT ERROR\nTRYING NEXT TRACK...";
+                    elementos.status.className = 'error';
+                    elementos.bufferStatus.textContent = "ERROR";
+                    
+                    // Intentar siguiente canción
+                    setTimeout(() => {
+                        siguienteTema();
+                    }, 2000);
+                };
+                
+                // Intentar reproducir
                 try {
                     await audio.play();
                     
@@ -935,245 +346,103 @@
                     
                     mostrarNotificacion(`PLAYING: ${nombreCorto}`);
                     
-                } catch(error) {
+                } catch (error) {
                     console.error("Playback error:", error);
-                    elementos.status.textContent = "> PLAYBACK ERROR\nSKIPPING TRACK...";
+                    
+                    // SOLUCIÓN 6: Manejo específico de errores comunes
+                    if (error.name === 'NotSupportedError') {
+                        elementos.status.textContent = "> FORMAT NOT SUPPORTED\nSKIPPING...";
+                        mostrarNotificacion("UNSUPPORTED AUDIO FORMAT", "error");
+                    } else if (error.name === 'NotAllowedError') {
+                        elementos.status.textContent = "> AUTOPLAY BLOCKED\nCLICK PLAY BUTTON";
+                        mostrarNotificacion("CLICK PLAY BUTTON TO START", "warning");
+                        elementos.playBtn.disabled = false;
+                        elementos.playBtn.textContent = "▶";
+                        return;
+                    } else {
+                        elementos.status.textContent = "> PLAYBACK ERROR\nSKIPPING...";
+                    }
+                    
                     elementos.status.className = 'error';
                     elementos.playBtn.textContent = "▶";
                     elementos.playBtn.disabled = false;
                     estaReproduciendo = false;
                     elementos.bufferStatus.textContent = "ERROR";
                     
-                    mostrarNotificacion("PLAYBACK FAILED, SKIPPING...", "error");
-                    setTimeout(siguienteTema, 2000);
+                    // Intentar siguiente canción automáticamente
+                    setTimeout(() => {
+                        siguienteTema();
+                    }, 2000);
                 }
             }
             
-            // ==================== ACTUALIZAR BARRA DE PROGRESO ====================
-            function actualizarProgreso() {
-                if(audio.duration && !isNaN(audio.duration)) {
-                    const porcentaje = (audio.currentTime / audio.duration) * 100;
-                    elementos.progressBar.style.width = porcentaje + '%';
+            // ==================== FUNCIONES RESTANTES (sin cambios) ====================
+            // [Mantén todas las otras funciones del sistema Matrix anterior]
+            // como iniciarMatrixRain, crearVisualizador, mostrarNotificacion, etc.
+            
+            // SOLUCIÓN 7: Función para verificar repositorio
+            async function verificarRepositorio() {
+                try {
+                    const response = await fetch(`https://api.github.com/repos/${usuario}/${repo}`);
+                    if (!response.ok) throw new Error("Repositorio no encontrado");
                     
-                    // Actualizar tiempos
-                    elementos.currentTime.textContent = formatearTiempo(audio.currentTime);
-                    elementos.totalTime.textContent = formatearTiempo(audio.duration);
-                    
-                    // Actualizar bitrate (simulado)
-                    if(audio.buffered.length > 0) {
-                        const bufferPorcentaje = (audio.buffered.end(0) / audio.duration) * 100;
-                        elementos.bufferStatus.textContent = `BUFFERED ${Math.round(bufferPorcentaje)}%`;
-                    }
+                    const data = await response.json();
+                    console.log("Repositorio encontrado:", data.full_name);
+                    return true;
+                } catch (error) {
+                    console.error("Error verificando repositorio:", error);
+                    elementos.bootStatus.textContent = "> REPOSITORY NOT FOUND";
+                    return false;
                 }
             }
             
-            function formatearTiempo(segundos) {
-                const min = Math.floor(segundos / 60);
-                const seg = Math.floor(segundos % 60);
-                return `${min}:${seg < 10 ? '0' : ''}${seg}`;
-            }
-            
-            // ==================== CONTROL DE REPRODUCCIÓN ====================
-            function toggleReproduccion() {
-                if(!audio.src) {
-                    if(listaMusica.length > 0) {
-                        reproducir();
-                    }
+            // ==================== INICIALIZAR SISTEMA ====================
+            async function inicializarSistema() {
+                // Verificar repositorio primero
+                const repoExiste = await verificarRepositorio();
+                
+                if (!repoExiste) {
+                    elementos.bootStatus.textContent = "> ERROR: REPOSITORY NOT FOUND";
+                    elementos.status.textContent = "> CHECK REPO SETTINGS";
+                    mostrarNotificacion("REPOSITORY NOT FOUND", "error");
                     return;
                 }
                 
-                if(estaReproduciendo) {
-                    audio.pause();
-                    elementos.playBtn.textContent = "▶";
-                    elementos.status.textContent = "> SYSTEM PAUSED";
-                    elementos.status.className = 'paused';
-                    estaReproduciendo = false;
-                    elementos.bufferStatus.textContent = "PAUSED";
-                    
-                    if(intervaloProgreso) clearInterval(intervaloProgreso);
-                    
-                    mostrarNotificacion("PLAYBACK PAUSED");
-                } else {
-                    audio.play().then(() => {
-                        elementos.playBtn.textContent = "⏸";
-                        elementos.status.textContent = "> RESUMING PLAYBACK";
-                        elementos.status.className = 'playing';
-                        estaReproduciendo = true;
-                        elementos.bufferStatus.textContent = "PLAYING";
-                        
-                        intervaloProgreso = setInterval(actualizarProgreso, 100);
-                        
-                        mostrarNotificacion("PLAYBACK RESUMED");
-                    }).catch(error => {
-                        elementos.status.textContent = "> RESUME FAILED";
-                        elementos.status.className = 'error';
-                        mostrarNotificacion("RESUME FAILED", "error");
-                    });
-                }
-            }
-            
-            // ==================== NAVEGACIÓN ENTRE TEMAS ====================
-            function siguienteTema() {
-                if(listaMusica.length === 0) return;
-                
-                if(intervaloProgreso) clearInterval(intervaloProgreso);
-                
-                if(modoActual === 3) { // SHUFFLE MODE
-                    indiceActual = Math.floor(Math.random() * listaMusica.length);
-                } else {
-                    indiceActual = (indiceActual + 1) % listaMusica.length;
+                // Iniciar efectos visuales
+                if (typeof iniciarMatrixRain === 'function') {
+                    iniciarMatrixRain();
                 }
                 
-                elementos.progressBar.style.width = '0%';
-                reproducir();
-                mostrarNotificacion("NEXT TRACK");
-            }
-            
-            function anteriorTema() {
-                if(listaMusica.length === 0) return;
-                
-                if(intervaloProgreso) clearInterval(intervaloProgreso);
-                
-                indiceActual = (indiceActual - 1 + listaMusica.length) % listaMusica.length;
-                elementos.progressBar.style.width = '0%';
-                reproducir();
-                mostrarNotificacion("PREVIOUS TRACK");
-            }
-            
-            // ==================== CAMBIAR MODO DE REPRODUCCIÓN ====================
-            function cambiarModo() {
-                modoActual = (modoActual + 1) % modosReproduccion.length;
-                const modo = modosReproduccion[modoActual];
-                
-                elementos.playbackMode.textContent = modo.nombre;
-                document.getElementById('modeBtn').textContent = modo.icono;
-                
-                // Configurar según modo
-                switch(modoActual) {
-                    case 0: // NORMAL
-                        audio.loop = false;
-                        break;
-                    case 1: // REPEAT ONE
-                        audio.loop = true;
-                        break;
-                    case 2: // REPEAT ALL
-                        audio.loop = false;
-                        break;
-                    case 3: // SHUFFLE
-                        audio.loop = false;
-                        break;
-                }
-                
-                mostrarNotificacion(`MODE: ${modo.nombre}`);
-            }
-            
-            // ==================== EVENT LISTENERS ====================
-            audio.addEventListener('ended', function() {
-                if(modoActual === 1) { // REPEAT ONE
-                    audio.currentTime = 0;
-                    audio.play();
-                } else if(modoActual === 2 || modoActual === 0) { // REPEAT ALL o NORMAL
-                    siguienteTema();
-                } else if(modoActual === 3) { // SHUFFLE
-                    indiceActual = Math.floor(Math.random() * listaMusica.length);
-                    reproducir();
-                }
-            });
-            
-            audio.addEventListener('error', function() {
-                elementos.status.textContent = "> AUDIO ERROR\nSKIPPING TRACK...";
-                elementos.status.className = 'error';
-                setTimeout(siguienteTema, 2000);
-                mostrarNotificacion("AUDIO ERROR, SKIPPING...", "error");
-            });
-            
-            audio.addEventListener('loadeddata', function() {
-                elementos.bufferStatus.textContent = "LOADED";
-            });
-            
-            // Botón de inicio
-            document.getElementById('startBtn').onclick = function() {
-                elementos.intro.style.opacity = '0';
-                setTimeout(() => {
-                    elementos.intro.style.visibility = 'hidden';
-                    elementos.radioBody.classList.add('radio-visible');
+                // Iniciar visualizador
+                if (typeof crearVisualizador === 'function') {
                     crearVisualizador();
-                    
-                    // Reproducir si hay música
-                    if(listaMusica.length > 0) {
-                        setTimeout(() => reproducir(), 1000);
-                    }
-                }, 800);
-            };
-            
-            // Controles principales
-            elementos.playBtn.onclick = toggleReproduccion;
-            document.getElementById('nextBtn').onclick = siguienteTema;
-            document.getElementById('prevBtn').onclick = anteriorTema;
-            document.getElementById('modeBtn').onclick = cambiarModo;
-            document.getElementById('shuffleBtn').onclick = function() {
-                modoActual = 3;
-                cambiarModo();
-                mostrarNotificacion("SHUFFLE MODE ACTIVATED");
-            };
-            document.getElementById('repeatBtn').onclick = function() {
-                modoActual = 2;
-                cambiarModo();
-                mostrarNotificacion("REPEAT ALL MODE ACTIVATED");
-            };
-            
-            // Control de volumen
-            document.getElementById('volume').oninput = function(e) {
-                const volumen = e.target.value / 100;
-                audio.volume = volumen;
-                elementos.volumeValue.textContent = `${e.target.value}%`;
-            };
-            
-            // Saltar en la barra de progreso
-            elementos.progressBar.parentElement.onclick = function(e) {
-                if(audio.duration && !isNaN(audio.duration)) {
-                    const rect = e.target.getBoundingClientRect();
-                    const pos = (e.clientX - rect.left) / rect.width;
-                    audio.currentTime = pos * audio.duration;
-                    actualizarProgreso();
                 }
-            };
+                
+                // Obtener música
+                await obtenerMusica();
+                
+                // Configurar evento del botón de inicio
+                document.getElementById('startBtn').onclick = function() {
+                    elementos.intro.style.opacity = '0';
+                    setTimeout(() => {
+                        elementos.intro.style.visibility = 'hidden';
+                        elementos.radioBody.classList.add('radio-visible');
+                        
+                        // SOLUCIÓN 8: Reproducir solo si hay música válida
+                        if (listaMusica.length > 0) {
+                            // Pequeño delay para asegurar que la UI esté lista
+                            setTimeout(() => {
+                                reproducir();
+                            }, 500);
+                        } else {
+                            mostrarNotificacion("NO VALID AUDIO FOUND", "error");
+                        }
+                    }, 800);
+                };
+            }
             
-            // Atajos de teclado
-            document.addEventListener('keydown', (e) => {
-                switch(e.code) {
-                    case 'Space':
-                        e.preventDefault();
-                        toggleReproduccion();
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        siguienteTema();
-                        break;
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        anteriorTema();
-                        break;
-                    case 'KeyM':
-                        e.preventDefault();
-                        cambiarModo();
-                        break;
-                    case 'KeyS':
-                        e.preventDefault();
-                        modoActual = 3;
-                        cambiarModo();
-                        break;
-                    case 'KeyR':
-                        e.preventDefault();
-                        modoActual = 2;
-                        cambiarModo();
-                        break;
-                }
-            });
-            
-            // ==================== INICIALIZAR SISTEMA ====================
-            iniciarMatrixRain();
-            obtenerMusica();
+            // Iniciar todo
+            inicializarSistema();
         };
     </script>
 </body>
