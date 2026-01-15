@@ -9,8 +9,14 @@
     <meta name="description" content="📻 Emisora Cristiana con transiciones suaves entre canciones. Crossfade profesional para una experiencia auditiva perfecta.">
     
     <!-- Estilos y Fuentes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Usar Font Awesome desde un CDN alternativo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon en base64 para evitar error 404 -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>">
     
     <style>
         /* ===== VARIABLES Y RESET ===== */
@@ -94,6 +100,12 @@
 
         .app-loaded {
             display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* ===== HEADER ===== */
@@ -752,11 +764,11 @@
                     
                     // Nombres de canciones para mostrar
                     trackNames: [
-                        'Tech House Vibes',
-                        'Driving Ambition',
-                        'Deep Urban',
-                        'Summer Bossa',
-                        'Funky Groove'
+                        'Alabanza en el Espíritu',
+                        'Cánticos de Adoración',
+                        'Gloria al Altísimo',
+                        'Santo, Santo, Santo',
+                        'Aleluya Eterno'
                     ],
                     
                     // Artistas para mostrar
@@ -999,8 +1011,8 @@
                     
                     // Actualizar progreso visual
                     this.state.crossfadeProgress = progress;
-                    this.elements.crossfadeProgress.style.width = `${progress * 100}%`;
-                    this.elements.fadePercentage.textContent = `${Math.round(progress * 100)}%`;
+                    this.elements.crossfadeProgress.style.width = progress * 100 + '%';
+                    this.elements.fadePercentage.textContent = Math.round(progress * 100) + '%';
                     
                     // Aplicar curva de fade
                     const fadeOut = this.easeInOutCubic(progress);
@@ -1154,11 +1166,11 @@
                 });
                 
                 if (timeUntilFade > 0) {
-                    this.elements.nextChange.textContent = `Próximo cambio: ${timeStr}`;
+                    this.elements.nextChange.textContent = 'Próximo cambio: ' + timeStr;
                     
                     const minutes = Math.floor(timeUntilFade / 60000);
                     const seconds = Math.floor((timeUntilFade % 60000) / 1000);
-                    this.elements.nextTrackTime.textContent = `En aproximadamente ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    this.elements.nextTrackTime.textContent = 'En aproximadamente ' + minutes + ':' + seconds.toString().padStart(2, '0');
                 }
                 
                 console.log('Crossfade programado en:', Math.round(timeUntilFade / 1000), 'segundos');
@@ -1197,7 +1209,7 @@
                 
                 // Actualizar UI
                 const percentage = Math.round(this.state.volume * 100);
-                this.elements.volumeValue.textContent = `${percentage}%`;
+                this.elements.volumeValue.textContent = percentage + '%';
                 this.elements.volumeSlider.value = percentage;
                 
                 // Actualizar icono de volumen
@@ -1205,7 +1217,7 @@
                 if (percentage === 0) icon = 'fa-volume-mute';
                 else if (percentage < 50) icon = 'fa-volume-down';
                 
-                this.elements.volumeIcon.className = `fas ${icon}`;
+                this.elements.volumeIcon.className = 'fas ' + icon;
             }
 
             // ============== UI UPDATES ==============
@@ -1217,7 +1229,7 @@
                 const progress = (currentTime / duration) * 100;
                 
                 // Actualizar barras de progreso
-                this.elements.progressFill.style.width = `${progress}%`;
+                this.elements.progressFill.style.width = progress + '%';
                 
                 // Actualizar tiempos
                 this.elements.currentTime.textContent = this.formatTime(currentTime);
@@ -1226,7 +1238,7 @@
                 if (duration && !isNaN(duration)) {
                     this.elements.trackDuration.textContent = this.formatTime(duration);
                     this.elements.progressTotal.textContent = this.formatTime(duration);
-                    this.elements.timeRemaining.textContent = `-${this.formatTime(duration - currentTime)}`;
+                    this.elements.timeRemaining.textContent = '-' + this.formatTime(duration - currentTime);
                 }
             }
 
@@ -1235,16 +1247,16 @@
                 
                 const mins = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                return mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
             }
 
             updateAlbumArtColors() {
                 // Generar colores basados en el índice de la canción
                 const hue = (this.state.currentTrackIndex * 137) % 360; // Usar ángulo áureo
-                const color1 = `hsl(${hue}, 70%, 45%)`;
-                const color2 = `hsl(${(hue + 40) % 360}, 70%, 45%)`;
+                const color1 = 'hsl(' + hue + ', 70%, 45%)';
+                const color2 = 'hsl(' + ((hue + 40) % 360) + ', 70%, 45%)';
                 
-                this.elements.albumArt.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+                this.elements.albumArt.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
             }
 
             // ============== ESPECTRO ==============
@@ -1270,11 +1282,8 @@
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
                 ctx.fillRect(0, 0, width, height);
                 
-                // Crear efecto de onda si no hay contexto de audio
-                if (!this.state.audioContext) {
-                    this.createVisualizerFallback(ctx, width, height);
-                    return;
-                }
+                // Crear efecto de onda visual
+                this.createVisualizerFallback(ctx, width, height);
             }
 
             createVisualizerFallback(ctx, width, height) {
@@ -1284,7 +1293,7 @@
                 const amplitude = height * 0.4;
                 
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(66, 133, 244, ${this.state.isCrossfading ? 0.8 : 0.6})`;
+                ctx.strokeStyle = 'rgba(66, 133, 244, ' + (this.state.isCrossfading ? 0.8 : 0.6) + ')';
                 ctx.lineWidth = 3;
                 
                 for (let x = 0; x < width; x++) {
@@ -1308,7 +1317,7 @@
                     
                     ctx.beginPath();
                     ctx.arc(particleX, particleY, 2, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.5})`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, ' + Math.random() * 0.5 + ')';
                     ctx.fill();
                 }
             }
@@ -1326,10 +1335,10 @@
                 this.elements.notificationMessage.textContent = message;
                 
                 // Configurar color según tipo
-                let borderColor = var(--primary);
-                if (type === 'success') borderColor = var(--success);
-                if (type === 'error') borderColor = var(--secondary);
-                if (type === 'warning') borderColor = var(--accent);
+                let borderColor = '#1a73e8'; // var(--primary)
+                if (type === 'success') borderColor = '#34a853'; // var(--success)
+                if (type === 'error') borderColor = '#ea4335'; // var(--secondary)
+                if (type === 'warning') borderColor = '#fbbc05'; // var(--accent)
                 
                 this.elements.notification.style.borderLeftColor = borderColor;
                 
@@ -1344,7 +1353,7 @@
 
             // ============== EVENT HANDLERS ==============
             onTrackLoaded(type) {
-                console.log(`${type} track loaded`);
+                console.log(type + ' track loaded');
                 
                 if (type === 'current') {
                     const track = this.state.playlist[this.state.currentTrackIndex];
@@ -1356,7 +1365,7 @@
             }
 
             onAudioError(error, type) {
-                console.error(`Error en audio ${type}:`, error);
+                console.error('Error en audio ' + type + ':', error);
                 
                 if (type === 'current') {
                     this.showNotification('Error de audio', 'No se pudo cargar la canción actual', 'error');
@@ -1373,7 +1382,7 @@
             }
 
             onTrackEnded(type) {
-                console.log(`${type} track ended`);
+                console.log(type + ' track ended');
                 
                 if (type === 'current' && !this.state.isCrossfading) {
                     // Si termina sin crossfade, iniciar siguiente canción directamente
@@ -1399,7 +1408,7 @@
             }
 
             onCanPlay(type) {
-                console.log(`${type} track can play`);
+                console.log(type + ' track can play');
                 
                 if (type === 'next' && this.state.preloadNextTrack) {
                     console.log('Siguiente canción pre-cargada');
