@@ -3,11 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎵 VOZ DEL SHADDAI - Radio Cristiana 24/7</title>
+    
+    <!-- ===== TÍTULO PARA COMPARTIR ===== -->
+    <title>🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟</title>
+    
+    <!-- ===== META TAGS PARA COMPARTIR ===== -->
+    <meta name="description" content="Escucha música cristiana inspiradora las 24 horas del día. Radio en línea con espectro musical en vivo.">
+    <meta name="keywords" content="música cristiana, radio online, alabanza, adoración, radio cristiana 24/7">
+    <meta name="author" content="Voz del Shaddai">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cl7adv.github.io/Voz-del-Shaddai-Online/">
+    <meta property="og:title" content="🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟">
+    <meta property="og:description" content="Radio cristiana en vivo con música inspiradora las 24 horas. ¡Escucha ahora!">
+    <meta property="og:image" content="https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/radio-cover.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cl7adv.github.io/Voz-del-Shaddai-Online/">
+    <meta property="twitter:title" content="🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟">
+    <meta property="twitter:description" content="Radio cristiana en vivo con música inspiradora las 24 horas. ¡Escucha ahora!">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/radio-cover.jpg">
+    
+    <!-- ===== ICONS & FONTS ===== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
+    
     <style>
-        /* ===== RESET Y VARIABLES ===== */
+        /* ===== VARIABLES Y RESET ===== */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a0ca3;
@@ -142,6 +167,13 @@
             justify-content: center;
             font-size: 2rem;
             box-shadow: var(--shadow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .logo-text h1 {
@@ -159,17 +191,19 @@
             font-size: 1rem;
         }
 
-        /* ===== VISUALIZER ===== */
-        .visualizer-section {
+        /* ===== ESPECTRO MUSICAL AVANZADO ===== */
+        .spectrum-section {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .visualizer-title {
+        .spectrum-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
@@ -179,17 +213,46 @@
             gap: 0.5rem;
         }
 
-        .visualizer-container {
+        .spectrum-container {
             width: 100%;
-            height: 200px;
+            height: 250px;
             position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        #visualizer-canvas {
+        #spectrum-canvas {
             width: 100%;
             height: 100%;
+            display: block;
+        }
+
+        .spectrum-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .spectrum-btn {
+            padding: 0.5rem 1.5rem;
             border-radius: var(--radius);
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .spectrum-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .spectrum-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
         }
 
         /* ===== NOW PLAYING ===== */
@@ -220,6 +283,24 @@
             font-size: 3rem;
             box-shadow: var(--shadow-lg);
             flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-art::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .track-info {
@@ -231,6 +312,7 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             line-height: 1.2;
+            color: var(--light);
         }
 
         .track-artist {
@@ -268,6 +350,20 @@
             width: 0%;
             border-radius: var(--radius-full);
             transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--light);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
         }
 
         .progress-time {
@@ -277,7 +373,7 @@
             font-size: 0.9rem;
         }
 
-        /* ===== BOTONES GRANDES ===== */
+        /* ===== BOTONES PRINCIPALES ===== */
         .controls-container {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
@@ -293,6 +389,7 @@
             align-items: center;
             gap: 2rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .control-btn {
@@ -313,7 +410,12 @@
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:active {
+            transform: translateY(-2px) scale(1.02);
         }
 
         .control-btn.primary {
@@ -321,14 +423,28 @@
             height: 100px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             font-size: 2.5rem;
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
         }
 
+        .control-btn.primary:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            box-shadow: 0 20px 35px rgba(67, 97, 238, 0.6);
+        }
+
+        .control-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 30px rgba(67, 97, 238, 0.5);
+        }
+
+        /* ===== CONTROLES SECUNDARIOS ===== */
         .secondary-controls {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 1.5rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .secondary-btn {
@@ -343,10 +459,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 500;
         }
 
         .secondary-btn:hover {
             background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
         }
 
         .secondary-btn.active {
@@ -354,7 +472,7 @@
             color: white;
         }
 
-        /* ===== VOLUME ===== */
+        /* ===== VOLUMEN ===== */
         .volume-section {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
@@ -364,15 +482,31 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .volume-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .volume-control {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
+        .volume-icon {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            width: 40px;
+        }
+
         .volume-slider {
             flex: 1;
-            height: 8px;
+            height: 10px;
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-full);
@@ -381,12 +515,21 @@
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
             border: 3px solid var(--light);
+        }
+
+        .volume-value {
+            width: 60px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary-light);
         }
 
         /* ===== PLAYLIST ===== */
@@ -412,9 +555,32 @@
             color: var(--primary-light);
         }
 
+        .playlist-count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         .playlist {
             max-height: 400px;
             overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .playlist::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .playlist::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+        }
+
+        .playlist::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: var(--radius-full);
         }
 
         .playlist-item {
@@ -435,32 +601,135 @@
         .playlist-item.active {
             background: rgba(67, 97, 238, 0.3);
             border-left: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
-        /* ===== NOTIFICATION ===== */
+        .playlist-item-number {
+            color: var(--gray);
+            font-size: 1rem;
+            min-width: 35px;
+            font-weight: 600;
+        }
+
+        .playlist-item-title {
+            flex: 1;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 1.1rem;
+        }
+
+        .playlist-item-duration {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ===== SHARE SECTION ===== */
+        .share-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .share-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-light);
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .share-btn.facebook {
+            background: #1877f2;
+        }
+
+        .share-btn.twitter {
+            background: #1da1f2;
+        }
+
+        .share-btn.whatsapp {
+            background: #25d366;
+        }
+
+        /* ===== NOTIFICATIONS ===== */
         .notification {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: var(--dark);
             border-left: 4px solid var(--primary);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             gap: 1rem;
             transform: translateX(120%);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 1000;
+            max-width: 400px;
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
             .track-display {
                 flex-direction: column;
                 text-align: center;
@@ -471,6 +740,10 @@
                 height: 180px;
             }
             
+            .track-title {
+                font-size: 1.8rem;
+            }
+            
             .main-controls {
                 gap: 1rem;
             }
@@ -478,17 +751,84 @@
             .control-btn {
                 width: 70px;
                 height: 70px;
+                font-size: 1.5rem;
             }
             
             .control-btn.primary {
                 width: 85px;
                 height: 85px;
+                font-size: 2rem;
+            }
+            
+            .secondary-controls {
+                gap: 1rem;
+            }
+            
+            .secondary-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+            
+            .share-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .notification {
                 left: 1rem;
                 right: 1rem;
+                max-width: none;
             }
+        }
+
+        @media (max-width: 480px) {
+            .main-controls {
+                gap: 0.5rem;
+            }
+            
+            .control-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+            
+            .control-btn.primary {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .secondary-controls {
+                flex-direction: column;
+            }
+            
+            .secondary-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ===== ANIMACIONES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
@@ -498,8 +838,8 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <h1 class="loading-title">VOZ DEL SHADDAI</h1>
-            <p class="loading-subtitle">Inicializando sistema de radio...</p>
-            <div id="loading-details" style="color: var(--gray); margin-top: 1rem;"></div>
+            <p class="loading-subtitle">Inicializando sistema de radio con espectro musical...</p>
+            <div id="loading-details" style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;"></div>
         </div>
     </div>
 
@@ -513,7 +853,7 @@
                 </div>
                 <div class="logo-text">
                     <h1>VOZ DEL SHADDAI</h1>
-                    <p>Radio Cristiana 24/7</p>
+                    <p>Radio Cristiana 24/7 con Espectro Musical</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">
@@ -526,13 +866,32 @@
             </div>
         </header>
 
-        <!-- Visualizer -->
-        <div class="visualizer-section">
-            <div class="visualizer-title">
-                <i class="fas fa-wave-square"></i> Espectro Musical
+        <!-- Espectro Musical -->
+        <div class="spectrum-section">
+            <div class="spectrum-title">
+                <i class="fas fa-wave-square"></i> Espectro Musical en Vivo
             </div>
-            <div class="visualizer-container">
-                <canvas id="visualizer-canvas"></canvas>
+            
+            <div class="spectrum-container">
+                <canvas id="spectrum-canvas"></canvas>
+            </div>
+            
+            <div class="spectrum-controls">
+                <button class="spectrum-btn active" data-mode="bars" id="mode-bars">
+                    <i class="fas fa-chart-bar"></i> Barras
+                </button>
+                <button class="spectrum-btn" data-mode="wave" id="mode-wave">
+                    <i class="fas fa-water"></i> Onda
+                </button>
+                <button class="spectrum-btn" data-mode="circle" id="mode-circle">
+                    <i class="fas fa-circle"></i> Circular
+                </button>
+                <button class="spectrum-btn" data-mode="particles" id="mode-particles">
+                    <i class="fas fa-star"></i> Partículas
+                </button>
+                <button class="spectrum-btn" data-mode="spectrum" id="mode-spectrum">
+                    <i class="fas fa-music"></i> Espectro
+                </button>
             </div>
         </div>
 
@@ -599,14 +958,15 @@
 
         <!-- Volume -->
         <div class="volume-section">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                <h3 style="color: var(--primary-light);">Volumen</h3>
-                <span id="volume-value" style="font-weight: 600;">70%</span>
+            <div class="volume-title">
+                <i class="fas fa-volume-up"></i> Control de Volumen
             </div>
             <div class="volume-control">
-                <i class="fas fa-volume-down"></i>
+                <div class="volume-icon">
+                    <i class="fas fa-volume-down" id="volume-icon"></i>
+                </div>
                 <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
-                <i class="fas fa-volume-up"></i>
+                <div class="volume-value" id="volume-value">70%</div>
             </div>
         </div>
 
@@ -614,17 +974,36 @@
         <div class="playlist-section">
             <div class="playlist-header">
                 <h3 class="playlist-title">Lista de Reproducción</h3>
-                <span id="playlist-count" style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius);">0 canciones</span>
+                <span class="playlist-count" id="playlist-count">0 canciones</span>
             </div>
             <div class="playlist" id="playlist">
-                <!-- Las canciones se cargarán aquí -->
+                <!-- Canciones se cargarán aquí -->
+            </div>
+        </div>
+
+        <!-- Share Section -->
+        <div class="share-section">
+            <h3 class="share-title">¡Comparte esta radio!</h3>
+            <div class="share-buttons">
+                <button class="share-btn facebook" id="share-facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+                <button class="share-btn twitter" id="share-twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn whatsapp" id="share-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" id="share-link">
+                    <i class="fas fa-link"></i> Copiar Enlace
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
-        <i class="fas fa-info-circle"></i>
+        <i class="fas fa-info-circle notification-icon"></i>
         <div>
             <strong id="notification-title">Notificación</strong>
             <p id="notification-message">Mensaje de notificación</p>
@@ -632,78 +1011,58 @@
     </div>
 
     <script>
-        // ============== SISTEMA COMPLETO 100% FUNCIONAL ==============
-        class RadioPlayerSystem {
+        // ============== SISTEMA DE RADIO CON ESPECTRO MUSICAL ==============
+        class RadioSystemWithSpectrum {
             constructor() {
-                // CONFIGURACIÓN PRINCIPAL - TUS DATOS DE GITHUB
+                // Configuración
                 this.config = {
                     githubUser: 'cl7adv',
                     repo: 'Voz-del-Shaddai-Online',
-                    branch: 'main',
                     musicFolder: 'musica',
                     
-                    // MÚLTIPLES FUENTES DE FALLBACK (en orden de prioridad)
+                    // Fuentes de audio
                     sources: [
-                        // 1. GitHub Pages Directo (el más confiable si tienes GitHub Pages)
-                        (user, repo, branch, folder, file) => 
-                            `https://${user}.github.io/${repo}/${folder}/${encodeURIComponent(file)}`,
-                        
-                        // 2. jsDelivr CDN (muy confiable)
-                        (user, repo, branch, folder, file) => 
-                            `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${folder}/${encodeURIComponent(file)}`,
-                        
-                        // 3. Statically CDN (alternativa buena)
-                        (user, repo, branch, folder, file) => 
-                            `https://cdn.statically.io/gh/${user}/${repo}/${branch}/${folder}/${encodeURIComponent(file)}`,
-                        
-                        // 4. RawGit (alternativa)
-                        (user, repo, branch, folder, file) => 
-                            `https://rawcdn.githack.com/${user}/${repo}/${branch}/${folder}/${encodeURIComponent(file)}`,
-                        
-                        // 5. GitHub Raw (último recurso)
-                        (user, repo, branch, folder, file) => 
-                            `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${folder}/${encodeURIComponent(file)}`
+                        (user, repo, folder, file) => 
+                            `https://cdn.jsdelivr.net/gh/${user}/${repo}@main/${folder}/${encodeURIComponent(file)}`,
+                        (user, repo, folder, file) => 
+                            `https://rawcdn.githack.com/${user}/${repo}/main/${folder}/${encodeURIComponent(file)}`,
+                        (user, repo, folder, file) => 
+                            `https://raw.githubusercontent.com/${user}/${repo}/main/${folder}/${encodeURIComponent(file)}`
                     ],
                     
-                    // Formatos soportados
-                    supportedFormats: ['mp3', 'm4a', 'wav', 'ogg', 'flac', 'mp4'],
-                    
-                    // Configuración del reproductor
+                    supportedFormats: ['mp3', 'm4a', 'wav', 'ogg'],
                     defaultVolume: 0.7,
-                    autoPlay: true,
-                    shuffleOnStart: false,
-                    maxRetries: 3
+                    autoPlay: true
                 };
 
-                // ESTADO DEL SISTEMA
+                // Estado
                 this.state = {
                     tracks: [],
                     currentTrackIndex: 0,
                     isPlaying: false,
                     isShuffled: false,
-                    repeatMode: 'none', // none, one, all
+                    repeatMode: 'none',
                     volume: this.config.defaultVolume,
                     currentSource: 0,
-                    isLoading: false,
+                    visualizerMode: 'bars',
                     audioContext: null,
                     analyser: null,
                     sourceNode: null,
                     dataArray: null,
-                    animationFrame: null,
-                    retryCount: 0
+                    animationFrame: null
                 };
 
-                // ELEMENTOS DOM
+                // Elementos DOM
                 this.elements = {};
                 this.audio = new Audio();
-                this.audio.crossOrigin = "anonymous"; // IMPORTANTE para CORS
+                this.audio.crossOrigin = "anonymous";
                 this.audio.volume = this.state.volume;
                 
-                // Canvas para visualizador
+                // Canvas para espectro
                 this.canvas = null;
                 this.ctx = null;
                 
-                // Inicializar TODO
+                // Inicializar
                 this.init();
             }
 
@@ -712,18 +1071,15 @@
                 this.cacheElements();
                 this.setupEventListeners();
                 this.setupAudioEvents();
-                this.initVisualizer();
+                this.initSpectrum();
                 await this.loadTracks();
                 this.hideLoadingScreen();
             }
 
             cacheElements() {
                 this.elements = {
-                    // Loading
                     loadingScreen: document.getElementById('loading-screen'),
                     loadingDetails: document.getElementById('loading-details'),
-                    
-                    // App
                     app: document.getElementById('app'),
                     
                     // Track info
@@ -735,8 +1091,6 @@
                     progressBar: document.getElementById('progress-bar'),
                     progressCurrent: document.getElementById('progress-current'),
                     progressTotal: document.getElementById('progress-total'),
-                    currentTime: document.getElementById('current-time'),
-                    totalTime: document.getElementById('total-time'),
                     
                     // Controls
                     playBtn: document.getElementById('play-btn'),
@@ -749,6 +1103,7 @@
                     // Volume
                     volumeSlider: document.getElementById('volume-slider'),
                     volumeValue: document.getElementById('volume-value'),
+                    volumeIcon: document.getElementById('volume-icon'),
                     
                     // Playlist
                     playlist: document.getElementById('playlist'),
@@ -757,8 +1112,21 @@
                     // Connection
                     connectionStatus: document.getElementById('connection-status'),
                     
-                    // Visualizer
-                    visualizerCanvas: document.getElementById('visualizer-canvas'),
+                    // Spectrum
+                    spectrumCanvas: document.getElementById('spectrum-canvas'),
+                    
+                    // Spectrum mode buttons
+                    modeBars: document.getElementById('mode-bars'),
+                    modeWave: document.getElementById('mode-wave'),
+                    modeCircle: document.getElementById('mode-circle'),
+                    modeParticles: document.getElementById('mode-particles'),
+                    modeSpectrum: document.getElementById('mode-spectrum'),
+                    
+                    // Share buttons
+                    shareFacebook: document.getElementById('share-facebook'),
+                    shareTwitter: document.getElementById('share-twitter'),
+                    shareWhatsapp: document.getElementById('share-whatsapp'),
+                    shareLink: document.getElementById('share-link'),
                     
                     // Notification
                     notification: document.getElementById('notification'),
@@ -776,6 +1144,13 @@
                 this.elements.repeatBtn.addEventListener('click', () => this.toggleRepeat());
                 this.elements.refreshBtn.addEventListener('click', () => this.refreshTracks());
                 
+                // Modos del espectro
+                this.elements.modeBars.addEventListener('click', () => this.setVisualizerMode('bars'));
+                this.elements.modeWave.addEventListener('click', () => this.setVisualizerMode('wave'));
+                this.elements.modeCircle.addEventListener('click', () => this.setVisualizerMode('circle'));
+                this.elements.modeParticles.addEventListener('click', () => this.setVisualizerMode('particles'));
+                this.elements.modeSpectrum.addEventListener('click', () => this.setVisualizerMode('spectrum'));
+                
                 // Volumen
                 this.elements.volumeSlider.addEventListener('input', (e) => {
                     this.setVolume(e.target.value / 100);
@@ -787,6 +1162,12 @@
                     const percentage = (e.clientX - rect.left) / rect.width;
                     this.seek(percentage);
                 });
+                
+                // Compartir
+                this.elements.shareFacebook.addEventListener('click', () => this.shareFacebook());
+                this.elements.shareTwitter.addEventListener('click', () => this.shareTwitter());
+                this.elements.shareWhatsapp.addEventListener('click', () => this.shareWhatsapp());
+                this.elements.shareLink.addEventListener('click', () => this.copyLink());
                 
                 // Atajos de teclado
                 document.addEventListener('keydown', (e) => {
@@ -817,6 +1198,10 @@
                             e.preventDefault();
                             this.toggleRepeat();
                             break;
+                        case 'KeyV':
+                            e.preventDefault();
+                            this.cycleVisualizerMode();
+                            break;
                     }
                 });
             }
@@ -828,14 +1213,11 @@
                 this.audio.addEventListener('error', (e) => this.onAudioError(e));
                 this.audio.addEventListener('play', () => this.onPlay());
                 this.audio.addEventListener('pause', () => this.onPause());
-                this.audio.addEventListener('canplay', () => this.onCanPlay());
-                this.audio.addEventListener('stalled', () => this.onStalled());
-                this.audio.addEventListener('waiting', () => this.onWaiting());
             }
 
-            // ============== VISUALIZADOR ==============
-            initVisualizer() {
-                this.canvas = this.elements.visualizerCanvas;
+            // ============== ESPECTRO MUSICAL ==============
+            initSpectrum() {
+                this.canvas = this.elements.spectrumCanvas;
                 this.ctx = this.canvas.getContext('2d');
                 
                 // Configurar tamaño
@@ -852,27 +1234,26 @@
             initAudioAnalyser() {
                 try {
                     // Crear AudioContext
-                    this.state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    this.state.analyser = this.state.audioContext.createAnalyser();
-                    
-                    // Crear source desde el elemento audio
-                    this.state.sourceNode = this.state.audioContext.createMediaElementSource(this.audio);
-                    
-                    // Conectar
-                    this.state.sourceNode.connect(this.state.analyser);
-                    this.state.analyser.connect(this.state.audioContext.destination);
-                    
-                    // Configurar analizador
-                    this.state.analyser.fftSize = 256;
-                    const bufferLength = this.state.analyser.frequencyBinCount;
-                    this.state.dataArray = new Uint8Array(bufferLength);
-                    
+                    if (!this.state.audioContext) {
+                        this.state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        this.state.analyser = this.state.audioContext.createAnalyser();
+                        
+                        // Conectar el audio al analizador
+                        this.state.sourceNode = this.state.audioContext.createMediaElementSource(this.audio);
+                        this.state.sourceNode.connect(this.state.analyser);
+                        this.state.analyser.connect(this.state.audioContext.destination);
+                        
+                        // Configurar analizador
+                        this.state.analyser.fftSize = 2048; // Más detalle para el espectro
+                        const bufferLength = this.state.analyser.frequencyBinCount;
+                        this.state.dataArray = new Uint8Array(bufferLength);
+                    }
                 } catch (error) {
                     console.warn('No se pudo inicializar el analizador de audio:', error);
                 }
             }
 
-            startVisualizer() {
+            startSpectrum() {
                 if (!this.state.analyser || !this.state.dataArray) {
                     this.initAudioAnalyser();
                 }
@@ -892,62 +1273,345 @@
                     // Limpiar canvas
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                     
-                    // Dibujar barras
-                    this.drawFrequencyBars();
+                    // Dibujar según el modo
+                    switch(this.state.visualizerMode) {
+                        case 'bars':
+                            this.drawBars();
+                            break;
+                        case 'wave':
+                            this.drawWave();
+                            break;
+                        case 'circle':
+                            this.drawCircle();
+                            break;
+                        case 'particles':
+                            this.drawParticles();
+                            break;
+                        case 'spectrum':
+                            this.drawSpectrum();
+                            break;
+                    }
                 };
                 
                 draw();
             }
 
-            drawFrequencyBars() {
+            drawBars() {
                 const width = this.canvas.width;
                 const height = this.canvas.height;
-                const barWidth = (width / this.state.dataArray.length) * 2.5;
-                let barHeight;
-                let x = 0;
+                const barCount = 128;
+                const barWidth = width / barCount;
                 
-                for(let i = 0; i < this.state.dataArray.length; i++) {
-                    barHeight = this.state.dataArray[i] / 2;
+                for(let i = 0; i < barCount; i++) {
+                    const dataIndex = Math.floor(i * this.state.dataArray.length / barCount);
+                    const barHeight = (this.state.dataArray[dataIndex] / 255) * height;
                     
-                    // Crear gradiente
-                    const gradient = this.ctx.createLinearGradient(0, height, 0, height - barHeight);
-                    gradient.addColorStop(0, '#4361ee');
-                    gradient.addColorStop(0.5, '#4cc9f0');
-                    gradient.addColorStop(1, '#7209b7');
+                    // Gradiente de color basado en la frecuencia
+                    const hue = (i / barCount) * 360;
+                    this.ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
                     
-                    this.ctx.fillStyle = gradient;
-                    this.ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+                    // Dibujar barra con sombra
+                    this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+                    this.ctx.shadowBlur = 15;
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 1, barHeight);
                     
-                    x += barWidth + 1;
+                    // Restaurar sombra
+                    this.ctx.shadowBlur = 0;
+                    
+                    // Añadir brillo en la parte superior
+                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 1, 2);
                 }
             }
 
-            // ============== CARGA DE MÚSICA DESDE GITHUB ==============
+            drawWave() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                const sliceWidth = width / this.state.dataArray.length;
+                
+                this.ctx.beginPath();
+                this.ctx.lineWidth = 2;
+                this.ctx.lineJoin = 'round';
+                
+                let x = 0;
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    const v = this.state.dataArray[i] / 128.0;
+                    const y = v * height / 2;
+                    
+                    if(i === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                    
+                    x += sliceWidth;
+                }
+                
+                // Gradiente para la línea
+                const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
+                gradient.addColorStop(0, '#4361ee');
+                gradient.addColorStop(0.5, '#4cc9f0');
+                gradient.addColorStop(1, '#7209b7');
+                
+                this.ctx.strokeStyle = gradient;
+                this.ctx.stroke();
+                
+                // Relleno con opacidad
+                this.ctx.lineTo(width, height);
+                this.ctx.lineTo(0, height);
+                this.ctx.closePath();
+                this.ctx.fillStyle = 'rgba(67, 97, 238, 0.1)';
+                this.ctx.fill();
+            }
+
+            drawCircle() {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const radius = Math.min(centerX, centerY) * 0.8;
+                
+                // Círculo base
+                this.ctx.beginPath();
+                this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                this.ctx.lineWidth = 2;
+                this.ctx.stroke();
+                
+                // Puntos alrededor del círculo
+                const points = 128;
+                const angleStep = (2 * Math.PI) / points;
+                
+                for(let i = 0; i < points; i++) {
+                    const angle = i * angleStep;
+                    const dataIndex = Math.floor(i * this.state.dataArray.length / points);
+                    const amplitude = this.state.dataArray[dataIndex] / 255;
+                    
+                    // Posición del punto
+                    const pointRadius = radius * (1 + amplitude * 0.3);
+                    const x = centerX + Math.cos(angle) * pointRadius;
+                    const y = centerY + Math.sin(angle) * pointRadius;
+                    
+                    // Tamaño y color del punto
+                    const pointSize = 2 + amplitude * 4;
+                    const hue = (i / points) * 360;
+                    
+                    // Dibujar punto
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, pointSize, 0, 2 * Math.PI);
+                    this.ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+                    this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.fill();
+                    
+                    // Restaurar sombra
+                    this.ctx.shadowBlur = 0;
+                    
+                    // Conectar puntos
+                    if(i > 0) {
+                        const prevAngle = (i - 1) * angleStep;
+                        const prevDataIndex = Math.floor((i - 1) * this.state.dataArray.length / points);
+                        const prevAmplitude = this.state.dataArray[prevDataIndex] / 255;
+                        const prevPointRadius = radius * (1 + prevAmplitude * 0.3);
+                        
+                        const prevX = centerX + Math.cos(prevAngle) * prevPointRadius;
+                        const prevY = centerY + Math.sin(prevAngle) * prevPointRadius;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(prevX, prevY);
+                        this.ctx.lineTo(x, y);
+                        this.ctx.strokeStyle = `rgba(76, 201, 240, ${0.3 + amplitude * 0.7})`;
+                        this.ctx.lineWidth = 1;
+                        this.ctx.stroke();
+                    }
+                }
+            }
+
+            drawParticles() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                
+                // Fondo semi-transparente para efecto de trazo
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                this.ctx.fillRect(0, 0, width, height);
+                
+                // Crear partículas si no existen
+                if (!this.particles) {
+                    this.particles = [];
+                    for(let i = 0; i < 150; i++) {
+                        this.particles.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height,
+                            size: Math.random() * 3 + 1,
+                            speedX: (Math.random() - 0.5) * 2,
+                            speedY: (Math.random() - 0.5) * 2,
+                            color: this.getRandomColor(),
+                            frequency: Math.floor(Math.random() * this.state.dataArray.length)
+                        });
+                    }
+                }
+                
+                // Actualizar y dibujar partículas
+                this.particles.forEach((particle, index) => {
+                    // Obtener energía de la frecuencia correspondiente
+                    const energy = this.state.dataArray[particle.frequency] / 255;
+                    
+                    // Mover partícula con influencia de la música
+                    particle.x += particle.speedX * (1 + energy * 3);
+                    particle.y += particle.speedY * (1 + energy * 3);
+                    
+                    // Rebote en los bordes
+                    if (particle.x < 0 || particle.x > width) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > height) particle.speedY *= -1;
+                    
+                    // Mantener dentro del canvas
+                    particle.x = Math.max(0, Math.min(width, particle.x));
+                    particle.y = Math.max(0, Math.min(height, particle.y));
+                    
+                    // Actualizar frecuencia ocasionalmente
+                    if (Math.random() < 0.01) {
+                        particle.frequency = Math.floor(Math.random() * this.state.dataArray.length);
+                    }
+                    
+                    // Dibujar partícula
+                    this.ctx.beginPath();
+                    const currentSize = particle.size * (1 + energy * 2);
+                    this.ctx.arc(particle.x, particle.y, currentSize, 0, Math.PI * 2);
+                    
+                    // Gradiente para la partícula
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, currentSize
+                    );
+                    gradient.addColorStop(0, particle.color);
+                    gradient.addColorStop(1, 'rgba(67, 97, 238, 0.3)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                    
+                    // Añadir brillo
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, currentSize * 0.3, 0, Math.PI * 2);
+                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    this.ctx.fill();
+                    
+                    // Conectar partículas cercanas
+                    for(let j = index + 1; j < this.particles.length; j++) {
+                        const otherParticle = this.particles[j];
+                        const dx = particle.x - otherParticle.x;
+                        const dy = particle.y - otherParticle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(particle.x, particle.y);
+                            this.ctx.lineTo(otherParticle.x, otherParticle.y);
+                            this.ctx.strokeStyle = `rgba(76, 201, 240, ${0.3 - distance/100})`;
+                            this.ctx.lineWidth = 1;
+                            this.ctx.stroke();
+                        }
+                    }
+                });
+            }
+
+            drawSpectrum() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                
+                // Fondo
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                this.ctx.fillRect(0, 0, width, height);
+                
+                // Dibujar espectro de frecuencia
+                const barWidth = width / this.state.dataArray.length;
+                
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    const value = this.state.dataArray[i];
+                    const percent = value / 255;
+                    const barHeight = height * percent;
+                    
+                    // Color basado en la frecuencia (arcoíris)
+                    const hue = (i / this.state.dataArray.length) * 360;
+                    
+                    // Gradiente vertical para cada barra
+                    const gradient = this.ctx.createLinearGradient(0, height - barHeight, 0, height);
+                    gradient.addColorStop(0, `hsl(${hue}, 100%, 50%)`);
+                    gradient.addColorStop(1, `hsl(${hue}, 100%, 20%)`);
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth, barHeight);
+                    
+                    // Efecto de brillo
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${percent * 0.3})`;
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth, 2);
+                }
+                
+                // Línea superior suave
+                this.ctx.beginPath();
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    const value = this.state.dataArray[i];
+                    const percent = value / 255;
+                    const barHeight = height * percent;
+                    const x = i * (width / this.state.dataArray.length);
+                    const y = height - barHeight;
+                    
+                    if(i === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                }
+                this.ctx.stroke();
+            }
+
+            getRandomColor() {
+                const colors = ['#4361ee', '#4cc9f0', '#7209b7', '#f72585', '#3a0ca3'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            setVisualizerMode(mode) {
+                this.state.visualizerMode = mode;
+                
+                // Actualizar botones activos
+                document.querySelectorAll('.spectrum-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                const activeBtn = document.querySelector(`[data-mode="${mode}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+                
+                // Reiniciar visualizador
+                if (this.state.isPlaying) {
+                    this.startSpectrum();
+                }
+            }
+
+            cycleVisualizerMode() {
+                const modes = ['bars', 'wave', 'circle', 'particles', 'spectrum'];
+                const currentIndex = modes.indexOf(this.state.visualizerMode);
+                const nextIndex = (currentIndex + 1) % modes.length;
+                this.setVisualizerMode(modes[nextIndex]);
+            }
+
+            // ============== CARGA DE MÚSICA ==============
             async loadTracks() {
                 try {
                     this.updateLoadingStatus('Conectando con GitHub...');
-                    this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Conectando...';
                     
-                    // URL de la API de GitHub para listar archivos
                     const apiUrl = `https://api.github.com/repos/${this.config.githubUser}/${this.config.repo}/contents/${this.config.musicFolder}`;
-                    
                     const response = await fetch(apiUrl);
                     
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
-                    }
+                    if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
                     
-                    this.updateLoadingStatus('Obteniendo lista de archivos...');
+                    this.updateLoadingStatus('Obteniendo lista de canciones...');
                     
                     const files = await response.json();
                     
-                    // Filtrar solo archivos de audio
+                    // Filtrar archivos de audio
                     this.state.tracks = files
                         .filter(file => {
-                            // Solo archivos, no carpetas
                             if (file.type !== 'file') return false;
-                            
-                            // Verificar extensión
                             const ext = file.name.toLowerCase().split('.').pop();
                             return this.config.supportedFormats.includes(ext);
                         })
@@ -956,17 +1620,16 @@
                             name: file.name,
                             size: file.size,
                             type: file.name.split('.').pop().toLowerCase(),
-                            url: '', // Se llenará dinámicamente
+                            url: this.getTrackUrl(file.name),
                             duration: 0,
-                            played: false,
-                            lastModified: file.sha // Usar SHA como identificador único
+                            played: false
                         }));
                     
                     if (this.state.tracks.length === 0) {
-                        throw new Error('No se encontraron archivos de audio en la carpeta /musica/');
+                        throw new Error('No se encontraron archivos de audio');
                     }
                     
-                    this.updateLoadingStatus(`Procesando ${this.state.tracks.length} canciones...`);
+                    this.updateLoadingStatus(`${this.state.tracks.length} canciones encontradas`);
                     
                     // Actualizar UI
                     this.updateTrackCount();
@@ -974,246 +1637,66 @@
                     this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Conectado';
                     this.elements.connectionStatus.style.color = 'var(--success)';
                     
-                    // Si hay canciones, cargar la primera
-                    if (this.state.tracks.length > 0) {
-                        this.updateLoadingStatus('Cargando primera canción...');
-                        
-                        // Configurar shuffle si está activado
-                        if (this.config.shuffleOnStart) {
-                            this.state.currentTrackIndex = Math.floor(Math.random() * this.state.tracks.length);
-                            this.state.isShuffled = true;
-                            this.elements.shuffleBtn.classList.add('active');
-                        }
-                        
-                        // Cargar la primera canción
-                        await this.loadTrack(this.state.currentTrackIndex);
+                    // Cargar primera canción
+                    if (this.config.autoPlay && this.state.tracks.length > 0) {
+                        await this.loadTrack(0);
                     }
                     
-                    this.updateLoadingStatus('Sistema listo');
-                    this.showNotification('¡Listo!', `${this.state.tracks.length} canciones cargadas`, 'success');
+                    this.showNotification('¡Sistema listo!', `${this.state.tracks.length} canciones cargadas`, 'success');
                     
                 } catch (error) {
                     console.error('Error cargando canciones:', error);
-                    
-                    // Actualizar estado de conexión
+                    this.showNotification('Error de conexión', error.message, 'error');
                     this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Error';
                     this.elements.connectionStatus.style.color = 'var(--danger)';
-                    
-                    // Mostrar error detallado
-                    let errorMessage = error.message;
-                    if (error.message.includes('404')) {
-                        errorMessage = 'No se encontró la carpeta /musica/ en GitHub';
-                    } else if (error.message.includes('403')) {
-                        errorMessage = 'Límite de API de GitHub alcanzado. Intenta más tarde.';
-                    }
-                    
-                    this.showNotification('Error de conexión', errorMessage, 'error');
-                    
-                    // Intentar método alternativo
-                    await this.tryAlternativeLoading();
                 }
             }
 
-            async tryAlternativeLoading() {
-                try {
-                    this.updateLoadingStatus('Intentando método alternativo...');
-                    
-                    // Intentar cargar una lista de archivos conocidos
-                    const knownFiles = [
-                        'A Cristo sea la gloria.mp3',
-                        'Amor divino.mp3',
-                        // Añade aquí más nombres de archivos si los conoces
-                    ];
-                    
-                    this.state.tracks = knownFiles
-                        .map((name, index) => ({
-                            id: index + 1,
-                            name: name,
-                            size: 0,
-                            type: 'mp3',
-                            url: '',
-                            duration: 0,
-                            played: false
-                        }))
-                        .filter(track => track.name); // Filtrar nombres vacíos
-                    
-                    if (this.state.tracks.length > 0) {
-                        this.updateLoadingStatus(`Encontradas ${this.state.tracks.length} canciones`);
-                        this.updateTrackCount();
-                        this.updatePlaylist();
-                        await this.loadTrack(0);
-                    } else {
-                        throw new Error('No se pudieron cargar canciones');
-                    }
-                    
-                } catch (error) {
-                    console.error('Error en método alternativo:', error);
-                    this.showNotification('Error crítico', 'No se pudo cargar música. Verifica tu conexión.', 'error');
-                }
-            }
-
-            // ============== SISTEMA DE URLS INTELIGENTE ==============
-            getTrackUrl(trackName) {
-                // Intentar con la fuente actual
+            getTrackUrl(filename) {
                 const sourceFunc = this.config.sources[this.state.currentSource];
-                let url = sourceFunc(
-                    this.config.githubUser,
-                    this.config.repo,
-                    this.config.branch,
-                    this.config.musicFolder,
-                    trackName
-                );
-                
-                // Codificar caracteres especiales correctamente
-                url = this.fixUrlEncoding(url);
-                
-                return url;
-            }
-
-            fixUrlEncoding(url) {
-                // Decodificar primero para evitar doble encoding
-                try {
-                    url = decodeURIComponent(url);
-                } catch (e) {
-                    // Ignorar si ya está bien formada
-                }
-                
-                // Codificar solo los caracteres problemáticos
-                return encodeURI(url).replace(/'/g, '%27').replace(/"/g, '%22');
-            }
-
-            async testUrl(url) {
-                return new Promise((resolve) => {
-                    const testAudio = new Audio();
-                    testAudio.preload = 'metadata';
-                    testAudio.src = url;
-                    
-                    testAudio.addEventListener('loadedmetadata', () => {
-                        resolve({ success: true, url });
-                    });
-                    
-                    testAudio.addEventListener('error', () => {
-                        resolve({ success: false, url });
-                    });
-                    
-                    setTimeout(() => {
-                        resolve({ success: false, url });
-                    }, 3000);
-                });
+                return sourceFunc(this.config.githubUser, this.config.repo, this.config.musicFolder, filename);
             }
 
             // ============== REPRODUCCIÓN ==============
             async loadTrack(index) {
-                if (index < 0 || index >= this.state.tracks.length) {
-                    console.error('Índice fuera de rango:', index);
-                    return;
-                }
+                if (index < 0 || index >= this.state.tracks.length) return;
                 
                 this.state.currentTrackIndex = index;
                 const track = this.state.tracks[index];
                 
                 try {
-                    this.state.isLoading = true;
                     this.updatePlayButton();
                     this.elements.trackTitle.textContent = this.formatTrackName(track.name);
-                    this.elements.trackArtist.textContent = 'Voz del Shaddai';
+                    this.updatePlaylist();
                     
-                    // Detener reproducción actual
+                    // Detener audio actual
                     if (this.state.isPlaying) {
                         this.audio.pause();
+                        this.state.isPlaying = false;
                     }
                     
-                    // Detener visualizador
-                    if (this.state.animationFrame) {
-                        cancelAnimationFrame(this.state.animationFrame);
-                        this.state.animationFrame = null;
+                    // Cargar nueva pista
+                    const url = this.getTrackUrl(track.name);
+                    this.audio.src = url;
+                    await this.audio.load();
+                    
+                    // Reproducir
+                    if (this.config.autoPlay) {
+                        await this.play();
                     }
                     
-                    // Reiniciar contador de reintentos
-                    this.state.retryCount = 0;
-                    
-                    // Obtener URL y cargar
-                    await this.loadTrackWithFallback(track);
-                    
-                    this.state.isLoading = false;
+                    track.played = true;
                     
                 } catch (error) {
                     console.error('Error cargando track:', error);
                     this.showNotification('Error', `No se pudo cargar: ${track.name}`, 'error');
-                    
-                    // Intentar siguiente canción
                     setTimeout(() => this.nextTrack(), 2000);
                 }
             }
 
-            async loadTrackWithFallback(track) {
-                const maxAttempts = this.config.sources.length * this.config.maxRetries;
-                let attempts = 0;
-                
-                while (attempts < maxAttempts) {
-                    // Obtener URL de la fuente actual
-                    const url = this.getTrackUrl(track.name);
-                    
-                    try {
-                        console.log(`Intentando cargar desde: ${url}`);
-                        
-                        // Asignar URL al audio
-                        this.audio.src = url;
-                        this.audio.load();
-                        
-                        // Esperar a que cargue
-                        await new Promise((resolve, reject) => {
-                            const onLoaded = () => {
-                                this.audio.removeEventListener('canplay', onLoaded);
-                                this.audio.removeEventListener('error', onError);
-                                resolve();
-                            };
-                            
-                            const onError = (e) => {
-                                this.audio.removeEventListener('canplay', onLoaded);
-                                this.audio.removeEventListener('error', onError);
-                                reject(new Error('Error de carga'));
-                            };
-                            
-                            this.audio.addEventListener('canplay', onLoaded);
-                            this.audio.addEventListener('error', onError);
-                            
-                            // Timeout
-                            setTimeout(() => {
-                                this.audio.removeEventListener('canplay', onLoaded);
-                                this.audio.removeEventListener('error', onError);
-                                reject(new Error('Timeout'));
-                            }, 10000);
-                        });
-                        
-                        // Si llegamos aquí, la carga fue exitosa
-                        track.url = url;
-                        
-                        // Reproducir automáticamente
-                        if (this.config.autoPlay) {
-                            await this.play();
-                        }
-                        
-                        return; // Salir del bucle, éxito
-                        
-                    } catch (error) {
-                        console.warn(`Intento ${attempts + 1} falló:`, error);
-                        attempts++;
-                        
-                        // Cambiar a siguiente fuente
-                        this.state.currentSource = (this.state.currentSource + 1) % this.config.sources.length;
-                        
-                        // Esperar un poco antes del siguiente intento
-                        await new Promise(resolve => setTimeout(resolve, 500));
-                    }
-                }
-                
-                throw new Error(`No se pudo cargar después de ${maxAttempts} intentos`);
-            }
-
             async play() {
                 try {
-                    // Si el AudioContext está suspendido, reanudarlo
+                    // Reanudar AudioContext si está suspendido
                     if (this.state.audioContext && this.state.audioContext.state === 'suspended') {
                         await this.state.audioContext.resume();
                     }
@@ -1222,8 +1705,8 @@
                     this.state.isPlaying = true;
                     this.updatePlayButton();
                     
-                    // Iniciar visualizador
-                    this.startVisualizer();
+                    // Iniciar espectro
+                    this.startSpectrum();
                     
                     this.showNotification('Reproduciendo', this.formatTrackName(this.state.tracks[this.state.currentTrackIndex].name), 'success');
                     
@@ -1233,10 +1716,7 @@
                     this.updatePlayButton();
                     
                     if (error.name === 'NotAllowedError') {
-                        this.showNotification('Haz clic en play', 'El navegador requiere interacción para reproducir', 'warning');
-                    } else if (error.name === 'NotSupportedError') {
-                        this.showNotification('Formato no compatible', 'Intentando otra fuente...', 'error');
-                        this.nextTrack();
+                        this.showNotification('Haz clic en play', 'El navegador requiere interacción', 'warning');
                     }
                 }
             }
@@ -1246,7 +1726,7 @@
                 this.state.isPlaying = false;
                 this.updatePlayButton();
                 
-                // Detener visualizador
+                // Detener espectro
                 if (this.state.animationFrame) {
                     cancelAnimationFrame(this.state.animationFrame);
                     this.state.animationFrame = null;
@@ -1302,7 +1782,7 @@
                 let newIndex;
                 do {
                     newIndex = Math.floor(Math.random() * this.state.tracks.length);
-                } while (newIndex === this.state.currentTrackIndex && this.state.tracks.length > 1);
+                } while (newIndex === this.state.currentTrackIndex);
                 return newIndex;
             }
 
@@ -1317,6 +1797,15 @@
                 this.audio.volume = value;
                 this.elements.volumeSlider.value = value * 100;
                 this.elements.volumeValue.textContent = `${Math.round(value * 100)}%`;
+                
+                // Actualizar icono
+                if (value === 0) {
+                    this.elements.volumeIcon.className = 'fas fa-volume-mute';
+                } else if (value < 0.5) {
+                    this.elements.volumeIcon.className = 'fas fa-volume-down';
+                } else {
+                    this.elements.volumeIcon.className = 'fas fa-volume-up';
+                }
             }
 
             toggleMute() {
@@ -1346,12 +1835,54 @@
                 this.audio.loop = this.state.repeatMode === 'one';
                 
                 const modeNames = ['Sin repetición', 'Repetir una', 'Repetir todas'];
-                const modeText = modeNames[(currentIndex + 1) % modeNames.length];
-                
-                this.elements.repeatBtn.innerHTML = `<i class="fas fa-redo"></i> ${modeText}`;
+                this.elements.repeatBtn.innerHTML = `<i class="fas ${this.getRepeatIcon(this.state.repeatMode)}"></i> ${modeNames[(currentIndex + 1) % modeNames.length]}`;
                 this.elements.repeatBtn.classList.toggle('active', this.state.repeatMode !== 'none');
                 
-                this.showNotification('Modo repetir', modeText, 'info');
+                this.showNotification('Modo repetir', modeNames[(currentIndex + 1) % modeNames.length], 'info');
+            }
+
+            getRepeatIcon(mode) {
+                switch(mode) {
+                    case 'none': return 'redo';
+                    case 'one': return 'redo';
+                    case 'all': return 'infinity';
+                    default: return 'redo';
+                }
+            }
+
+            // ============== COMPARTIR ==============
+            shareFacebook() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+            }
+
+            shareTwitter() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
+                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            }
+
+            shareWhatsapp() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
+                window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+            }
+
+            async copyLink() {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    this.showNotification('Enlace copiado', '¡Comparte esta radio con otros!', 'success');
+                } catch (error) {
+                    // Fallback para navegadores antiguos
+                    const input = document.createElement('input');
+                    input.value = window.location.href;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(input);
+                    this.showNotification('Enlace copiado', '¡Comparte esta radio con otros!', 'success');
+                }
             }
 
             // ============== ACTUALIZACIÓN DE UI ==============
@@ -1362,15 +1893,11 @@
                 const duration = this.audio.duration;
                 const percentage = (current / duration) * 100;
                 
-                // Actualizar barra de progreso
                 this.elements.progressFill.style.width = `${percentage}%`;
                 
-                // Actualizar tiempos
                 const currentStr = this.formatTime(current);
                 const durationStr = this.formatTime(duration);
                 
-                this.elements.currentTime.textContent = currentStr;
-                this.elements.totalTime.textContent = durationStr;
                 this.elements.progressCurrent.textContent = currentStr;
                 this.elements.progressTotal.textContent = durationStr;
             }
@@ -1387,13 +1914,9 @@
                     const item = document.createElement('div');
                     item.className = `playlist-item ${index === this.state.currentTrackIndex ? 'active' : ''}`;
                     item.innerHTML = `
-                        <div style="width: 30px; text-align: center; color: var(--gray);">${index + 1}</div>
-                        <div style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            ${this.formatTrackName(track.name)}
-                        </div>
-                        <div style="color: var(--gray); font-size: 0.9rem;">
-                            ${this.formatFileSize(track.size)}
-                        </div>
+                        <div class="playlist-item-number">${index + 1}</div>
+                        <div class="playlist-item-title">${this.formatTrackName(track.name)}</div>
+                        <div class="playlist-item-duration">${this.formatTime(track.duration || 0)}</div>
                     `;
                     
                     item.addEventListener('click', () => this.loadTrack(index));
@@ -1412,7 +1935,6 @@
             }
 
             formatTrackName(name) {
-                // Remover extensión y limitar longitud
                 const withoutExt = name.replace(/\.[^/.]+$/, '');
                 return withoutExt.length > 40 ? withoutExt.substring(0, 40) + '...' : withoutExt;
             }
@@ -1425,18 +1947,13 @@
                 return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             }
 
-            formatFileSize(bytes) {
-                if (!bytes) return '';
-                const mb = bytes / (1024 * 1024);
-                return `${mb.toFixed(1)} MB`;
-            }
-
             // ============== EVENT HANDLERS ==============
             onTrackLoaded() {
                 const track = this.state.tracks[this.state.currentTrackIndex];
                 if (this.audio.duration && !isNaN(this.audio.duration)) {
                     track.duration = this.audio.duration;
                 }
+                this.updatePlaylist();
             }
 
             onTrackEnded() {
@@ -1461,39 +1978,8 @@
 
             onAudioError(error) {
                 console.error('Error de audio:', error);
-                
-                // Incrementar contador de reintentos
-                this.state.retryCount++;
-                
-                if (this.state.retryCount < this.config.maxRetries) {
-                    // Intentar con siguiente fuente
-                    this.state.currentSource = (this.state.currentSource + 1) % this.config.sources.length;
-                    this.showNotification('Reintentando', 'Probando otra fuente...', 'warning');
-                    
-                    // Recargar la misma canción con nueva fuente
-                    setTimeout(() => {
-                        this.loadTrack(this.state.currentTrackIndex);
-                    }, 1000);
-                } else {
-                    // Demasiados intentos, siguiente canción
-                    this.showNotification('Error', 'Saltando a siguiente canción', 'error');
-                    setTimeout(() => this.nextTrack(), 2000);
-                }
-            }
-
-            onCanPlay() {
-                console.log('Audio listo para reproducir');
-                this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Reproduciendo';
-                this.elements.connectionStatus.style.color = 'var(--success)';
-            }
-
-            onStalled() {
-                console.warn('Audio se estancó, reintentando...');
-                this.showNotification('Buffering', 'Recuperando conexión...', 'warning');
-            }
-
-            onWaiting() {
-                console.log('Audio esperando datos...');
+                this.showNotification('Error de reproducción', 'Saltando a siguiente canción', 'error');
+                setTimeout(() => this.nextTrack(), 2000);
             }
 
             onPlay() {
@@ -1511,21 +1997,24 @@
                 this.elements.notificationTitle.textContent = title;
                 this.elements.notificationMessage.textContent = message;
                 
-                // Establecer color según tipo
-                let color = 'var(--primary)';
-                if (type === 'success') color = 'var(--success)';
-                if (type === 'error') color = 'var(--danger)';
-                if (type === 'warning') color = 'var(--warning)';
+                this.elements.notification.className = `notification ${type}`;
+                this.elements.notification.querySelector('.notification-icon').className = 
+                    `fas ${this.getNotificationIcon(type)} notification-icon`;
                 
-                this.elements.notification.style.borderLeftColor = color;
-                
-                // Mostrar
                 this.elements.notification.classList.add('show');
                 
-                // Ocultar después de 3 segundos
                 setTimeout(() => {
                     this.elements.notification.classList.remove('show');
                 }, 3000);
+            }
+
+            getNotificationIcon(type) {
+                switch (type) {
+                    case 'success': return 'fa-check-circle';
+                    case 'error': return 'fa-exclamation-circle';
+                    case 'warning': return 'fa-exclamation-triangle';
+                    default: return 'fa-info-circle';
+                }
             }
 
             // ============== UTILIDADES ==============
@@ -1536,47 +2025,36 @@
                         this.elements.loadingScreen.style.display = 'none';
                         this.elements.app.style.display = 'block';
                         
-                        // Animación de entrada
                         setTimeout(() => {
                             this.elements.app.classList.add('app-loaded');
+                            
+                            // Animar elementos
+                            document.querySelectorAll('.spectrum-section, .now-playing, .controls-container, .volume-section, .playlist-section, .share-section').forEach((el, i) => {
+                                el.style.animationDelay = `${i * 0.1}s`;
+                                el.classList.add('animate-fade-in');
+                            });
+                            
                         }, 50);
-                        
                     }, 500);
                 }, 1000);
             }
 
             async refreshTracks() {
-                this.showNotification('Actualizando', 'Recargando lista de canciones...', 'info');
+                this.showNotification('Actualizando', 'Buscando nueva música...', 'info');
                 await this.loadTracks();
-            }
-
-            // ============== DEBUG ==============
-            debugInfo() {
-                console.log('=== DEBUG INFO ===');
-                console.log('Tracks cargadas:', this.state.tracks.length);
-                console.log('Track actual:', this.state.currentTrackIndex);
-                console.log('Fuente actual:', this.state.currentSource);
-                console.log('URL actual:', this.audio.src);
-                console.log('Estado:', this.state.isPlaying ? 'Reproduciendo' : 'Pausado');
-                console.log('Volumen:', this.state.volume);
-                console.log('==================');
             }
         }
 
         // ============== INICIAR APLICACIÓN ==============
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar sistema
-            window.radioSystem = new RadioPlayerSystem();
+            window.radioSystem = new RadioSystemWithSpectrum();
             
-            // Para depuración
-            window.debugRadio = () => window.radioSystem.debugInfo();
-            
-            // Mostrar instrucciones después de cargar
+            // Mostrar instrucciones
             setTimeout(() => {
                 if (window.radioSystem.state.tracks.length > 0) {
                     window.radioSystem.showNotification(
-                        '¡Controles activos!',
-                        'Usa las flechas ← → para navegar, ESPACIO para play/pause',
+                        '¡Bienvenido!',
+                        'Usa las flechas del teclado para navegar y ESPACIO para play/pause',
                         'info'
                     );
                 }
@@ -1584,20 +2062,6 @@
         });
 
         // ============== FUNCIONES GLOBALES ==============
-        function shareRadio() {
-            const url = window.location.href;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Voz del Shaddai Radio',
-                    text: 'Escucha música cristiana las 24 horas',
-                    url: url
-                });
-            } else {
-                navigator.clipboard.writeText(url);
-                window.radioSystem?.showNotification('Enlace copiado', 'Comparte la radio con otros', 'success');
-            }
-        }
-
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
