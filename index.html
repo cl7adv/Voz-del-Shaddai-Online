@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOZ DEL SHADDAI - Radio Local y en Línea</title>
+    <title>🎵 VOZ DEL SHADDAI - Radio con Visualizador</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== VARIABLES Y RESET ===== */
+        /* ===== RESET Y VARIABLES ===== */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a0ca3;
@@ -100,23 +100,6 @@
             font-size: 1.1rem;
         }
 
-        .loading-progress {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .loading-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            width: 0%;
-            border-radius: var(--radius-full);
-            transition: width 0.3s ease;
-        }
-
         /* ===== MAIN APP ===== */
         #app {
             display: none;
@@ -135,9 +118,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 0;
+            padding: 1.5rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
@@ -147,20 +133,20 @@
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 2rem;
             box-shadow: var(--shadow);
         }
 
         .logo-text h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary-light), var(--primary));
             -webkit-background-clip: text;
@@ -170,54 +156,71 @@
 
         .logo-text p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
-        .source-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            font-size: 0.9rem;
-        }
-
-        .source-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .source-dot.local { background: var(--success); }
-        .source-dot.github { background: var(--primary); }
-
-        /* ===== PLAYER CONTAINER ===== */
-        .player-container {
+        /* ===== MAIN LAYOUT ===== */
+        .main-container {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 350px;
             gap: 2rem;
             margin-bottom: 2rem;
         }
 
         @media (max-width: 1024px) {
-            .player-container {
+            .main-container {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* ===== PLAYER CARD ===== */
-        .player-card {
+        /* ===== VISUALIZER SECTION ===== */
+        .visualizer-section {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
             padding: 2rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualizer-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .visualizer-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        #visualizer-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         /* ===== NOW PLAYING ===== */
         .now-playing {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .track-display {
             display: flex;
             align-items: center;
             gap: 1.5rem;
@@ -225,24 +228,34 @@
         }
 
         .album-art {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border-radius: var(--radius);
             background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: var(--shadow);
+            font-size: 3rem;
+            box-shadow: var(--shadow-lg);
             flex-shrink: 0;
+            position: relative;
             overflow: hidden;
         }
 
-        .album-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
+        .album-art::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .track-info {
@@ -250,44 +263,39 @@
         }
 
         .track-title {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
             line-height: 1.2;
+            color: var(--light);
         }
 
         .track-artist {
-            color: var(--gray);
-            font-size: 1.1rem;
+            color: var(--primary-light);
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            font-weight: 500;
         }
 
-        .track-stats {
+        .track-meta {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+
         .progress-bar {
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .progress-track {
             width: 100%;
             height: 8px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-full);
             overflow: hidden;
+            margin-bottom: 0.5rem;
             cursor: pointer;
         }
 
@@ -306,71 +314,154 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             background: var(--light);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
         }
 
-        /* ===== CONTROLS ===== */
-        .controls {
+        .progress-time {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== BOTONES GRANDES Y VISIBLES ===== */
+        .controls-container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius);
             border: none;
             background: rgba(255, 255, 255, 0.1);
             color: var(--light);
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: var(--shadow);
         }
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:active {
+            transform: translateY(-2px) scale(1.02);
         }
 
         .control-btn.primary {
-            width: 60px;
-            height: 60px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            font-size: 1.5rem;
-            box-shadow: var(--shadow);
+            font-size: 2.5rem;
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
         }
 
         .control-btn.primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            box-shadow: 0 20px 35px rgba(67, 97, 238, 0.6);
         }
 
         .control-btn.active {
             background: var(--primary);
             color: white;
+            box-shadow: 0 0 30px rgba(67, 97, 238, 0.5);
         }
 
-        /* ===== VOLUME ===== */
+        /* ===== CONTROL SECUNDARIOS ===== */
+        .secondary-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .secondary-btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .secondary-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== VOLUMEN ===== */
+        .volume-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .volume-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .volume-control {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 2rem;
+        }
+
+        .volume-icon {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            width: 40px;
         }
 
         .volume-slider {
             flex: 1;
-            height: 6px;
+            height: 10px;
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-full);
@@ -379,21 +470,29 @@
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
-            background: var(--light);
+            background: var(--primary);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+            border: 3px solid var(--light);
+        }
+
+        .volume-value {
+            width: 60px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary-light);
         }
 
         /* ===== PLAYLIST ===== */
-        .playlist-container {
+        .playlist-section {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
             padding: 2rem;
-            box-shadow: var(--shadow-lg);
             border: 1px solid rgba(255, 255, 255, 0.1);
             height: fit-content;
         }
@@ -408,13 +507,15 @@
         .playlist-title {
             font-size: 1.5rem;
             font-weight: 600;
+            color: var(--primary-light);
         }
 
         .playlist-count {
             background: rgba(255, 255, 255, 0.1);
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: var(--radius-full);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .playlist {
@@ -424,7 +525,7 @@
         }
 
         .playlist::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
 
         .playlist::-webkit-scrollbar-track {
@@ -453,14 +554,16 @@
         }
 
         .playlist-item.active {
-            background: rgba(67, 97, 238, 0.2);
+            background: rgba(67, 97, 238, 0.3);
             border-left: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
         .playlist-item-number {
             color: var(--gray);
-            font-size: 0.9rem;
-            min-width: 30px;
+            font-size: 1rem;
+            min-width: 35px;
+            font-weight: 600;
         }
 
         .playlist-item-info {
@@ -473,91 +576,49 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 1.1rem;
         }
 
         .playlist-item-duration {
             color: var(--gray);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        /* ===== SOURCE SELECTOR ===== */
-        .source-selector {
+        /* ===== INFO SECTION ===== */
+        .info-section {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            margin-top: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .source-options {
-            display: flex;
-            gap: 1rem;
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin-top: 1rem;
         }
 
-        .source-option {
-            flex: 1;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
+        .info-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
             border-radius: var(--radius);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .source-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .source-option.active {
-            border-color: var(--primary);
-            background: rgba(67, 97, 238, 0.1);
-        }
-
-        .source-option i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .source-option.local i { color: var(--success); }
-        .source-option.github i { color: var(--primary); }
-
-        /* ===== STATUS INDICATORS ===== */
-        .status-indicators {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .status-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .status-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        .status-value {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .status-value.connected {
-            color: var(--success);
-        }
-
-        .status-value.streaming {
+        .info-title {
             color: var(--primary-light);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            font-size: 1.3rem;
         }
 
         /* ===== NOTIFICATIONS ===== */
@@ -567,7 +628,7 @@
             right: 2rem;
             background: var(--dark);
             border-left: 4px solid var(--primary);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             display: flex;
@@ -576,7 +637,7 @@
             transform: translateX(120%);
             transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 1000;
-            max-width: 350px;
+            max-width: 400px;
         }
 
         .notification.show {
@@ -584,7 +645,7 @@
         }
 
         .notification-icon {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
         .notification.success {
@@ -601,36 +662,53 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .player-container {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .main-container {
                 padding: 0 1rem;
             }
             
-            .now-playing {
+            .track-display {
                 flex-direction: column;
                 text-align: center;
             }
             
             .album-art {
-                width: 150px;
-                height: 150px;
+                width: 180px;
+                height: 180px;
             }
             
             .track-title {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
-            .controls {
+            .main-controls {
                 gap: 1rem;
             }
             
             .control-btn {
-                width: 45px;
-                height: 45px;
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
             }
             
             .control-btn.primary {
-                width: 55px;
-                height: 55px;
+                width: 85px;
+                height: 85px;
+                font-size: 2rem;
+            }
+            
+            .secondary-controls {
+                gap: 1rem;
+            }
+            
+            .secondary-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
             }
             
             .notification {
@@ -638,38 +716,40 @@
                 right: 1rem;
                 max-width: none;
             }
-            
-            .status-indicators {
-                grid-template-columns: 1fr;
-            }
-            
-            .source-options {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 480px) {
-            .header {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+            .main-controls {
+                gap: 0.5rem;
             }
             
-            .logo {
-                flex-direction: column;
-                text-align: center;
+            .control-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
             }
             
-            .playlist-container, .source-selector {
-                padding: 1.5rem;
+            .control-btn.primary {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .secondary-controls {
+                flex-direction: column;
+            }
+            
+            .secondary-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
 
         /* ===== ANIMATIONS ===== */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .pulse {
@@ -677,24 +757,40 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .animate-slide-up {
             animation: slideUp 0.5s ease forwards;
         }
 
-        /* ===== UTILITY CLASSES ===== */
-        .hidden {
-            display: none !important;
+        /* ===== VISUALIZER EFFECTS ===== */
+        .visualizer-modes {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .text-gradient {
-            background: linear-gradient(90deg, var(--primary-light), var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .visualizer-mode-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .visualizer-mode-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .visualizer-mode-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
         }
     </style>
 </head>
@@ -704,11 +800,10 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <h1 class="loading-title">VOZ DEL SHADDAI</h1>
-            <p class="loading-subtitle">Radio Cristiana - Cargando reproductor</p>
-            <div class="loading-progress">
-                <div class="loading-progress-bar" id="loading-progress"></div>
+            <p class="loading-subtitle">Inicializando reproductor con visualizador...</p>
+            <div id="loading-details" style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">
+                Conectando con GitHub: cl7adv/Voz-del-Shaddai-Online
             </div>
-            <p id="loading-status">Inicializando sistema...</p>
         </div>
     </div>
 
@@ -722,146 +817,156 @@
                 </div>
                 <div class="logo-text">
                     <h1>VOZ DEL SHADDAI</h1>
-                    <p>Radio Cristiana - Tu música, tu servidor</p>
+                    <p>Radio Cristiana con Visualizador</p>
                 </div>
             </div>
-            <div class="source-indicator">
-                <div class="source-dot" id="source-dot"></div>
-                <span id="source-text">Cargando fuente...</span>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="text-align: right;">
+                    <div style="font-size: 0.9rem; color: var(--gray);">Fuente</div>
+                    <div style="font-weight: 600; color: var(--success);">
+                        <i class="fab fa-github"></i> GitHub
+                    </div>
+                </div>
             </div>
         </header>
 
-        <!-- Source Selector -->
-        <div class="source-selector">
-            <h3>Selecciona la fuente de música:</h3>
-            <div class="source-options">
-                <div class="source-option local active" id="source-local">
-                    <i class="fas fa-server"></i>
-                    <strong>Servidor Local</strong>
-                    <small>Desde tu carpeta /musica/</small>
+        <!-- Main Layout -->
+        <div class="main-container">
+            <!-- Left Column -->
+            <div>
+                <!-- Visualizer -->
+                <div class="visualizer-section">
+                    <div class="visualizer-title">
+                        <i class="fas fa-wave-square"></i> Espectro Musical
+                    </div>
+                    
+                    <div class="visualizer-modes">
+                        <button class="visualizer-mode-btn active" data-mode="bars" id="mode-bars">
+                            <i class="fas fa-chart-bar"></i> Barras
+                        </button>
+                        <button class="visualizer-mode-btn" data-mode="wave" id="mode-wave">
+                            <i class="fas fa-water"></i> Onda
+                        </button>
+                        <button class="visualizer-mode-btn" data-mode="circle" id="mode-circle">
+                            <i class="fas fa-circle"></i> Circular
+                        </button>
+                        <button class="visualizer-mode-btn" data-mode="particles" id="mode-particles">
+                            <i class="fas fa-star"></i> Partículas
+                        </button>
+                    </div>
+                    
+                    <div class="visualizer-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
                 </div>
-                <div class="source-option github" id="source-github">
-                    <i class="fab fa-github"></i>
-                    <strong>GitHub</strong>
-                    <small>Desde tu repositorio</small>
-                </div>
-            </div>
-        </div>
 
-        <!-- Main Player -->
-        <main class="player-container">
-            <!-- Player Card -->
-            <div class="player-card">
                 <!-- Now Playing -->
                 <div class="now-playing">
-                    <div class="album-art">
-                        <i class="fas fa-music"></i>
-                        <img id="album-art-img" alt="Album Art">
-                    </div>
-                    <div class="track-info">
-                        <h2 class="track-title" id="track-title">Selecciona una fuente de música</h2>
-                        <p class="track-artist" id="track-artist">Voz del Shaddai Radio</p>
-                        <div class="track-stats">
-                            <span id="track-position">--:--</span>
-                            <span id="track-duration">--:--</span>
-                            <span id="track-source">Esperando...</span>
+                    <div class="track-display">
+                        <div class="album-art">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="track-info">
+                            <h2 class="track-title" id="track-title">Cargando música...</h2>
+                            <p class="track-artist" id="track-artist">Voz del Shaddai Radio</p>
+                            <div class="track-meta">
+                                <span id="current-time">00:00</span>
+                                <span id="total-time">00:00</span>
+                                <span id="bitrate">128 kbps</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Progress Bar -->
-                <div class="playback-controls">
-                    <div class="progress-bar">
-                        <div class="progress-info">
-                            <span id="current-time">00:00</span>
-                            <span id="total-time">00:00</span>
-                        </div>
-                        <div class="progress-track" id="progress-track">
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar">
                             <div class="progress-fill" id="progress-fill"></div>
                         </div>
-                    </div>
-
-                    <!-- Controls -->
-                    <div class="controls">
-                        <button class="control-btn" id="shuffle-btn" title="Aleatorio">
-                            <i class="fas fa-random"></i>
-                        </button>
-                        <button class="control-btn" id="prev-btn" title="Anterior">
-                            <i class="fas fa-step-backward"></i>
-                        </button>
-                        <button class="control-btn primary" id="play-btn" title="Reproducir">
-                            <i class="fas fa-play"></i>
-                        </button>
-                        <button class="control-btn" id="next-btn" title="Siguiente">
-                            <i class="fas fa-step-forward"></i>
-                        </button>
-                        <button class="control-btn" id="repeat-btn" title="Repetir">
-                            <i class="fas fa-redo"></i>
-                        </button>
-                    </div>
-
-                    <!-- Volume -->
-                    <div class="volume-control">
-                        <i class="fas fa-volume-down" id="volume-icon"></i>
-                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
-                        <i class="fas fa-volume-up"></i>
+                        <div class="progress-time">
+                            <span id="progress-current">00:00</span>
+                            <span id="progress-total">00:00</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Status Indicators -->
-                <div class="status-indicators">
-                    <div class="status-item">
-                        <span class="status-label">Estado</span>
-                        <span class="status-value" id="player-status">Esperando</span>
+                <!-- Main Controls -->
+                <div class="controls-container">
+                    <div class="main-controls">
+                        <button class="control-btn" id="prev-btn" title="Canción anterior">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        
+                        <button class="control-btn primary" id="play-btn" title="Reproducir/Pausar">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        
+                        <button class="control-btn" id="next-btn" title="Siguiente canción">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
                     </div>
-                    <div class="status-item">
-                        <span class="status-label">Canciones</span>
-                        <span class="status-value" id="total-tracks">0</span>
+
+                    <!-- Secondary Controls -->
+                    <div class="secondary-controls">
+                        <button class="secondary-btn" id="shuffle-btn" title="Modo aleatorio">
+                            <i class="fas fa-random"></i> Aleatorio
+                        </button>
+                        
+                        <button class="secondary-btn" id="repeat-btn" title="Modo repetición">
+                            <i class="fas fa-redo"></i> Repetir
+                        </button>
+                        
+                        <button class="secondary-btn" id="refresh-btn" title="Recargar lista">
+                            <i class="fas fa-sync-alt"></i> Recargar
+                        </button>
                     </div>
-                    <div class="status-item">
-                        <span class="status-label">Modo</span>
-                        <span class="status-value" id="play-mode">Normal</span>
+                </div>
+
+                <!-- Volume -->
+                <div class="volume-section">
+                    <div class="volume-title">
+                        <i class="fas fa-volume-up"></i> Volumen
+                    </div>
+                    <div class="volume-control">
+                        <div class="volume-icon">
+                            <i class="fas fa-volume-down" id="volume-icon"></i>
+                        </div>
+                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
+                        <div class="volume-value" id="volume-value">70%</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Playlist -->
-            <div class="playlist-container">
+            <!-- Right Column - Playlist -->
+            <div class="playlist-section">
                 <div class="playlist-header">
                     <h3 class="playlist-title">Lista de Reproducción</h3>
                     <span class="playlist-count" id="playlist-count">0 canciones</span>
                 </div>
                 <div class="playlist" id="playlist">
-                    <!-- Playlist items will be added here -->
-                </div>
-                <div style="margin-top: 1.5rem; text-align: center;">
-                    <button class="control-btn" id="refresh-btn" title="Recargar lista">
-                        <i class="fas fa-sync-alt"></i> Recargar Música
-                    </button>
+                    <!-- Canciones se cargarán aquí -->
                 </div>
             </div>
-        </main>
+        </div>
 
         <!-- Info Section -->
-        <div class="player-card" style="margin-top: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3>Información del Sistema</h3>
-                <button class="control-btn" id="info-btn" title="Ver información">
-                    <i class="fas fa-info-circle"></i>
-                </button>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Fuente Actual</h4>
-                    <p id="current-source">Cargando...</p>
+        <div class="info-section">
+            <h3 style="margin-bottom: 1rem; color: var(--primary-light);">Información del Sistema</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-title">Repositorio</div>
+                    <div class="info-value">cl7adv/Voz-del-Shaddai-Online</div>
                 </div>
-                <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Servidor</h4>
-                    <p id="server-info">Conectando...</p>
+                <div class="info-card">
+                    <div class="info-title">Carpeta de Música</div>
+                    <div class="info-value">/musica/</div>
                 </div>
-                <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Reproductor</h4>
-                    <p id="player-info">Versión 2.0 • Listo</p>
+                <div class="info-card">
+                    <div class="info-title">Modo Visualizador</div>
+                    <div class="info-value" id="visualizer-mode">Barras</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-title">Estado</div>
+                    <div class="info-value" id="system-status" style="color: var(--success);">Conectado</div>
                 </div>
             </div>
         </div>
@@ -877,52 +982,56 @@
     </div>
 
     <script>
-        // ============== SISTEMA DE RADIO HÍBRIDO ==============
-        class HybridRadioPlayer {
+        // ============== SISTEMA DE RADIO CON VISUALIZADOR ==============
+        class RadioPlayerWithVisualizer {
             constructor() {
                 // Configuración
                 this.config = {
-                    // Para servidor local
-                    localMusicFolder: 'musica',
-                    localListEndpoint: 'list-music.php',
-                    
-                    // Para GitHub
                     githubUser: 'cl7adv',
-                    githubRepo: 'Voz-del-Shaddai-Online',
-                    githubFolder: 'musica',
-                    githubApiUrl: 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica',
+                    repo: 'Voz-del-Shaddai-Online',
+                    musicFolder: 'musica',
                     
-                    // Configuración general
-                    maxFileSize: 50 * 1024 * 1024,
-                    supportedFormats: ['mp3', 'm4a', 'ogg', 'wav', 'flac']
+                    // CDNs disponibles
+                    cdns: [
+                        (user, repo, folder, file) => 
+                            `https://cdn.jsdelivr.net/gh/${user}/${repo}@main/${folder}/${encodeURIComponent(file)}`,
+                        (user, repo, folder, file) => 
+                            `https://rawcdn.githack.com/${user}/${repo}/main/${folder}/${encodeURIComponent(file)}`,
+                        (user, repo, folder, file) => 
+                            `https://raw.githubusercontent.com/${user}/${repo}/main/${folder}/${encodeURIComponent(file)}`
+                    ],
+                    
+                    supportedFormats: ['mp3', 'm4a', 'ogg', 'wav', 'flac'],
+                    defaultVolume: 0.7,
+                    autoPlay: true
                 };
 
-                // Estado del reproductor
+                // Estado
                 this.state = {
                     tracks: [],
                     currentTrackIndex: 0,
                     isPlaying: false,
                     isShuffled: false,
                     repeatMode: 'none',
-                    volume: 0.7,
-                    isMuted: false,
-                    lastVolume: 0.7,
-                    currentSource: 'local', // 'local' o 'github'
-                    isOnline: navigator.onLine
+                    volume: this.config.defaultVolume,
+                    currentCDN: 0,
+                    visualizerMode: 'bars',
+                    audioContext: null,
+                    analyser: null,
+                    source: null,
+                    dataArray: null,
+                    animationFrame: null
                 };
 
                 // Elementos DOM
                 this.elements = {};
                 this.audio = new Audio();
                 this.audio.volume = this.state.volume;
-                this.audio.preload = 'auto';
-
-                // Estadísticas
-                this.stats = {
-                    totalPlays: 0,
-                    tracksLoaded: 0
-                };
-
+                
+                // Canvas para visualizador
+                this.canvas = null;
+                this.ctx = null;
+                
                 // Inicializar
                 this.init();
             }
@@ -931,62 +1040,64 @@
             async init() {
                 this.cacheElements();
                 this.setupEventListeners();
-                this.setupNetworkListener();
-                await this.autoDetectSource();
+                this.setupAudioEvents();
+                this.initVisualizer();
+                await this.loadTracks();
                 this.hideLoadingScreen();
             }
 
             cacheElements() {
-                // Elementos principales
                 this.elements = {
+                    // Loading
                     loadingScreen: document.getElementById('loading-screen'),
-                    loadingProgress: document.getElementById('loading-progress'),
-                    loadingStatus: document.getElementById('loading-status'),
+                    loadingDetails: document.getElementById('loading-details'),
+                    
+                    // App
                     app: document.getElementById('app'),
                     
-                    // Indicador de fuente
-                    sourceDot: document.getElementById('source-dot'),
-                    sourceText: document.getElementById('source-text'),
-                    
-                    // Selectores de fuente
-                    sourceLocal: document.getElementById('source-local'),
-                    sourceGitHub: document.getElementById('source-github'),
-                    
-                    // Información de la canción
+                    // Track info
                     trackTitle: document.getElementById('track-title'),
                     trackArtist: document.getElementById('track-artist'),
+                    
+                    // Progress
+                    progressFill: document.getElementById('progress-fill'),
+                    progressBar: document.getElementById('progress-bar'),
+                    progressCurrent: document.getElementById('progress-current'),
+                    progressTotal: document.getElementById('progress-total'),
                     currentTime: document.getElementById('current-time'),
                     totalTime: document.getElementById('total-time'),
-                    playerStatus: document.getElementById('player-status'),
-                    trackSource: document.getElementById('track-source'),
                     
-                    // Controles
+                    // Controls
                     playBtn: document.getElementById('play-btn'),
                     prevBtn: document.getElementById('prev-btn'),
                     nextBtn: document.getElementById('next-btn'),
                     shuffleBtn: document.getElementById('shuffle-btn'),
                     repeatBtn: document.getElementById('repeat-btn'),
-                    volumeSlider: document.getElementById('volume-slider'),
-                    volumeIcon: document.getElementById('volume-icon'),
                     refreshBtn: document.getElementById('refresh-btn'),
-                    infoBtn: document.getElementById('info-btn'),
                     
-                    // Barra de progreso
-                    progressTrack: document.getElementById('progress-track'),
-                    progressFill: document.getElementById('progress-fill'),
+                    // Volume
+                    volumeSlider: document.getElementById('volume-slider'),
+                    volumeValue: document.getElementById('volume-value'),
+                    volumeIcon: document.getElementById('volume-icon'),
                     
-                    // Lista de reproducción
+                    // Playlist
                     playlist: document.getElementById('playlist'),
                     playlistCount: document.getElementById('playlist-count'),
-                    totalTracks: document.getElementById('total-tracks'),
-                    playMode: document.getElementById('play-mode'),
                     
-                    // Información del sistema
-                    currentSource: document.getElementById('current-source'),
-                    serverInfo: document.getElementById('server-info'),
-                    playerInfo: document.getElementById('player-info'),
+                    // Visualizer
+                    visualizerCanvas: document.getElementById('visualizer-canvas'),
+                    visualizerMode: document.getElementById('visualizer-mode'),
                     
-                    // Notificación
+                    // Visualizer mode buttons
+                    modeBars: document.getElementById('mode-bars'),
+                    modeWave: document.getElementById('mode-wave'),
+                    modeCircle: document.getElementById('mode-circle'),
+                    modeParticles: document.getElementById('mode-particles'),
+                    
+                    // System
+                    systemStatus: document.getElementById('system-status'),
+                    
+                    // Notification
                     notification: document.getElementById('notification'),
                     notificationTitle: document.getElementById('notification-title'),
                     notificationMessage: document.getElementById('notification-message')
@@ -994,296 +1105,451 @@
             }
 
             setupEventListeners() {
-                // Selectores de fuente
-                this.elements.sourceLocal.addEventListener('click', () => this.switchSource('local'));
-                this.elements.sourceGitHub.addEventListener('click', () => this.switchSource('github'));
-                
-                // Controles de reproducción
+                // Controles principales
                 this.elements.playBtn.addEventListener('click', () => this.togglePlay());
                 this.elements.prevBtn.addEventListener('click', () => this.previousTrack());
                 this.elements.nextBtn.addEventListener('click', () => this.nextTrack());
                 this.elements.shuffleBtn.addEventListener('click', () => this.toggleShuffle());
                 this.elements.repeatBtn.addEventListener('click', () => this.toggleRepeat());
                 this.elements.refreshBtn.addEventListener('click', () => this.refreshTracks());
-                this.elements.infoBtn.addEventListener('click', () => this.showSystemInfo());
                 
-                // Control de volumen
+                // Visualizer modes
+                this.elements.modeBars.addEventListener('click', () => this.setVisualizerMode('bars'));
+                this.elements.modeWave.addEventListener('click', () => this.setVisualizerMode('wave'));
+                this.elements.modeCircle.addEventListener('click', () => this.setVisualizerMode('circle'));
+                this.elements.modeParticles.addEventListener('click', () => this.setVisualizerMode('particles'));
+                
+                // Volumen
                 this.elements.volumeSlider.addEventListener('input', (e) => {
                     this.setVolume(e.target.value / 100);
                 });
                 
                 // Barra de progreso
-                this.elements.progressTrack.addEventListener('click', (e) => {
+                this.elements.progressBar.addEventListener('click', (e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const percentage = (e.clientX - rect.left) / rect.width;
                     this.seek(percentage);
                 });
                 
-                // Eventos del audio
+                // Atajos de teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.tagName === 'INPUT') return;
+                    
+                    switch(e.code) {
+                        case 'Space':
+                            e.preventDefault();
+                            this.togglePlay();
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            this.nextTrack();
+                            break;
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            this.previousTrack();
+                            break;
+                        case 'KeyM':
+                            e.preventDefault();
+                            this.toggleMute();
+                            break;
+                        case 'KeyS':
+                            e.preventDefault();
+                            this.toggleShuffle();
+                            break;
+                        case 'KeyR':
+                            e.preventDefault();
+                            this.toggleRepeat();
+                            break;
+                        case 'KeyV':
+                            e.preventDefault();
+                            this.cycleVisualizerMode();
+                            break;
+                        case 'KeyF':
+                            e.preventDefault();
+                            document.documentElement.requestFullscreen?.();
+                            break;
+                    }
+                });
+            }
+
+            setupAudioEvents() {
                 this.audio.addEventListener('timeupdate', () => this.updateProgress());
                 this.audio.addEventListener('loadedmetadata', () => this.onTrackLoaded());
                 this.audio.addEventListener('ended', () => this.onTrackEnded());
                 this.audio.addEventListener('error', (e) => this.onAudioError(e));
                 this.audio.addEventListener('play', () => this.onPlay());
                 this.audio.addEventListener('pause', () => this.onPause());
-                
-                // Atajos de teclado
-                document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
             }
 
-            setupNetworkListener() {
-                window.addEventListener('online', () => {
-                    this.state.isOnline = true;
-                    this.showNotification('Conectado', 'Volviste a estar en línea', 'success');
-                    this.updateSourceIndicator();
+            // ============== VISUALIZADOR ==============
+            initVisualizer() {
+                this.canvas = this.elements.visualizerCanvas;
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Configurar tamaño del canvas
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Inicializar AudioContext
+                this.initAudioContext();
+            }
+
+            resizeCanvas() {
+                const container = this.canvas.parentElement;
+                this.canvas.width = container.clientWidth;
+                this.canvas.height = container.clientHeight;
+            }
+
+            initAudioContext() {
+                if (!this.state.audioContext) {
+                    this.state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.state.analyser = this.state.audioContext.createAnalyser();
+                    
+                    // Conectar el audio al analizador
+                    this.state.source = this.state.audioContext.createMediaElementSource(this.audio);
+                    this.state.source.connect(this.state.analyser);
+                    this.state.analyser.connect(this.state.audioContext.destination);
+                    
+                    // Configurar analizador
+                    this.state.analyser.fftSize = 256;
+                    const bufferLength = this.state.analyser.frequencyBinCount;
+                    this.state.dataArray = new Uint8Array(bufferLength);
+                }
+            }
+
+            startVisualizer() {
+                if (this.state.animationFrame) {
+                    cancelAnimationFrame(this.state.animationFrame);
+                }
+                
+                const draw = () => {
+                    this.state.animationFrame = requestAnimationFrame(draw);
+                    
+                    if (!this.state.analyser || !this.state.dataArray) return;
+                    
+                    // Obtener datos de frecuencia
+                    this.state.analyser.getByteFrequencyData(this.state.dataArray);
+                    
+                    // Limpiar canvas
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    // Dibujar según el modo
+                    switch(this.state.visualizerMode) {
+                        case 'bars':
+                            this.drawBars();
+                            break;
+                        case 'wave':
+                            this.drawWave();
+                            break;
+                        case 'circle':
+                            this.drawCircle();
+                            break;
+                        case 'particles':
+                            this.drawParticles();
+                            break;
+                    }
+                };
+                
+                draw();
+            }
+
+            drawBars() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                const barWidth = (width / this.state.dataArray.length) * 2.5;
+                let barHeight;
+                let x = 0;
+                
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    barHeight = this.state.dataArray[i] / 2;
+                    
+                    // Crear gradiente de color
+                    const gradient = this.ctx.createLinearGradient(0, height, 0, height - barHeight);
+                    gradient.addColorStop(0, '#4361ee');
+                    gradient.addColorStop(0.5, '#4cc9f0');
+                    gradient.addColorStop(1, '#7209b7');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+                    
+                    // Añadir brillo en la parte superior
+                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                    this.ctx.fillRect(x, height - barHeight, barWidth, 2);
+                    
+                    x += barWidth + 1;
+                }
+            }
+
+            drawWave() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                const sliceWidth = width / this.state.dataArray.length;
+                let x = 0;
+                
+                this.ctx.beginPath();
+                this.ctx.lineWidth = 3;
+                
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    const v = this.state.dataArray[i] / 128.0;
+                    const y = v * height / 2;
+                    
+                    if(i === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                    
+                    x += sliceWidth;
+                }
+                
+                // Crear gradiente para la línea
+                const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
+                gradient.addColorStop(0, '#4361ee');
+                gradient.addColorStop(0.5, '#4cc9f0');
+                gradient.addColorStop(1, '#7209b7');
+                
+                this.ctx.strokeStyle = gradient;
+                this.ctx.stroke();
+                
+                // Relleno debajo de la onda
+                this.ctx.lineTo(width, height);
+                this.ctx.lineTo(0, height);
+                this.ctx.closePath();
+                this.ctx.fillStyle = 'rgba(67, 97, 238, 0.2)';
+                this.ctx.fill();
+            }
+
+            drawCircle() {
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const radius = Math.min(centerX, centerY) * 0.7;
+                
+                this.ctx.beginPath();
+                this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                this.ctx.lineWidth = 2;
+                this.ctx.stroke();
+                
+                // Dibujar puntos alrededor del círculo
+                const points = 64;
+                const angleStep = (2 * Math.PI) / points;
+                
+                for(let i = 0; i < points; i++) {
+                    const angle = i * angleStep;
+                    const dataIndex = Math.floor(i * this.state.dataArray.length / points);
+                    const amplitude = this.state.dataArray[dataIndex] / 256;
+                    const pointRadius = radius * (1 + amplitude * 0.5);
+                    
+                    const x = centerX + Math.cos(angle) * pointRadius;
+                    const y = centerY + Math.sin(angle) * pointRadius;
+                    
+                    // Gradiente para cada punto
+                    const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, 5);
+                    gradient.addColorStop(0, '#4cc9f0');
+                    gradient.addColorStop(1, '#4361ee');
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                    
+                    // Conectar puntos con líneas
+                    if(i > 0) {
+                        const prevAngle = (i - 1) * angleStep;
+                        const prevDataIndex = Math.floor((i - 1) * this.state.dataArray.length / points);
+                        const prevAmplitude = this.state.dataArray[prevDataIndex] / 256;
+                        const prevPointRadius = radius * (1 + prevAmplitude * 0.5);
+                        
+                        const prevX = centerX + Math.cos(prevAngle) * prevPointRadius;
+                        const prevY = centerY + Math.sin(prevAngle) * prevPointRadius;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(prevX, prevY);
+                        this.ctx.lineTo(x, y);
+                        this.ctx.strokeStyle = `rgba(76, 201, 240, ${0.3 + amplitude * 0.7})`;
+                        this.ctx.lineWidth = 2;
+                        this.ctx.stroke();
+                    }
+                }
+            }
+
+            drawParticles() {
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                
+                // Fondo semi-transparente para efecto de trazo
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                this.ctx.fillRect(0, 0, width, height);
+                
+                // Crear partículas si no existen
+                if (!this.particles) {
+                    this.particles = [];
+                    for(let i = 0; i < 100; i++) {
+                        this.particles.push({
+                            x: Math.random() * width,
+                            y: Math.random() * height,
+                            size: Math.random() * 4 + 1,
+                            speedX: Math.random() * 2 - 1,
+                            speedY: Math.random() * 2 - 1,
+                            color: this.getRandomColor()
+                        });
+                    }
+                }
+                
+                // Actualizar y dibujar partículas
+                const energy = this.getAverageEnergy();
+                
+                this.particles.forEach(particle => {
+                    // Mover partícula
+                    particle.x += particle.speedX * (1 + energy * 2);
+                    particle.y += particle.speedY * (1 + energy * 2);
+                    
+                    // Rebote en los bordes
+                    if (particle.x < 0 || particle.x > width) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > height) particle.speedY *= -1;
+                    
+                    // Mantener dentro del canvas
+                    particle.x = Math.max(0, Math.min(width, particle.x));
+                    particle.y = Math.max(0, Math.min(height, particle.y));
+                    
+                    // Dibujar partícula
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size * (1 + energy), 0, Math.PI * 2);
+                    
+                    // Gradiente para la partícula
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, particle.size * (1 + energy)
+                    );
+                    gradient.addColorStop(0, particle.color);
+                    gradient.addColorStop(1, 'rgba(67, 97, 238, 0.3)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                    
+                    // Añadir brillo
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
+                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    this.ctx.fill();
+                });
+            }
+
+            getRandomColor() {
+                const colors = ['#4361ee', '#4cc9f0', '#7209b7', '#f72585', '#3a0ca3'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            getAverageEnergy() {
+                if (!this.state.dataArray) return 0;
+                let sum = 0;
+                for(let i = 0; i < this.state.dataArray.length; i++) {
+                    sum += this.state.dataArray[i];
+                }
+                return sum / (this.state.dataArray.length * 256);
+            }
+
+            setVisualizerMode(mode) {
+                this.state.visualizerMode = mode;
+                this.elements.visualizerMode.textContent = this.getModeName(mode);
+                
+                // Actualizar botones activos
+                document.querySelectorAll('.visualizer-mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
                 });
                 
-                window.addEventListener('offline', () => {
-                    this.state.isOnline = false;
-                    this.showNotification('Sin conexión', 'Modo offline activado', 'warning');
-                    this.updateSourceIndicator();
-                });
-            }
-
-            // ============== DETECCIÓN AUTOMÁTICA DE FUENTE ==============
-            async autoDetectSource() {
-                this.updateLoadingStatus('Detectando mejor fuente de música...', 30);
+                const activeBtn = document.querySelector(`[data-mode="${mode}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
                 
-                // Primero intentar con servidor local
-                const localAvailable = await this.testLocalSource();
-                
-                if (localAvailable) {
-                    this.updateLoadingStatus('Servidor local disponible', 50);
-                    await this.switchSource('local');
-                } else {
-                    this.updateLoadingStatus('Usando GitHub como fuente', 50);
-                    await this.switchSource('github');
-                }
-                
-                this.updateLoadingStatus('Sistema listo', 100);
-            }
-
-            async testLocalSource() {
-                try {
-                    // Intentar cargar desde PHP endpoint
-                    const response = await fetch(this.config.localListEndpoint, {
-                        method: 'GET',
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.success && data.files && data.files.length > 0;
-                    }
-                    
-                    // Si no hay PHP, intentar listado directo de directorio
-                    const dirResponse = await fetch(this.config.localMusicFolder + '/');
-                    if (dirResponse.ok) {
-                        const html = await dirResponse.text();
-                        // Buscar enlaces a archivos de audio
-                        return html.includes('.mp3') || html.includes('.m4a') || 
-                               html.includes('.wav') || html.includes('.ogg');
-                    }
-                    
-                    return false;
-                } catch (error) {
-                    console.log('Fuente local no disponible:', error.message);
-                    return false;
+                // Reiniciar visualizador
+                if (this.state.isPlaying) {
+                    this.startVisualizer();
                 }
             }
 
-            // ============== CAMBIO DE FUENTE ==============
-            async switchSource(source) {
-                if (source === this.state.currentSource) return;
-                
-                this.state.currentSource = source;
-                
-                // Actualizar UI
-                this.elements.sourceLocal.classList.toggle('active', source === 'local');
-                this.elements.sourceGitHub.classList.toggle('active', source === 'github');
-                
-                this.updateSourceIndicator();
-                this.showNotification('Cambiando fuente', `Conectando a ${source === 'local' ? 'servidor local' : 'GitHub'}...`, 'info');
-                
-                // Cargar canciones desde la nueva fuente
-                await this.loadTracks();
-                
-                // Actualizar información del sistema
-                this.updateSystemInfo();
+            getModeName(mode) {
+                const names = {
+                    'bars': 'Barras',
+                    'wave': 'Onda',
+                    'circle': 'Circular',
+                    'particles': 'Partículas'
+                };
+                return names[mode] || mode;
             }
 
-            updateSourceIndicator() {
-                const isLocal = this.state.currentSource === 'local';
-                const isOnline = this.state.isOnline;
-                
-                let color, text;
-                
-                if (isLocal) {
-                    color = 'var(--success)';
-                    text = 'Servidor Local';
-                } else {
-                    color = 'var(--primary)';
-                    text = 'GitHub';
-                    
-                    if (!isOnline) {
-                        color = 'var(--warning)';
-                        text = 'GitHub (Offline)';
-                    }
-                }
-                
-                this.elements.sourceDot.style.backgroundColor = color;
-                this.elements.sourceText.textContent = text;
-                this.elements.sourceDot.className = `source-dot ${isLocal ? 'local' : 'github'}`;
+            cycleVisualizerMode() {
+                const modes = ['bars', 'wave', 'circle', 'particles'];
+                const currentIndex = modes.indexOf(this.state.visualizerMode);
+                const nextIndex = (currentIndex + 1) % modes.length;
+                this.setVisualizerMode(modes[nextIndex]);
             }
 
-            // ============== CARGA DE CANCIONES ==============
+            // ============== CARGA DE MÚSICA ==============
             async loadTracks() {
                 try {
-                    this.updateLoadingStatus(`Cargando desde ${this.state.currentSource === 'local' ? 'servidor local' : 'GitHub'}...`, 60);
+                    this.elements.loadingDetails.textContent = `Conectando con GitHub...`;
                     
-                    if (this.state.currentSource === 'local') {
-                        await this.loadLocalTracks();
-                    } else {
-                        await this.loadGitHubTracks();
-                    }
-                    
-                    if (this.state.tracks.length === 0) {
-                        throw new Error('No se encontraron canciones');
-                    }
-                    
-                    this.updateLoadingStatus(`${this.state.tracks.length} canciones cargadas`, 80);
-                    
-                    // Actualizar UI
-                    this.updatePlaylist();
-                    this.updateTrackCount();
-                    
-                    // Cargar primera canción
-                    if (this.state.tracks.length > 0) {
-                        await this.loadTrack(0);
-                    }
-                    
-                    this.stats.tracksLoaded = this.state.tracks.length;
-                    this.showNotification('Listo', `${this.state.tracks.length} canciones cargadas`, 'success');
-                    
-                } catch (error) {
-                    console.error('Error cargando canciones:', error);
-                    
-                    // Intentar cambiar a la otra fuente si falla
-                    const otherSource = this.state.currentSource === 'local' ? 'github' : 'local';
-                    this.showNotification(`Error con ${this.state.currentSource}`, `Intentando con ${otherSource}...`, 'error');
-                    
-                    await this.switchSource(otherSource);
-                }
-            }
-
-            async loadLocalTracks() {
-                try {
-                    // Intentar con PHP primero
-                    const response = await fetch(this.config.localListEndpoint);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.success && data.files) {
-                            this.state.tracks = data.files.map((file, index) => ({
-                                id: index + 1,
-                                name: file.name,
-                                url: file.path || `./${this.config.localMusicFolder}/${encodeURIComponent(file.name)}`,
-                                size: file.size || 0,
-                                type: file.type || file.name.split('.').pop(),
-                                duration: 0,
-                                source: 'local'
-                            }));
-                            return;
-                        }
-                    }
-                    
-                    // Si PHP falla, intentar listado de directorio
-                    await this.loadLocalTracksFallback();
-                    
-                } catch (error) {
-                    console.error('Error cargando local:', error);
-                    await this.loadLocalTracksFallback();
-                }
-            }
-
-            async loadLocalTracksFallback() {
-                try {
-                    const response = await fetch(this.config.localMusicFolder + '/');
-                    if (response.ok) {
-                        const html = await response.text();
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        // Buscar todos los enlaces a archivos de audio
-                        const links = Array.from(doc.querySelectorAll('a'));
-                        const audioLinks = links.filter(link => {
-                            const href = link.getAttribute('href');
-                            if (!href) return false;
-                            const ext = href.split('.').pop().toLowerCase();
-                            return this.config.supportedFormats.includes(ext) && 
-                                   !href.includes('?') && 
-                                   !href.startsWith('?') &&
-                                   !href.startsWith('/');
-                        });
-                        
-                        this.state.tracks = audioLinks.map((link, index) => {
-                            const href = link.getAttribute('href');
-                            return {
-                                id: index + 1,
-                                name: decodeURIComponent(href),
-                                url: `./${this.config.localMusicFolder}/${href}`,
-                                size: 0,
-                                type: href.split('.').pop().toLowerCase(),
-                                duration: 0,
-                                source: 'local'
-                            };
-                        });
-                    }
-                } catch (error) {
-                    throw new Error('No se pudo acceder a la carpeta local de música');
-                }
-            }
-
-            async loadGitHubTracks() {
-                if (!this.state.isOnline) {
-                    throw new Error('No hay conexión a internet para acceder a GitHub');
-                }
-                
-                try {
-                    const response = await fetch(this.config.githubApiUrl);
+                    const apiUrl = `https://api.github.com/repos/${this.config.githubUser}/${this.config.repo}/contents/${this.config.musicFolder}`;
+                    const response = await fetch(apiUrl);
                     
                     if (!response.ok) {
-                        throw new Error(`GitHub API error: ${response.status}`);
+                        throw new Error(`Error HTTP ${response.status}`);
                     }
+                    
+                    this.elements.loadingDetails.textContent = `Procesando archivos de audio...`;
                     
                     const files = await response.json();
                     
-                    // Filtrar solo archivos de audio
-                    const audioFiles = files.filter(file => {
-                        if (file.type !== 'file') return false;
-                        const ext = file.name.split('.').pop().toLowerCase();
-                        return this.config.supportedFormats.includes(ext);
-                    });
+                    // Filtrar y procesar archivos
+                    this.state.tracks = files
+                        .filter(file => {
+                            if (file.type !== 'file') return false;
+                            const ext = file.name.toLowerCase().split('.').pop();
+                            return this.config.supportedFormats.includes(ext);
+                        })
+                        .map((file, index) => ({
+                            id: index + 1,
+                            name: file.name,
+                            size: file.size,
+                            type: file.name.split('.').pop().toLowerCase(),
+                            url: this.getTrackUrl(file.name),
+                            duration: 0,
+                            played: false
+                        }));
                     
-                    // Usar jsDelivr CDN para mejores velocidades
-                    this.state.tracks = audioFiles.map((file, index) => ({
-                        id: index + 1,
-                        name: file.name,
-                        url: `https://cdn.jsdelivr.net/gh/${this.config.githubUser}/${this.config.githubRepo}/${this.config.githubFolder}/${encodeURIComponent(file.name)}`,
-                        size: file.size || 0,
-                        type: file.name.split('.').pop().toLowerCase(),
-                        duration: 0,
-                        source: 'github',
-                        githubUrl: file.download_url
-                    }));
+                    if (this.state.tracks.length === 0) {
+                        throw new Error('No se encontraron archivos de audio en la carpeta');
+                    }
+                    
+                    this.elements.loadingDetails.textContent = `Cargadas ${this.state.tracks.length} canciones`;
+                    
+                    // Actualizar UI
+                    this.updateTrackCount();
+                    this.updatePlaylist();
+                    this.elements.systemStatus.textContent = 'Conectado';
+                    this.elements.systemStatus.style.color = 'var(--success)';
+                    
+                    // Cargar primera canción
+                    if (this.config.autoPlay && this.state.tracks.length > 0) {
+                        await this.loadTrack(0);
+                    }
+                    
+                    this.showNotification('¡Listo!', `${this.state.tracks.length} canciones cargadas`, 'success');
                     
                 } catch (error) {
-                    console.error('Error cargando desde GitHub:', error);
-                    throw new Error(`No se pudo cargar desde GitHub: ${error.message}`);
+                    console.error('Error cargando canciones:', error);
+                    this.showNotification('Error', error.message, 'error');
+                    this.elements.systemStatus.textContent = 'Error';
+                    this.elements.systemStatus.style.color = 'var(--danger)';
                 }
             }
 
-            // ============== CONTROL DE REPRODUCCIÓN ==============
+            getTrackUrl(filename) {
+                const cdnFunc = this.config.cdns[this.state.currentCDN];
+                return cdnFunc(this.config.githubUser, this.config.repo, this.config.musicFolder, filename);
+            }
+
+            // ============== REPRODUCCIÓN ==============
             async loadTrack(index) {
                 if (index < 0 || index >= this.state.tracks.length) return;
                 
@@ -1293,46 +1559,56 @@
                 try {
                     // Actualizar UI
                     this.elements.trackTitle.textContent = this.formatTrackName(track.name);
-                    this.elements.trackArtist.textContent = 'Voz del Shaddai Radio';
-                    this.elements.trackSource.textContent = track.source === 'local' ? 'Local' : 'GitHub';
-                    this.elements.playerStatus.textContent = 'Cargando...';
-                    
-                    // Actualizar lista de reproducción
                     this.updatePlaylist();
                     
-                    // Detener audio actual si está reproduciendo
+                    // Detener audio actual
                     if (this.state.isPlaying) {
                         this.audio.pause();
+                        this.state.isPlaying = false;
                     }
                     
-                    // Cargar nuevo audio
-                    this.audio.src = track.url;
+                    // Cargar nueva pista
+                    const url = this.getTrackUrl(track.name);
+                    this.audio.src = url;
                     await this.audio.load();
                     
-                    // Reproducir automáticamente
-                    await this.play();
+                    // Iniciar visualizador
+                    this.initAudioContext();
                     
-                    // Estadísticas
-                    this.stats.totalPlays++;
+                    // Reproducir
+                    if (this.config.autoPlay) {
+                        await this.play();
+                    } else {
+                        this.updatePlayButton();
+                    }
                     
-                    this.showNotification('Reproduciendo', track.name, 'success');
+                    track.played = true;
                     
                 } catch (error) {
                     console.error('Error cargando track:', error);
                     this.showNotification('Error', `No se pudo cargar: ${track.name}`, 'error');
                     
-                    // Intentar siguiente canción si falla
+                    // Intentar siguiente canción
                     setTimeout(() => this.nextTrack(), 2000);
                 }
             }
 
             async play() {
                 try {
+                    // Si el AudioContext está suspendido, reanudarlo
+                    if (this.state.audioContext && this.state.audioContext.state === 'suspended') {
+                        await this.state.audioContext.resume();
+                    }
+                    
                     await this.audio.play();
                     this.state.isPlaying = true;
                     this.updatePlayButton();
-                    this.elements.playerStatus.textContent = 'Reproduciendo';
-                    this.elements.playerStatus.className = 'status-value streaming';
+                    
+                    // Iniciar visualizador
+                    this.startVisualizer();
+                    
+                    this.showNotification('Reproduciendo', this.formatTrackName(this.state.tracks[this.state.currentTrackIndex].name), 'success');
+                    
                 } catch (error) {
                     console.error('Error reproduciendo:', error);
                     this.state.isPlaying = false;
@@ -1348,8 +1624,12 @@
                 this.audio.pause();
                 this.state.isPlaying = false;
                 this.updatePlayButton();
-                this.elements.playerStatus.textContent = 'Pausado';
-                this.elements.playerStatus.className = 'status-value';
+                
+                // Detener visualizador
+                if (this.state.animationFrame) {
+                    cancelAnimationFrame(this.state.animationFrame);
+                    this.state.animationFrame = null;
+                }
             }
 
             togglePlay() {
@@ -1415,8 +1695,9 @@
                 this.state.volume = value;
                 this.audio.volume = value;
                 this.elements.volumeSlider.value = value * 100;
+                this.elements.volumeValue.textContent = `${Math.round(value * 100)}%`;
                 
-                // Actualizar icono de volumen
+                // Actualizar icono
                 if (value === 0) {
                     this.elements.volumeIcon.className = 'fas fa-volume-mute';
                 } else if (value < 0.5) {
@@ -1427,19 +1708,16 @@
             }
 
             toggleMute() {
-                if (this.state.isMuted) {
-                    this.setVolume(this.state.lastVolume);
-                } else {
-                    this.state.lastVolume = this.state.volume;
+                if (this.audio.volume > 0) {
                     this.setVolume(0);
+                } else {
+                    this.setVolume(this.config.defaultVolume);
                 }
-                this.state.isMuted = !this.state.isMuted;
             }
 
             toggleShuffle() {
                 this.state.isShuffled = !this.state.isShuffled;
                 this.elements.shuffleBtn.classList.toggle('active', this.state.isShuffled);
-                this.elements.playMode.textContent = this.state.isShuffled ? 'Aleatorio' : 'Normal';
                 
                 this.showNotification(
                     'Modo aleatorio',
@@ -1455,11 +1733,20 @@
                 
                 this.audio.loop = this.state.repeatMode === 'one';
                 
-                // Actualizar botón
-                const icons = ['fa-redo', 'fa-redo', 'fa-infinity'];
-                this.elements.repeatBtn.innerHTML = `<i class="fas ${icons[(currentIndex + 1) % icons.length]}"></i>`;
+                const modeNames = ['Sin repetición', 'Repetir una', 'Repetir todas'];
+                this.elements.repeatBtn.innerHTML = `<i class="fas ${this.getRepeatIcon(this.state.repeatMode)}"></i> ${modeNames[(currentIndex + 1) % modeNames.length]}`;
+                this.elements.repeatBtn.classList.toggle('active', this.state.repeatMode !== 'none');
                 
-                this.showNotification('Modo repetir', this.getRepeatModeText(), 'info');
+                this.showNotification('Modo repetir', modeNames[(currentIndex + 1) % modeNames.length], 'info');
+            }
+
+            getRepeatIcon(mode) {
+                switch(mode) {
+                    case 'none': return 'redo';
+                    case 'one': return 'redo';
+                    case 'all': return 'infinity';
+                    default: return 'redo';
+                }
             }
 
             // ============== ACTUALIZACIÓN DE UI ==============
@@ -1474,8 +1761,13 @@
                 this.elements.progressFill.style.width = `${percentage}%`;
                 
                 // Actualizar tiempos
-                this.elements.currentTime.textContent = this.formatTime(current);
-                this.elements.totalTime.textContent = this.formatTime(duration);
+                const currentStr = this.formatTime(current);
+                const durationStr = this.formatTime(duration);
+                
+                this.elements.currentTime.textContent = currentStr;
+                this.elements.totalTime.textContent = durationStr;
+                this.elements.progressCurrent.textContent = currentStr;
+                this.elements.progressTotal.textContent = durationStr;
             }
 
             updatePlayButton() {
@@ -1493,9 +1785,6 @@
                         <div class="playlist-item-number">${index + 1}</div>
                         <div class="playlist-item-info">
                             <div class="playlist-item-title">${this.formatTrackName(track.name)}</div>
-                            <small style="color: var(--gray); font-size: 0.8rem;">
-                                ${track.source === 'local' ? '📁 Local' : '🐙 GitHub'}
-                            </small>
                         </div>
                         <div class="playlist-item-duration">${this.formatTime(track.duration || 0)}</div>
                     `;
@@ -1507,61 +1796,19 @@
 
             updateTrackCount() {
                 this.elements.playlistCount.textContent = `${this.state.tracks.length} canciones`;
-                this.elements.totalTracks.textContent = this.state.tracks.length;
             }
 
-            updateSystemInfo() {
-                const sourceText = this.state.currentSource === 'local' ? 'Servidor Local' : 'GitHub';
-                const statusText = this.state.isOnline ? 'En línea' : 'Offline';
+            formatTrackName(name) {
+                const withoutExt = name.replace(/\.[^/.]+$/, '');
+                return withoutExt.length > 40 ? withoutExt.substring(0, 40) + '...' : withoutExt;
+            }
+
+            formatTime(seconds) {
+                if (!seconds || isNaN(seconds)) return '00:00';
                 
-                this.elements.currentSource.textContent = `${sourceText} • ${statusText}`;
-                this.elements.serverInfo.textContent = this.state.currentSource === 'local' ? 
-                    'Carpeta /musica/' : 
-                    `https://github.com/${this.config.githubUser}/${this.config.githubRepo}`;
-                this.elements.playerInfo.textContent = `v2.0 • ${this.stats.tracksLoaded} canciones • ${this.stats.totalPlays} reproducciones`;
-            }
-
-            showSystemInfo() {
-                const info = `
-                    <strong>Información Técnica:</strong><br>
-                    • Fuente: ${this.state.currentSource}<br>
-                    • Canciones cargadas: ${this.state.tracks.length}<br>
-                    • Modo: ${this.state.isShuffled ? 'Aleatorio' : 'Normal'}<br>
-                    • Repetición: ${this.getRepeatModeText()}<br>
-                    • Volumen: ${Math.round(this.state.volume * 100)}%<br>
-                    • Estado: ${this.state.isPlaying ? 'Reproduciendo' : 'Pausado'}
-                `;
-                
-                this.showNotification('Información del Sistema', info, 'info');
-            }
-
-            updateLoadingStatus(message, progress) {
-                if (this.elements.loadingStatus) {
-                    this.elements.loadingStatus.textContent = message;
-                }
-                if (this.elements.loadingProgress) {
-                    this.elements.loadingProgress.style.width = `${progress}%`;
-                }
-            }
-
-            hideLoadingScreen() {
-                setTimeout(() => {
-                    this.elements.loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        this.elements.loadingScreen.style.display = 'none';
-                        this.elements.app.classList.add('app-loaded');
-                        
-                        // Animar elementos
-                        document.querySelectorAll('.player-card, .playlist-container, .source-selector').forEach((el, i) => {
-                            el.style.animationDelay = `${i * 0.1}s`;
-                            el.classList.add('animate-slide-up');
-                        });
-                        
-                        // Actualizar info del sistema
-                        this.updateSystemInfo();
-                        
-                    }, 500);
-                }, 1000);
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             }
 
             // ============== EVENT HANDLERS ==============
@@ -1570,8 +1817,6 @@
                 if (this.audio.duration && !isNaN(this.audio.duration)) {
                     track.duration = this.audio.duration;
                 }
-                
-                this.elements.totalTime.textContent = this.formatTime(this.audio.duration);
                 this.updatePlaylist();
             }
 
@@ -1590,7 +1835,6 @@
                             this.nextTrack();
                         } else {
                             this.pause();
-                            this.elements.playerStatus.textContent = 'Listo';
                         }
                         break;
                 }
@@ -1599,8 +1843,6 @@
             onAudioError(error) {
                 console.error('Error de audio:', error);
                 this.showNotification('Error de reproducción', 'Saltando a siguiente canción', 'error');
-                
-                // Intentar siguiente canción
                 setTimeout(() => this.nextTrack(), 2000);
             }
 
@@ -1614,46 +1856,23 @@
                 this.updatePlayButton();
             }
 
-            // ============== UTILIDADES ==============
-            formatTrackName(name) {
-                // Remover extensión y limitar longitud
-                const withoutExt = name.replace(/\.[^/.]+$/, '');
-                return withoutExt.length > 40 ? withoutExt.substring(0, 40) + '...' : withoutExt;
-            }
-
-            formatTime(seconds) {
-                if (!seconds || isNaN(seconds)) return '00:00';
-                
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-
-            getRepeatModeText() {
-                switch (this.state.repeatMode) {
-                    case 'none': return 'Sin repetición';
-                    case 'one': return 'Repetir una canción';
-                    case 'all': return 'Repetir todas';
-                    default: return '';
-                }
-            }
-
+            // ============== NOTIFICACIONES ==============
             showNotification(title, message, type = 'info') {
                 this.elements.notificationTitle.textContent = title;
                 this.elements.notificationMessage.textContent = message;
                 
                 // Establecer tipo
                 this.elements.notification.className = `notification ${type}`;
-                const icon = this.elements.notification.querySelector('.notification-icon');
-                icon.className = `fas ${this.getNotificationIcon(type)} notification-icon`;
+                this.elements.notification.querySelector('.notification-icon').className = 
+                    `fas ${this.getNotificationIcon(type)} notification-icon`;
                 
                 // Mostrar
                 this.elements.notification.classList.add('show');
                 
-                // Ocultar después de 4 segundos
+                // Ocultar después de 3 segundos
                 setTimeout(() => {
                     this.elements.notification.classList.remove('show');
-                }, 4000);
+                }, 3000);
             }
 
             getNotificationIcon(type) {
@@ -1665,128 +1884,70 @@
                 }
             }
 
+            // ============== UTILIDADES ==============
+            hideLoadingScreen() {
+                setTimeout(() => {
+                    this.elements.loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        this.elements.loadingScreen.style.display = 'none';
+                        this.elements.app.style.display = 'block';
+                        setTimeout(() => {
+                            this.elements.app.classList.add('app-loaded');
+                            
+                            // Animar elementos
+                            document.querySelectorAll('.visualizer-section, .now-playing, .controls-container, .volume-section, .playlist-section').forEach((el, i) => {
+                                el.style.animationDelay = `${i * 0.1}s`;
+                                el.classList.add('animate-slide-up');
+                            });
+                            
+                        }, 50);
+                    }, 500);
+                }, 1000);
+            }
+
             async refreshTracks() {
-                this.showNotification('Actualizando', `Recargando canciones desde ${this.state.currentSource === 'local' ? 'servidor local' : 'GitHub'}...`, 'info');
+                this.showNotification('Actualizando', 'Buscando nueva música en GitHub...', 'info');
                 await this.loadTracks();
-                this.updateSystemInfo();
-            }
-
-            handleKeyboardShortcuts(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                
-                switch (e.code) {
-                    case 'Space':
-                        e.preventDefault();
-                        this.togglePlay();
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        this.nextTrack();
-                        break;
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        this.previousTrack();
-                        break;
-                    case 'KeyM':
-                        e.preventDefault();
-                        this.toggleMute();
-                        break;
-                    case 'KeyS':
-                        e.preventDefault();
-                        this.toggleShuffle();
-                        break;
-                    case 'KeyR':
-                        e.preventDefault();
-                        this.toggleRepeat();
-                        break;
-                    case 'KeyF':
-                        e.preventDefault();
-                        document.documentElement.requestFullscreen?.();
-                        break;
-                    case 'KeyL':
-                        e.preventDefault();
-                        this.switchSource('local');
-                        break;
-                    case 'KeyG':
-                        e.preventDefault();
-                        this.switchSource('github');
-                        break;
-                }
             }
         }
-
-        // ============== ARCHIVOS PHP NECESARIOS ==============
-
-        /* list-music.php (opcional, para servidor local)
-        <?php
-        header('Content-Type: application/json');
-        header('Access-Control-Allow-Origin: *');
-        
-        $musicDir = './musica/';
-        $files = [];
-        
-        if (is_dir($musicDir)) {
-            $scan = scandir($musicDir);
-            foreach ($scan as $file) {
-                if ($file === '.' || $file === '..') continue;
-                
-                $path = $musicDir . $file;
-                $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                
-                if (in_array($ext, ['mp3', 'm4a', 'wav', 'ogg', 'flac'])) {
-                    $files[] = [
-                        'name' => $file,
-                        'path' => $path,
-                        'size' => filesize($path),
-                        'type' => $ext,
-                        'lastModified' => filemtime($path)
-                    ];
-                }
-            }
-        }
-        
-        echo json_encode([
-            'success' => true,
-            'files' => $files,
-            'count' => count($files)
-        ]);
-        ?>
-        */
 
         // ============== INICIAR APLICACIÓN ==============
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar reproductor híbrido
-            window.radioPlayer = new HybridRadioPlayer();
+            // Inicializar reproductor
+            window.radioPlayer = new RadioPlayerWithVisualizer();
             
-            // Mostrar instrucciones de teclado
+            // Mostrar instrucciones
             setTimeout(() => {
-                window.radioPlayer.showNotification(
-                    'Atajos de teclado',
-                    'Espacio: Play/Pause • Flechas: Siguiente/Anterior • L: Local • G: GitHub • F: Pantalla completa',
-                    'info'
-                );
-            }, 5000);
+                if (window.radioPlayer.state.tracks.length > 0) {
+                    window.radioPlayer.showNotification(
+                        '¡Controles activos!',
+                        'Usa las flechas ← → para cambiar canciones, ESPACIO para play/pause',
+                        'info'
+                    );
+                }
+            }, 3000);
         });
 
         // ============== FUNCIONES GLOBALES ==============
+        function shareRadio() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Voz del Shaddai Radio',
+                    text: 'Escucha música cristiana con visualizador espectacular',
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url);
+                window.radioPlayer?.showNotification('Enlace copiado', 'Comparte la radio con otros', 'success');
+            }
+        }
+
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
             } else {
                 document.exitFullscreen();
-            }
-        }
-
-        function shareRadio() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Voz del Shaddai Radio',
-                    text: 'Escucha música cristiana las 24 horas',
-                    url: window.location.href
-                });
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                window.radioPlayer?.showNotification('Enlace copiado', 'Comparte la radio con otros', 'success');
             }
         }
     </script>
