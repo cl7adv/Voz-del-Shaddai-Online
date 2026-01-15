@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOZ DEL SHADDAI - Radio Local</title>
+    <title>VOZ DEL SHADDAI - Radio Local y en Línea</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -172,6 +172,25 @@
             color: var(--gray);
             font-size: 0.9rem;
         }
+
+        .source-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+        }
+
+        .source-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .source-dot.local { background: var(--success); }
+        .source-dot.github { background: var(--primary); }
 
         /* ===== PLAYER CONTAINER ===== */
         .player-container {
@@ -461,107 +480,50 @@
             font-size: 0.9rem;
         }
 
-        /* ===== UPLOAD SECTION ===== */
-        .upload-section {
+        /* ===== SOURCE SELECTOR ===== */
+        .source-selector {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 2rem;
         }
 
-        .upload-header {
+        .source-options {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .upload-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+        .source-option {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius);
-            padding: 3rem 2rem;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
         }
 
-        .upload-area:hover {
+        .source-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .source-option.active {
             border-color: var(--primary);
             background: rgba(67, 97, 238, 0.1);
         }
 
-        .upload-area i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .upload-area p {
-            color: var(--gray);
+        .source-option i {
+            font-size: 2rem;
             margin-bottom: 0.5rem;
+            display: block;
         }
 
-        .upload-area small {
-            color: var(--gray);
-            font-size: 0.8rem;
-        }
-
-        #file-input {
-            display: none;
-        }
-
-        .upload-button {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 0 auto;
-        }
-
-        .upload-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .upload-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .upload-progress {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .upload-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            width: 0%;
-            border-radius: var(--radius-full);
-            transition: width 0.3s ease;
-        }
+        .source-option.local i { color: var(--success); }
+        .source-option.github i { color: var(--primary); }
 
         /* ===== STATUS INDICATORS ===== */
         .status-indicators {
@@ -680,6 +642,10 @@
             .status-indicators {
                 grid-template-columns: 1fr;
             }
+            
+            .source-options {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
@@ -694,7 +660,7 @@
                 text-align: center;
             }
             
-            .playlist-container, .upload-section {
+            .playlist-container, .source-selector {
                 padding: 1.5rem;
             }
         }
@@ -738,11 +704,11 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <h1 class="loading-title">VOZ DEL SHADDAI</h1>
-            <p class="loading-subtitle">Radio Local - Cargando desde servidor</p>
+            <p class="loading-subtitle">Radio Cristiana - Cargando reproductor</p>
             <div class="loading-progress">
                 <div class="loading-progress-bar" id="loading-progress"></div>
             </div>
-            <p id="loading-status">Inicializando sistema local...</p>
+            <p id="loading-status">Inicializando sistema...</p>
         </div>
     </div>
 
@@ -756,16 +722,31 @@
                 </div>
                 <div class="logo-text">
                     <h1>VOZ DEL SHADDAI</h1>
-                    <p>Radio Local - Servidor Propio</p>
+                    <p>Radio Cristiana - Tu música, tu servidor</p>
                 </div>
             </div>
-            <div class="header-actions">
-                <div class="status-indicator">
-                    <div class="status-dot connected pulse"></div>
-                    <span>Conectado al servidor</span>
-                </div>
+            <div class="source-indicator">
+                <div class="source-dot" id="source-dot"></div>
+                <span id="source-text">Cargando fuente...</span>
             </div>
         </header>
+
+        <!-- Source Selector -->
+        <div class="source-selector">
+            <h3>Selecciona la fuente de música:</h3>
+            <div class="source-options">
+                <div class="source-option local active" id="source-local">
+                    <i class="fas fa-server"></i>
+                    <strong>Servidor Local</strong>
+                    <small>Desde tu carpeta /musica/</small>
+                </div>
+                <div class="source-option github" id="source-github">
+                    <i class="fab fa-github"></i>
+                    <strong>GitHub</strong>
+                    <small>Desde tu repositorio</small>
+                </div>
+            </div>
+        </div>
 
         <!-- Main Player -->
         <main class="player-container">
@@ -778,12 +759,12 @@
                         <img id="album-art-img" alt="Album Art">
                     </div>
                     <div class="track-info">
-                        <h2 class="track-title" id="track-title">Cargando música local...</h2>
+                        <h2 class="track-title" id="track-title">Selecciona una fuente de música</h2>
                         <p class="track-artist" id="track-artist">Voz del Shaddai Radio</p>
                         <div class="track-stats">
                             <span id="track-position">--:--</span>
                             <span id="track-duration">--:--</span>
-                            <span id="track-bitrate">Local</span>
+                            <span id="track-source">Esperando...</span>
                         </div>
                     </div>
                 </div>
@@ -831,7 +812,7 @@
                 <div class="status-indicators">
                     <div class="status-item">
                         <span class="status-label">Estado</span>
-                        <span class="status-value streaming" id="player-status">Listo</span>
+                        <span class="status-value" id="player-status">Esperando</span>
                     </div>
                     <div class="status-item">
                         <span class="status-label">Canciones</span>
@@ -847,7 +828,7 @@
             <!-- Playlist -->
             <div class="playlist-container">
                 <div class="playlist-header">
-                    <h3 class="playlist-title">Música Local</h3>
+                    <h3 class="playlist-title">Lista de Reproducción</h3>
                     <span class="playlist-count" id="playlist-count">0 canciones</span>
                 </div>
                 <div class="playlist" id="playlist">
@@ -861,59 +842,26 @@
             </div>
         </main>
 
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <div class="upload-header">
-                <h3 class="upload-title">Subir Música al Servidor</h3>
-                <small>Máximo 50MB por archivo • Formatos: MP3, M4A, WAV, OGG</small>
-            </div>
-            
-            <div class="upload-area" id="upload-area">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Arrastra y suelta archivos de música aquí</p>
-                <small>o haz clic para seleccionar archivos</small>
-            </div>
-            
-            <input type="file" id="file-input" accept=".mp3,.m4a,.wav,.ogg,.flac" multiple>
-            
-            <div class="upload-progress" id="upload-progress">
-                <div class="upload-progress-bar" id="upload-progress-bar"></div>
-            </div>
-            
-            <button class="upload-button" id="upload-button" disabled>
-                <i class="fas fa-upload"></i> Subir Archivos Seleccionados
-            </button>
-            
-            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: var(--radius);">
-                <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Instrucciones:</h4>
-                <ol style="padding-left: 1.5rem; color: var(--gray); font-size: 0.9rem;">
-                    <li>Los archivos se guardarán en la carpeta <code>/musica/</code> del servidor</li>
-                    <li>Recomendado: Nombrar archivos sin espacios ni caracteres especiales</li>
-                    <li>Después de subir, haz clic en "Recargar Música"</li>
-                </ol>
-            </div>
-        </div>
-
-        <!-- Server Info -->
+        <!-- Info Section -->
         <div class="player-card" style="margin-top: 2rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3>Información del Servidor</h3>
-                <button class="control-btn" id="server-info-btn" title="Ver info del servidor">
-                    <i class="fas fa-server"></i>
+                <h3>Información del Sistema</h3>
+                <button class="control-btn" id="info-btn" title="Ver información">
+                    <i class="fas fa-info-circle"></i>
                 </button>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                 <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Ruta Local</h4>
-                    <p id="server-path">Cargando ruta del servidor...</p>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Fuente Actual</h4>
+                    <p id="current-source">Cargando...</p>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Espacio Disponible</h4>
-                    <p id="server-space">Calculando espacio...</p>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Servidor</h4>
+                    <p id="server-info">Conectando...</p>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Estadísticas</h4>
-                    <p id="server-stats">0 archivos • 0 MB total</p>
+                    <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">Reproductor</h4>
+                    <p id="player-info">Versión 2.0 • Listo</p>
                 </div>
             </div>
         </div>
@@ -929,16 +877,23 @@
     </div>
 
     <script>
-        // ============== SISTEMA DE RADIO LOCAL ==============
-        class LocalRadioPlayer {
+        // ============== SISTEMA DE RADIO HÍBRIDO ==============
+        class HybridRadioPlayer {
             constructor() {
                 // Configuración
                 this.config = {
-                    musicFolder: 'musica',  // Carpeta local en el servidor
-                    uploadEndpoint: 'upload.php', // PHP para subir archivos
-                    listEndpoint: 'list-music.php', // PHP para listar archivos
-                    serverInfoEndpoint: 'server-info.php', // PHP para info del servidor
-                    maxFileSize: 50 * 1024 * 1024, // 50MB
+                    // Para servidor local
+                    localMusicFolder: 'musica',
+                    localListEndpoint: 'list-music.php',
+                    
+                    // Para GitHub
+                    githubUser: 'cl7adv',
+                    githubRepo: 'Voz-del-Shaddai-Online',
+                    githubFolder: 'musica',
+                    githubApiUrl: 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica',
+                    
+                    // Configuración general
+                    maxFileSize: 50 * 1024 * 1024,
                     supportedFormats: ['mp3', 'm4a', 'ogg', 'wav', 'flac']
                 };
 
@@ -948,12 +903,12 @@
                     currentTrackIndex: 0,
                     isPlaying: false,
                     isShuffled: false,
-                    repeatMode: 'none', // none, one, all
+                    repeatMode: 'none',
                     volume: 0.7,
-                    playbackRate: 1.0,
                     isMuted: false,
                     lastVolume: 0.7,
-                    filesToUpload: []
+                    currentSource: 'local', // 'local' o 'github'
+                    isOnline: navigator.onLine
                 };
 
                 // Elementos DOM
@@ -961,6 +916,12 @@
                 this.audio = new Audio();
                 this.audio.volume = this.state.volume;
                 this.audio.preload = 'auto';
+
+                // Estadísticas
+                this.stats = {
+                    totalPlays: 0,
+                    tracksLoaded: 0
+                };
 
                 // Inicializar
                 this.init();
@@ -970,9 +931,8 @@
             async init() {
                 this.cacheElements();
                 this.setupEventListeners();
-                await this.loadTracks();
-                await this.loadServerInfo();
-                this.showNotification('Sistema local cargado', 'Conectado al servidor', 'success');
+                this.setupNetworkListener();
+                await this.autoDetectSource();
                 this.hideLoadingScreen();
             }
 
@@ -984,12 +944,21 @@
                     loadingStatus: document.getElementById('loading-status'),
                     app: document.getElementById('app'),
                     
+                    // Indicador de fuente
+                    sourceDot: document.getElementById('source-dot'),
+                    sourceText: document.getElementById('source-text'),
+                    
+                    // Selectores de fuente
+                    sourceLocal: document.getElementById('source-local'),
+                    sourceGitHub: document.getElementById('source-github'),
+                    
                     // Información de la canción
                     trackTitle: document.getElementById('track-title'),
                     trackArtist: document.getElementById('track-artist'),
                     currentTime: document.getElementById('current-time'),
                     totalTime: document.getElementById('total-time'),
                     playerStatus: document.getElementById('player-status'),
+                    trackSource: document.getElementById('track-source'),
                     
                     // Controles
                     playBtn: document.getElementById('play-btn'),
@@ -1000,7 +969,7 @@
                     volumeSlider: document.getElementById('volume-slider'),
                     volumeIcon: document.getElementById('volume-icon'),
                     refreshBtn: document.getElementById('refresh-btn'),
-                    serverInfoBtn: document.getElementById('server-info-btn'),
+                    infoBtn: document.getElementById('info-btn'),
                     
                     // Barra de progreso
                     progressTrack: document.getElementById('progress-track'),
@@ -1012,17 +981,10 @@
                     totalTracks: document.getElementById('total-tracks'),
                     playMode: document.getElementById('play-mode'),
                     
-                    // Subida de archivos
-                    uploadArea: document.getElementById('upload-area'),
-                    fileInput: document.getElementById('file-input'),
-                    uploadButton: document.getElementById('upload-button'),
-                    uploadProgress: document.getElementById('upload-progress'),
-                    uploadProgressBar: document.getElementById('upload-progress-bar'),
-                    
-                    // Información del servidor
-                    serverPath: document.getElementById('server-path'),
-                    serverSpace: document.getElementById('server-space'),
-                    serverStats: document.getElementById('server-stats'),
+                    // Información del sistema
+                    currentSource: document.getElementById('current-source'),
+                    serverInfo: document.getElementById('server-info'),
+                    playerInfo: document.getElementById('player-info'),
                     
                     // Notificación
                     notification: document.getElementById('notification'),
@@ -1032,6 +994,10 @@
             }
 
             setupEventListeners() {
+                // Selectores de fuente
+                this.elements.sourceLocal.addEventListener('click', () => this.switchSource('local'));
+                this.elements.sourceGitHub.addEventListener('click', () => this.switchSource('github'));
+                
                 // Controles de reproducción
                 this.elements.playBtn.addEventListener('click', () => this.togglePlay());
                 this.elements.prevBtn.addEventListener('click', () => this.previousTrack());
@@ -1039,7 +1005,7 @@
                 this.elements.shuffleBtn.addEventListener('click', () => this.toggleShuffle());
                 this.elements.repeatBtn.addEventListener('click', () => this.toggleRepeat());
                 this.elements.refreshBtn.addEventListener('click', () => this.refreshTracks());
-                this.elements.serverInfoBtn.addEventListener('click', () => this.loadServerInfo());
+                this.elements.infoBtn.addEventListener('click', () => this.showSystemInfo());
                 
                 // Control de volumen
                 this.elements.volumeSlider.addEventListener('input', (e) => {
@@ -1051,38 +1017,6 @@
                     const rect = e.currentTarget.getBoundingClientRect();
                     const percentage = (e.clientX - rect.left) / rect.width;
                     this.seek(percentage);
-                });
-                
-                // Subida de archivos
-                this.elements.uploadArea.addEventListener('click', () => {
-                    this.elements.fileInput.click();
-                });
-                
-                this.elements.fileInput.addEventListener('change', (e) => {
-                    this.handleFileSelection(e.target.files);
-                });
-                
-                this.elements.uploadButton.addEventListener('click', () => {
-                    this.uploadFiles();
-                });
-                
-                // Drag and drop
-                this.elements.uploadArea.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.elements.uploadArea.style.borderColor = 'var(--primary)';
-                    this.elements.uploadArea.style.background = 'rgba(67, 97, 238, 0.1)';
-                });
-                
-                this.elements.uploadArea.addEventListener('dragleave', () => {
-                    this.elements.uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    this.elements.uploadArea.style.background = '';
-                });
-                
-                this.elements.uploadArea.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.elements.uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    this.elements.uploadArea.style.background = '';
-                    this.handleFileSelection(e.dataTransfer.files);
                 });
                 
                 // Eventos del audio
@@ -1097,195 +1031,255 @@
                 document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
             }
 
-            // ============== CARGA DE CANCIONES DESDE SERVIDOR ==============
+            setupNetworkListener() {
+                window.addEventListener('online', () => {
+                    this.state.isOnline = true;
+                    this.showNotification('Conectado', 'Volviste a estar en línea', 'success');
+                    this.updateSourceIndicator();
+                });
+                
+                window.addEventListener('offline', () => {
+                    this.state.isOnline = false;
+                    this.showNotification('Sin conexión', 'Modo offline activado', 'warning');
+                    this.updateSourceIndicator();
+                });
+            }
+
+            // ============== DETECCIÓN AUTOMÁTICA DE FUENTE ==============
+            async autoDetectSource() {
+                this.updateLoadingStatus('Detectando mejor fuente de música...', 30);
+                
+                // Primero intentar con servidor local
+                const localAvailable = await this.testLocalSource();
+                
+                if (localAvailable) {
+                    this.updateLoadingStatus('Servidor local disponible', 50);
+                    await this.switchSource('local');
+                } else {
+                    this.updateLoadingStatus('Usando GitHub como fuente', 50);
+                    await this.switchSource('github');
+                }
+                
+                this.updateLoadingStatus('Sistema listo', 100);
+            }
+
+            async testLocalSource() {
+                try {
+                    // Intentar cargar desde PHP endpoint
+                    const response = await fetch(this.config.localListEndpoint, {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.success && data.files && data.files.length > 0;
+                    }
+                    
+                    // Si no hay PHP, intentar listado directo de directorio
+                    const dirResponse = await fetch(this.config.localMusicFolder + '/');
+                    if (dirResponse.ok) {
+                        const html = await dirResponse.text();
+                        // Buscar enlaces a archivos de audio
+                        return html.includes('.mp3') || html.includes('.m4a') || 
+                               html.includes('.wav') || html.includes('.ogg');
+                    }
+                    
+                    return false;
+                } catch (error) {
+                    console.log('Fuente local no disponible:', error.message);
+                    return false;
+                }
+            }
+
+            // ============== CAMBIO DE FUENTE ==============
+            async switchSource(source) {
+                if (source === this.state.currentSource) return;
+                
+                this.state.currentSource = source;
+                
+                // Actualizar UI
+                this.elements.sourceLocal.classList.toggle('active', source === 'local');
+                this.elements.sourceGitHub.classList.toggle('active', source === 'github');
+                
+                this.updateSourceIndicator();
+                this.showNotification('Cambiando fuente', `Conectando a ${source === 'local' ? 'servidor local' : 'GitHub'}...`, 'info');
+                
+                // Cargar canciones desde la nueva fuente
+                await this.loadTracks();
+                
+                // Actualizar información del sistema
+                this.updateSystemInfo();
+            }
+
+            updateSourceIndicator() {
+                const isLocal = this.state.currentSource === 'local';
+                const isOnline = this.state.isOnline;
+                
+                let color, text;
+                
+                if (isLocal) {
+                    color = 'var(--success)';
+                    text = 'Servidor Local';
+                } else {
+                    color = 'var(--primary)';
+                    text = 'GitHub';
+                    
+                    if (!isOnline) {
+                        color = 'var(--warning)';
+                        text = 'GitHub (Offline)';
+                    }
+                }
+                
+                this.elements.sourceDot.style.backgroundColor = color;
+                this.elements.sourceText.textContent = text;
+                this.elements.sourceDot.className = `source-dot ${isLocal ? 'local' : 'github'}`;
+            }
+
+            // ============== CARGA DE CANCIONES ==============
             async loadTracks() {
                 try {
-                    this.updateLoadingStatus('Conectando con servidor local...', 30);
+                    this.updateLoadingStatus(`Cargando desde ${this.state.currentSource === 'local' ? 'servidor local' : 'GitHub'}...`, 60);
                     
-                    // Usar PHP para listar archivos
-                    const response = await fetch(this.config.listEndpoint);
-                    
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP ${response.status}`);
+                    if (this.state.currentSource === 'local') {
+                        await this.loadLocalTracks();
+                    } else {
+                        await this.loadGitHubTracks();
                     }
-                    
-                    this.updateLoadingStatus('Obteniendo lista de canciones...', 60);
-                    
-                    const data = await response.json();
-                    
-                    if (!data.success) {
-                        throw new Error(data.error || 'Error al listar archivos');
-                    }
-                    
-                    this.state.tracks = data.files.map((file, index) => ({
-                        id: index + 1,
-                        name: file.name,
-                        path: file.path,
-                        size: file.size,
-                        type: file.type,
-                        duration: 0,
-                        played: false,
-                        lastModified: file.lastModified
-                    }));
                     
                     if (this.state.tracks.length === 0) {
-                        this.updateLoadingStatus('No hay música en el servidor', 100);
-                        this.showNotification('Sin música', 'Sube archivos MP3 a la carpeta /musica/', 'warning');
-                    } else {
-                        this.updateLoadingStatus(`Cargando ${this.state.tracks.length} canciones...`, 80);
-                        
-                        // Actualizar UI
-                        this.updatePlaylist();
-                        this.updateTrackCount();
-                        
-                        // Cargar primera canción
-                        await this.loadTrack(0);
-                        
-                        this.updateLoadingStatus('Sistema listo', 100);
+                        throw new Error('No se encontraron canciones');
                     }
+                    
+                    this.updateLoadingStatus(`${this.state.tracks.length} canciones cargadas`, 80);
+                    
+                    // Actualizar UI
+                    this.updatePlaylist();
+                    this.updateTrackCount();
+                    
+                    // Cargar primera canción
+                    if (this.state.tracks.length > 0) {
+                        await this.loadTrack(0);
+                    }
+                    
+                    this.stats.tracksLoaded = this.state.tracks.length;
+                    this.showNotification('Listo', `${this.state.tracks.length} canciones cargadas`, 'success');
                     
                 } catch (error) {
                     console.error('Error cargando canciones:', error);
                     
-                    // Intentar método alternativo si PHP falla
-                    await this.loadTracksFallback();
+                    // Intentar cambiar a la otra fuente si falla
+                    const otherSource = this.state.currentSource === 'local' ? 'github' : 'local';
+                    this.showNotification(`Error con ${this.state.currentSource}`, `Intentando con ${otherSource}...`, 'error');
+                    
+                    await this.switchSource(otherSource);
                 }
             }
 
-            // Método alternativo si no hay PHP
-            async loadTracksFallback() {
+            async loadLocalTracks() {
                 try {
-                    this.updateLoadingStatus('Intentando método alternativo...', 50);
+                    // Intentar con PHP primero
+                    const response = await fetch(this.config.localListEndpoint);
                     
-                    // Intentar cargar archivos directamente desde la carpeta
-                    // Esto requiere que el servidor tenga listado de directorios habilitado
-                    const musicFolder = this.config.musicFolder;
-                    
-                    // Obtener lista de archivos del servidor
-                    const response = await fetch(musicFolder + '/');
-                    
-                    if (response.ok) {
-                        const html = await response.text();
-                        
-                        // Parsear HTML para encontrar enlaces a archivos de audio
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const links = doc.querySelectorAll('a[href$=".mp3"], a[href$=".m4a"], a[href$=".wav"], a[href$=".ogg"]');
-                        
-                        this.state.tracks = Array.from(links).map((link, index) => ({
-                            id: index + 1,
-                            name: link.href.split('/').pop(),
-                            path: link.href,
-                            size: 0,
-                            type: link.href.split('.').pop(),
-                            duration: 0,
-                            played: false
-                        }));
-                        
-                        if (this.state.tracks.length > 0) {
-                            this.updateLoadingStatus(`Encontradas ${this.state.tracks.length} canciones`, 80);
-                            this.updatePlaylist();
-                            this.updateTrackCount();
-                            await this.loadTrack(0);
-                        }
-                    } else {
-                        throw new Error('No se pudo acceder a la carpeta de música');
-                    }
-                    
-                } catch (error) {
-                    console.error('Error en método alternativo:', error);
-                    this.showNotification('Error de conexión', 'No se pudo cargar música del servidor', 'error');
-                    this.updateLoadingStatus('Error al cargar música', 100);
-                }
-            }
-
-            // ============== INFORMACIÓN DEL SERVIDOR ==============
-            async loadServerInfo() {
-                try {
-                    const response = await fetch(this.config.serverInfoEndpoint);
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.success) {
-                            this.elements.serverPath.textContent = data.path || 'Desconocido';
-                            this.elements.serverSpace.textContent = data.freeSpace || 'Desconocido';
-                            this.elements.serverStats.textContent = `${data.fileCount || 0} archivos • ${data.totalSize || 0} MB`;
+                        if (data.success && data.files) {
+                            this.state.tracks = data.files.map((file, index) => ({
+                                id: index + 1,
+                                name: file.name,
+                                url: file.path || `./${this.config.localMusicFolder}/${encodeURIComponent(file.name)}`,
+                                size: file.size || 0,
+                                type: file.type || file.name.split('.').pop(),
+                                duration: 0,
+                                source: 'local'
+                            }));
+                            return;
                         }
                     }
+                    
+                    // Si PHP falla, intentar listado de directorio
+                    await this.loadLocalTracksFallback();
+                    
                 } catch (error) {
-                    console.error('Error cargando info del servidor:', error);
-                    this.elements.serverPath.textContent = '/musica/ (ruta por defecto)';
+                    console.error('Error cargando local:', error);
+                    await this.loadLocalTracksFallback();
                 }
             }
 
-            // ============== MANEJO DE ARCHIVOS ==============
-            handleFileSelection(files) {
-                this.state.filesToUpload = Array.from(files).filter(file => {
-                    const extension = file.name.split('.').pop().toLowerCase();
-                    const isValidFormat = this.config.supportedFormats.includes(extension);
-                    const isValidSize = file.size <= this.config.maxFileSize;
-                    
-                    if (!isValidFormat) {
-                        this.showNotification('Formato no soportado', `${file.name} no es un formato de audio válido`, 'error');
-                        return false;
+            async loadLocalTracksFallback() {
+                try {
+                    const response = await fetch(this.config.localMusicFolder + '/');
+                    if (response.ok) {
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        // Buscar todos los enlaces a archivos de audio
+                        const links = Array.from(doc.querySelectorAll('a'));
+                        const audioLinks = links.filter(link => {
+                            const href = link.getAttribute('href');
+                            if (!href) return false;
+                            const ext = href.split('.').pop().toLowerCase();
+                            return this.config.supportedFormats.includes(ext) && 
+                                   !href.includes('?') && 
+                                   !href.startsWith('?') &&
+                                   !href.startsWith('/');
+                        });
+                        
+                        this.state.tracks = audioLinks.map((link, index) => {
+                            const href = link.getAttribute('href');
+                            return {
+                                id: index + 1,
+                                name: decodeURIComponent(href),
+                                url: `./${this.config.localMusicFolder}/${href}`,
+                                size: 0,
+                                type: href.split('.').pop().toLowerCase(),
+                                duration: 0,
+                                source: 'local'
+                            };
+                        });
                     }
-                    
-                    if (!isValidSize) {
-                        this.showNotification('Archivo muy grande', `${file.name} excede el límite de 50MB`, 'error');
-                        return false;
-                    }
-                    
-                    return true;
-                });
-                
-                if (this.state.filesToUpload.length > 0) {
-                    this.elements.uploadButton.disabled = false;
-                    this.showNotification('Archivos listos', `${this.state.filesToUpload.length} archivo(s) listo(s) para subir`, 'success');
-                } else {
-                    this.elements.uploadButton.disabled = true;
+                } catch (error) {
+                    throw new Error('No se pudo acceder a la carpeta local de música');
                 }
             }
 
-            async uploadFiles() {
-                if (this.state.filesToUpload.length === 0) return;
-                
-                this.elements.uploadButton.disabled = true;
-                this.elements.uploadProgress.style.display = 'block';
-                this.elements.uploadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...';
-                
-                const formData = new FormData();
-                this.state.filesToUpload.forEach(file => {
-                    formData.append('files[]', file);
-                });
+            async loadGitHubTracks() {
+                if (!this.state.isOnline) {
+                    throw new Error('No hay conexión a internet para acceder a GitHub');
+                }
                 
                 try {
-                    const response = await fetch(this.config.uploadEndpoint, {
-                        method: 'POST',
-                        body: formData
-                    });
+                    const response = await fetch(this.config.githubApiUrl);
                     
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        this.showNotification('Subida exitosa', `${data.uploaded.length} archivo(s) subido(s)`, 'success');
-                        
-                        // Limpiar lista de archivos
-                        this.state.filesToUpload = [];
-                        this.elements.fileInput.value = '';
-                        
-                        // Recargar lista de canciones
-                        setTimeout(() => this.refreshTracks(), 1000);
-                    } else {
-                        throw new Error(data.error || 'Error desconocido');
+                    if (!response.ok) {
+                        throw new Error(`GitHub API error: ${response.status}`);
                     }
                     
+                    const files = await response.json();
+                    
+                    // Filtrar solo archivos de audio
+                    const audioFiles = files.filter(file => {
+                        if (file.type !== 'file') return false;
+                        const ext = file.name.split('.').pop().toLowerCase();
+                        return this.config.supportedFormats.includes(ext);
+                    });
+                    
+                    // Usar jsDelivr CDN para mejores velocidades
+                    this.state.tracks = audioFiles.map((file, index) => ({
+                        id: index + 1,
+                        name: file.name,
+                        url: `https://cdn.jsdelivr.net/gh/${this.config.githubUser}/${this.config.githubRepo}/${this.config.githubFolder}/${encodeURIComponent(file.name)}`,
+                        size: file.size || 0,
+                        type: file.name.split('.').pop().toLowerCase(),
+                        duration: 0,
+                        source: 'github',
+                        githubUrl: file.download_url
+                    }));
+                    
                 } catch (error) {
-                    console.error('Error subiendo archivos:', error);
-                    this.showNotification('Error en subida', error.message, 'error');
-                } finally {
-                    this.elements.uploadButton.disabled = true;
-                    this.elements.uploadButton.innerHTML = '<i class="fas fa-upload"></i> Subir Archivos Seleccionados';
-                    this.elements.uploadProgress.style.display = 'none';
-                    this.elements.uploadProgressBar.style.width = '0%';
+                    console.error('Error cargando desde GitHub:', error);
+                    throw new Error(`No se pudo cargar desde GitHub: ${error.message}`);
                 }
             }
 
@@ -1300,30 +1294,35 @@
                     // Actualizar UI
                     this.elements.trackTitle.textContent = this.formatTrackName(track.name);
                     this.elements.trackArtist.textContent = 'Voz del Shaddai Radio';
+                    this.elements.trackSource.textContent = track.source === 'local' ? 'Local' : 'GitHub';
                     this.elements.playerStatus.textContent = 'Cargando...';
                     
                     // Actualizar lista de reproducción
                     this.updatePlaylist();
                     
-                    // Usar ruta relativa desde el servidor
-                    const audioPath = track.path.startsWith('http') ? track.path : `./${this.config.musicFolder}/${encodeURIComponent(track.name)}`;
+                    // Detener audio actual si está reproduciendo
+                    if (this.state.isPlaying) {
+                        this.audio.pause();
+                    }
                     
-                    // Cargar audio
-                    this.audio.src = audioPath;
+                    // Cargar nuevo audio
+                    this.audio.src = track.url;
                     await this.audio.load();
                     
                     // Reproducir automáticamente
                     await this.play();
                     
                     // Estadísticas
-                    track.played = true;
+                    this.stats.totalPlays++;
                     
-                    this.showNotification('Reproduciendo local', track.name, 'success');
+                    this.showNotification('Reproduciendo', track.name, 'success');
                     
                 } catch (error) {
                     console.error('Error cargando track:', error);
                     this.showNotification('Error', `No se pudo cargar: ${track.name}`, 'error');
-                    this.nextTrack();
+                    
+                    // Intentar siguiente canción si falla
+                    setTimeout(() => this.nextTrack(), 2000);
                 }
             }
 
@@ -1339,7 +1338,6 @@
                     this.state.isPlaying = false;
                     this.updatePlayButton();
                     
-                    // Si es error de autoplay, mostrar mensaje
                     if (error.name === 'NotAllowedError') {
                         this.showNotification('Haz clic en play', 'El navegador requiere interacción para reproducir', 'warning');
                     }
@@ -1355,6 +1353,13 @@
             }
 
             togglePlay() {
+                if (!this.audio.src) {
+                    if (this.state.tracks.length > 0) {
+                        this.loadTrack(this.state.currentTrackIndex);
+                    }
+                    return;
+                }
+                
                 if (this.state.isPlaying) {
                     this.pause();
                 } else {
@@ -1363,6 +1368,8 @@
             }
 
             nextTrack() {
+                if (this.state.tracks.length === 0) return;
+                
                 let nextIndex;
                 
                 if (this.state.isShuffled) {
@@ -1375,6 +1382,8 @@
             }
 
             previousTrack() {
+                if (this.state.tracks.length === 0) return;
+                
                 let prevIndex;
                 
                 if (this.state.isShuffled) {
@@ -1448,7 +1457,7 @@
                 
                 // Actualizar botón
                 const icons = ['fa-redo', 'fa-redo', 'fa-infinity'];
-                this.elements.repeatBtn.innerHTML = `<i class="fas ${icons[currentIndex + 1]}"></i>`;
+                this.elements.repeatBtn.innerHTML = `<i class="fas ${icons[(currentIndex + 1) % icons.length]}"></i>`;
                 
                 this.showNotification('Modo repetir', this.getRepeatModeText(), 'info');
             }
@@ -1484,6 +1493,9 @@
                         <div class="playlist-item-number">${index + 1}</div>
                         <div class="playlist-item-info">
                             <div class="playlist-item-title">${this.formatTrackName(track.name)}</div>
+                            <small style="color: var(--gray); font-size: 0.8rem;">
+                                ${track.source === 'local' ? '📁 Local' : '🐙 GitHub'}
+                            </small>
                         </div>
                         <div class="playlist-item-duration">${this.formatTime(track.duration || 0)}</div>
                     `;
@@ -1496,6 +1508,31 @@
             updateTrackCount() {
                 this.elements.playlistCount.textContent = `${this.state.tracks.length} canciones`;
                 this.elements.totalTracks.textContent = this.state.tracks.length;
+            }
+
+            updateSystemInfo() {
+                const sourceText = this.state.currentSource === 'local' ? 'Servidor Local' : 'GitHub';
+                const statusText = this.state.isOnline ? 'En línea' : 'Offline';
+                
+                this.elements.currentSource.textContent = `${sourceText} • ${statusText}`;
+                this.elements.serverInfo.textContent = this.state.currentSource === 'local' ? 
+                    'Carpeta /musica/' : 
+                    `https://github.com/${this.config.githubUser}/${this.config.githubRepo}`;
+                this.elements.playerInfo.textContent = `v2.0 • ${this.stats.tracksLoaded} canciones • ${this.stats.totalPlays} reproducciones`;
+            }
+
+            showSystemInfo() {
+                const info = `
+                    <strong>Información Técnica:</strong><br>
+                    • Fuente: ${this.state.currentSource}<br>
+                    • Canciones cargadas: ${this.state.tracks.length}<br>
+                    • Modo: ${this.state.isShuffled ? 'Aleatorio' : 'Normal'}<br>
+                    • Repetición: ${this.getRepeatModeText()}<br>
+                    • Volumen: ${Math.round(this.state.volume * 100)}%<br>
+                    • Estado: ${this.state.isPlaying ? 'Reproduciendo' : 'Pausado'}
+                `;
+                
+                this.showNotification('Información del Sistema', info, 'info');
             }
 
             updateLoadingStatus(message, progress) {
@@ -1515,10 +1552,13 @@
                         this.elements.app.classList.add('app-loaded');
                         
                         // Animar elementos
-                        document.querySelectorAll('.player-card, .playlist-container, .upload-section').forEach((el, i) => {
+                        document.querySelectorAll('.player-card, .playlist-container, .source-selector').forEach((el, i) => {
                             el.style.animationDelay = `${i * 0.1}s`;
                             el.classList.add('animate-slide-up');
                         });
+                        
+                        // Actualizar info del sistema
+                        this.updateSystemInfo();
                         
                     }, 500);
                 }, 1000);
@@ -1604,16 +1644,16 @@
                 
                 // Establecer tipo
                 this.elements.notification.className = `notification ${type}`;
-                this.elements.notification.querySelector('.notification-icon').className = 
-                    `fas ${this.getNotificationIcon(type)} notification-icon`;
+                const icon = this.elements.notification.querySelector('.notification-icon');
+                icon.className = `fas ${this.getNotificationIcon(type)} notification-icon`;
                 
                 // Mostrar
                 this.elements.notification.classList.add('show');
                 
-                // Ocultar después de 3 segundos
+                // Ocultar después de 4 segundos
                 setTimeout(() => {
                     this.elements.notification.classList.remove('show');
-                }, 3000);
+                }, 4000);
             }
 
             getNotificationIcon(type) {
@@ -1626,12 +1666,12 @@
             }
 
             async refreshTracks() {
-                this.showNotification('Actualizando', 'Recargando lista de música...', 'info');
+                this.showNotification('Actualizando', `Recargando canciones desde ${this.state.currentSource === 'local' ? 'servidor local' : 'GitHub'}...`, 'info');
                 await this.loadTracks();
+                this.updateSystemInfo();
             }
 
             handleKeyboardShortcuts(e) {
-                // Evitar atajos en inputs
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
                 
                 switch (e.code) {
@@ -1663,16 +1703,24 @@
                         e.preventDefault();
                         document.documentElement.requestFullscreen?.();
                         break;
+                    case 'KeyL':
+                        e.preventDefault();
+                        this.switchSource('local');
+                        break;
+                    case 'KeyG':
+                        e.preventDefault();
+                        this.switchSource('github');
+                        break;
                 }
             }
         }
 
         // ============== ARCHIVOS PHP NECESARIOS ==============
-        // Crear estos archivos en tu servidor:
 
-        /* list-music.php
+        /* list-music.php (opcional, para servidor local)
         <?php
         header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
         
         $musicDir = './musica/';
         $files = [];
@@ -1699,110 +1747,25 @@
         
         echo json_encode([
             'success' => true,
-            'files' => $files
-        ]);
-        ?>
-        */
-
-        /* upload.php
-        <?php
-        header('Content-Type: application/json');
-        
-        $musicDir = './musica/';
-        
-        if (!is_dir($musicDir)) {
-            mkdir($musicDir, 0777, true);
-        }
-        
-        $uploaded = [];
-        $errors = [];
-        
-        if (isset($_FILES['files'])) {
-            foreach ($_FILES['files']['tmp_name'] as $key => $tmpName) {
-                $fileName = $_FILES['files']['name'][$key];
-                $fileSize = $_FILES['files']['size'][$key];
-                $fileError = $_FILES['files']['error'][$key];
-                
-                // Validar tamaño (50MB máximo)
-                if ($fileSize > 50 * 1024 * 1024) {
-                    $errors[] = "$fileName excede el límite de 50MB";
-                    continue;
-                }
-                
-                // Validar extensión
-                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                $allowed = ['mp3', 'm4a', 'wav', 'ogg', 'flac'];
-                
-                if (!in_array($ext, $allowed)) {
-                    $errors[] = "$fileName tiene un formato no permitido";
-                    continue;
-                }
-                
-                // Mover archivo
-                $destination = $musicDir . basename($fileName);
-                if (move_uploaded_file($tmpName, $destination)) {
-                    $uploaded[] = $fileName;
-                } else {
-                    $errors[] = "Error subiendo $fileName";
-                }
-            }
-        }
-        
-        echo json_encode([
-            'success' => count($errors) === 0,
-            'uploaded' => $uploaded,
-            'errors' => $errors
-        ]);
-        ?>
-        */
-
-        /* server-info.php
-        <?php
-        header('Content-Type: application/json');
-        
-        $musicDir = './musica/';
-        $totalSize = 0;
-        $fileCount = 0;
-        
-        if (is_dir($musicDir)) {
-            $files = scandir($musicDir);
-            foreach ($files as $file) {
-                if ($file === '.' || $file === '..') continue;
-                $path = $musicDir . $file;
-                if (is_file($path)) {
-                    $totalSize += filesize($path);
-                    $fileCount++;
-                }
-            }
-        }
-        
-        $freeSpace = disk_free_space('.');
-        
-        echo json_encode([
-            'success' => true,
-            'path' => realpath($musicDir),
-            'fileCount' => $fileCount,
-            'totalSize' => round($totalSize / 1024 / 1024, 2),
-            'freeSpace' => round($freeSpace / 1024 / 1024, 2) . ' MB'
+            'files' => $files,
+            'count' => count($files)
         ]);
         ?>
         */
 
         // ============== INICIAR APLICACIÓN ==============
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar reproductor
-            window.radioPlayer = new LocalRadioPlayer();
+            // Inicializar reproductor híbrido
+            window.radioPlayer = new HybridRadioPlayer();
             
-            // Para desarrollo: Si no hay PHP, usar modo simulado
+            // Mostrar instrucciones de teclado
             setTimeout(() => {
-                if (window.radioPlayer.state.tracks.length === 0) {
-                    window.radioPlayer.showNotification(
-                        'Modo desarrollo', 
-                        'Crea los archivos PHP para cargar música real', 
-                        'warning'
-                    );
-                }
-            }, 3000);
+                window.radioPlayer.showNotification(
+                    'Atajos de teclado',
+                    'Espacio: Play/Pause • Flechas: Siguiente/Anterior • L: Local • G: GitHub • F: Pantalla completa',
+                    'info'
+                );
+            }, 5000);
         });
 
         // ============== FUNCIONES GLOBALES ==============
@@ -1811,6 +1774,19 @@
                 document.documentElement.requestFullscreen();
             } else {
                 document.exitFullscreen();
+            }
+        }
+
+        function shareRadio() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Voz del Shaddai Radio',
+                    text: 'Escucha música cristiana las 24 horas',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                window.radioPlayer?.showNotification('Enlace copiado', 'Comparte la radio con otros', 'success');
             }
         }
     </script>
