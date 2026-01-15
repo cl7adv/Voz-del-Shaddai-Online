@@ -3,58 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📻 Voz del Shaddai Radio - Emisora Cristiana 24/7</title>
     
-    <!-- ===== TÍTULO PARA COMPARTIR ===== -->
-    <title>🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟</title>
+    <!-- Meta Tags para Compartir -->
+    <meta name="description" content="📻 Escucha Voz del Shaddai Radio - Emisora Cristiana en vivo 24/7. Música inspiradora sin interrupciones.">
+    <meta name="keywords" content="radio cristiana, emisora online, música cristiana, radio en vivo, 24/7">
+    <meta property="og:title" content="📻 Voz del Shaddai Radio - Emisora Cristiana 24/7">
+    <meta property="og:description" content="Sintoniza nuestra emisora cristiana en vivo. Música inspiradora las 24 horas.">
     
-    <!-- ===== META TAGS PARA COMPARTIR ===== -->
-    <meta name="description" content="Escucha música cristiana inspiradora las 24 horas del día. Radio en línea con espectro musical en vivo.">
-    <meta name="keywords" content="música cristiana, radio online, alabanza, adoración, radio cristiana 24/7">
-    <meta name="author" content="Voz del Shaddai">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cl7adv.github.io/Voz-del-Shaddai-Online/">
-    <meta property="og:title" content="🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟">
-    <meta property="og:description" content="Radio cristiana en vivo con música inspiradora las 24 horas. ¡Escucha ahora!">
-    <meta property="og:image" content="https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/radio-cover.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cl7adv.github.io/Voz-del-Shaddai-Online/">
-    <meta property="twitter:title" content="🎵 Voz del Shaddai Radio - Música Cristiana 24/7 🌟">
-    <meta property="twitter:description" content="Radio cristiana en vivo con música inspiradora las 24 horas. ¡Escucha ahora!">
-    <meta property="twitter:image" content="https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/radio-cover.jpg">
-    
-    <!-- ===== ICONS & FONTS ===== -->
+    <!-- Estilos y Fuentes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
     
     <style>
         /* ===== VARIABLES Y RESET ===== */
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a0ca3;
-            --primary-light: #4cc9f0;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --success: #4ade80;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --dark: #1e293b;
-            --darker: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --gray-dark: #334155;
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #4285f4;
+            --secondary: #ea4335;
+            --accent: #fbbc05;
+            --success: #34a853;
+            --dark: #202124;
+            --darker: #171717;
+            --light: #ffffff;
+            --gray: #9aa0a6;
+            --gray-dark: #5f6368;
             
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --radius: 12px;
-            --radius-lg: 20px;
-            --radius-full: 9999px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --radius: 16px;
+            --radius-sm: 8px;
             
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -69,7 +50,6 @@
             color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
         /* ===== LOADING SCREEN ===== */
@@ -112,17 +92,14 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--primary-light), var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--light);
             margin-bottom: 1rem;
         }
 
         .loading-subtitle {
             color: var(--gray);
-            margin-bottom: 2rem;
             font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
         /* ===== MAIN APP ===== */
@@ -130,7 +107,7 @@
             display: none;
             min-height: 100vh;
             padding: 1rem;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -138,163 +115,153 @@
             display: block;
         }
 
-        /* ===== HEADER ===== */
-        .header {
+        /* ===== RADIO HEADER ===== */
+        .radio-header {
+            background: rgba(32, 33, 36, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 2rem;
         }
 
-        .logo {
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .radio-brand {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
-        .logo-icon {
-            width: 60px;
-            height: 60px;
+        .radio-logo {
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: var(--radius);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            box-shadow: var(--shadow);
+            font-size: 2.5rem;
+            box-shadow: var(--shadow-lg);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
         }
 
-        .logo-text h1 {
+        .radio-info h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--primary-light), var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--light);
+            margin-bottom: 0.5rem;
         }
 
-        .logo-text p {
+        .radio-info p {
             color: var(--gray);
             font-size: 1rem;
         }
 
-        /* ===== ESPECTRO MUSICAL AVANZADO ===== */
-        .spectrum-section {
-            background: rgba(30, 41, 59, 0.7);
+        .radio-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        /* ===== LIVE BROADCAST SECTION ===== */
+        .broadcast-section {
+            background: rgba(32, 33, 36, 0.9);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
-        .spectrum-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+        .broadcast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1.5rem;
-            color: var(--primary-light);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .live-indicator {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            animation: livePulse 1.5s infinite;
         }
 
-        .spectrum-container {
-            width: 100%;
-            height: 250px;
-            position: relative;
-            border-radius: var(--radius);
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.3);
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        #spectrum-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .spectrum-controls {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .spectrum-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: var(--radius);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--light);
-            cursor: pointer;
-            transition: var(--transition);
+        .broadcast-time {
+            color: var(--gray);
             font-size: 0.9rem;
         }
 
-        .spectrum-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .spectrum-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
         /* ===== NOW PLAYING ===== */
-        .now-playing {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
+        .now-playing-card {
+            background: linear-gradient(135deg, rgba(26, 115, 232, 0.2), rgba(234, 67, 53, 0.2));
+            border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .track-display {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .album-art {
-            width: 140px;
-            height: 140px;
-            border-radius: var(--radius);
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: var(--shadow-lg);
-            flex-shrink: 0;
             position: relative;
             overflow: hidden;
         }
 
-        .album-art::before {
+        .now-playing-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
             animation: shine 3s infinite linear;
         }
 
@@ -303,12 +270,40 @@
             100% { transform: translateX(100%); }
         }
 
+        .track-display {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .track-display {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .album-art {
+            width: 140px;
+            height: 140px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            flex-shrink: 0;
+        }
+
         .track-info {
             flex: 1;
         }
 
         .track-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             line-height: 1.2;
@@ -317,7 +312,7 @@
 
         .track-artist {
             color: var(--primary-light);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             font-weight: 500;
         }
@@ -329,177 +324,82 @@
             font-size: 1rem;
         }
 
-        /* ===== PROGRESS BAR ===== */
-        .progress-container {
-            margin-bottom: 2rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            width: 0%;
-            border-radius: var(--radius-full);
-            transition: width 0.1s linear;
-            position: relative;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--light);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
-        }
-
-        .progress-time {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* ===== BOTONES PRINCIPALES ===== */
-        .controls-container {
-            background: rgba(30, 41, 59, 0.7);
+        /* ===== LISTENER CONTROLS (SOLO VOLUMEN Y ON/OFF) ===== */
+        .listener-controls {
+            background: rgba(32, 33, 36, 0.9);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
         }
 
-        .main-controls {
+        .controls-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .control-group {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 3rem;
             flex-wrap: wrap;
         }
 
-        .control-btn {
+        .power-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .power-btn {
             width: 80px;
             height: 80px;
-            border-radius: var(--radius);
+            border-radius: 50%;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: white;
             font-size: 1.8rem;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
         }
 
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        .power-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(52, 168, 83, 0.4);
         }
 
-        .control-btn:active {
-            transform: translateY(-2px) scale(1.02);
-        }
-
-        .control-btn.primary {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            font-size: 2.5rem;
-            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
-        }
-
-        .control-btn.primary:hover {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            box-shadow: 0 20px 35px rgba(67, 97, 238, 0.6);
-        }
-
-        .control-btn.active {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 0 30px rgba(67, 97, 238, 0.5);
-        }
-
-        /* ===== CONTROLES SECUNDARIOS ===== */
-        .secondary-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .secondary-btn {
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .secondary-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* ===== VOLUMEN ===== */
-        .volume-section {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .volume-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--primary-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .power-btn.off {
+            background: linear-gradient(135deg, var(--secondary), #c62828);
         }
 
         .volume-control {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 1rem;
+            min-width: 300px;
+        }
+
+        .volume-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
         }
 
         .volume-icon {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary-light);
             width: 40px;
         }
@@ -509,7 +409,7 @@
             height: 10px;
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
+            border-radius: 5px;
             outline: none;
         }
 
@@ -520,170 +420,92 @@
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
             border: 3px solid var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .volume-value {
             width: 60px;
             text-align: center;
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 1.3rem;
             color: var(--primary-light);
         }
 
-        /* ===== PLAYLIST ===== */
-        .playlist-section {
-            background: rgba(30, 41, 59, 0.7);
+        /* ===== ESPECTRO MUSICAL FUNCIONAL ===== */
+        .spectrum-section {
+            background: rgba(32, 33, 36, 0.9);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
         }
 
-        .playlist-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .playlist-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-light);
-        }
-
-        .playlist-count {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-full);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .playlist {
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-
-        .playlist::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .playlist::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-        }
-
-        .playlist::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: var(--radius-full);
-        }
-
-        .playlist-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 0.5rem;
-        }
-
-        .playlist-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .playlist-item.active {
-            background: rgba(67, 97, 238, 0.3);
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
-        }
-
-        .playlist-item-number {
-            color: var(--gray);
-            font-size: 1rem;
-            min-width: 35px;
-            font-weight: 600;
-        }
-
-        .playlist-item-title {
-            flex: 1;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 1.1rem;
-        }
-
-        .playlist-item-duration {
-            color: var(--gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* ===== SHARE SECTION ===== */
-        .share-section {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .share-title {
+        .spectrum-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
-            color: var(--primary-light);
-        }
-
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .share-btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
             color: var(--light);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .spectrum-container {
+            width: 100%;
+            height: 180px;
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        #spectrum-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* ===== SISTEMA INFO ===== */
+        .system-info {
+            background: rgba(32, 33, 36, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-title {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
             font-weight: 500;
         }
 
-        .share-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--light);
         }
 
-        .share-btn.facebook {
-            background: #1877f2;
-        }
-
-        .share-btn.twitter {
-            background: #1da1f2;
-        }
-
-        .share-btn.whatsapp {
-            background: #25d366;
-        }
-
-        /* ===== NOTIFICATIONS ===== */
+        /* ===== NOTIFICATION ===== */
         .notification {
             position: fixed;
             bottom: 2rem;
@@ -691,13 +513,13 @@
             background: var(--dark);
             border-left: 4px solid var(--primary);
             padding: 1.5rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-sm);
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             gap: 1rem;
             transform: translateX(120%);
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transition: transform 0.3s ease;
             z-index: 1000;
             max-width: 400px;
         }
@@ -706,76 +528,19 @@
             transform: translateX(0);
         }
 
-        .notification-icon {
-            font-size: 1.5rem;
-        }
-
-        .notification.success {
-            border-left-color: var(--success);
-        }
-
-        .notification.error {
-            border-left-color: var(--danger);
-        }
-
-        .notification.warning {
-            border-left-color: var(--warning);
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .header {
+            .control-group {
                 flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+                gap: 2rem;
             }
             
-            .track-display {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .album-art {
-                width: 180px;
-                height: 180px;
+            .volume-control {
+                min-width: 100%;
             }
             
             .track-title {
                 font-size: 1.8rem;
-            }
-            
-            .main-controls {
-                gap: 1rem;
-            }
-            
-            .control-btn {
-                width: 70px;
-                height: 70px;
-                font-size: 1.5rem;
-            }
-            
-            .control-btn.primary {
-                width: 85px;
-                height: 85px;
-                font-size: 2rem;
-            }
-            
-            .secondary-controls {
-                gap: 1rem;
-            }
-            
-            .secondary-btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-            }
-            
-            .share-btn {
-                width: 100%;
-                justify-content: center;
             }
             
             .notification {
@@ -783,52 +548,6 @@
                 right: 1rem;
                 max-width: none;
             }
-        }
-
-        @media (max-width: 480px) {
-            .main-controls {
-                gap: 0.5rem;
-            }
-            
-            .control-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 1.2rem;
-            }
-            
-            .control-btn.primary {
-                width: 70px;
-                height: 70px;
-                font-size: 1.8rem;
-            }
-            
-            .secondary-controls {
-                flex-direction: column;
-            }
-            
-            .secondary-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* ===== ANIMACIONES ===== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center;
         }
     </style>
 </head>
@@ -838,172 +557,131 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <h1 class="loading-title">VOZ DEL SHADDAI</h1>
-            <p class="loading-subtitle">Inicializando sistema de radio con espectro musical...</p>
-            <div id="loading-details" style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;"></div>
+            <p class="loading-subtitle">Sintonizando emisora cristiana...</p>
+            <div id="loading-details" style="color: var(--gray); margin-top: 1rem;"></div>
         </div>
     </div>
 
     <!-- Main App -->
     <div id="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-cross"></i>
+        <!-- Radio Header -->
+        <header class="radio-header">
+            <div class="header-content">
+                <div class="radio-brand">
+                    <div class="radio-logo">
+                        <i class="fas fa-cross"></i>
+                    </div>
+                    <div class="radio-info">
+                        <h1>VOZ DEL SHADDAI RADIO</h1>
+                        <p>Emisora Cristiana en Vivo 24/7</p>
+                    </div>
                 </div>
-                <div class="logo-text">
-                    <h1>VOZ DEL SHADDAI</h1>
-                    <p>Radio Cristiana 24/7 con Espectro Musical</p>
-                </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div style="text-align: right;">
-                    <div style="font-size: 0.9rem; color: var(--gray);">Estado</div>
-                    <div id="connection-status" style="font-weight: 600; color: var(--success);">
-                        <i class="fas fa-circle"></i> Conectado
+                <div class="radio-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">OYENTES</div>
+                        <div class="stat-value" id="listener-count">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">ESTADO</div>
+                        <div class="stat-value" id="broadcast-status" style="color: var(--success);">EN VIVO</div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Espectro Musical -->
-        <div class="spectrum-section">
-            <div class="spectrum-title">
-                <i class="fas fa-wave-square"></i> Espectro Musical en Vivo
-            </div>
-            
-            <div class="spectrum-container">
-                <canvas id="spectrum-canvas"></canvas>
-            </div>
-            
-            <div class="spectrum-controls">
-                <button class="spectrum-btn active" data-mode="bars" id="mode-bars">
-                    <i class="fas fa-chart-bar"></i> Barras
-                </button>
-                <button class="spectrum-btn" data-mode="wave" id="mode-wave">
-                    <i class="fas fa-water"></i> Onda
-                </button>
-                <button class="spectrum-btn" data-mode="circle" id="mode-circle">
-                    <i class="fas fa-circle"></i> Circular
-                </button>
-                <button class="spectrum-btn" data-mode="particles" id="mode-particles">
-                    <i class="fas fa-star"></i> Partículas
-                </button>
-                <button class="spectrum-btn" data-mode="spectrum" id="mode-spectrum">
-                    <i class="fas fa-music"></i> Espectro
-                </button>
-            </div>
-        </div>
-
-        <!-- Now Playing -->
-        <div class="now-playing">
-            <div class="track-display">
-                <div class="album-art">
-                    <i class="fas fa-music"></i>
+        <!-- Broadcast Section -->
+        <section class="broadcast-section">
+            <div class="broadcast-header">
+                <div class="live-indicator">
+                    <div class="live-dot" style="width: 8px; height: 8px; background: white; border-radius: 50%;"></div>
+                    TRANSMITIENDO EN VIVO
                 </div>
-                <div class="track-info">
-                    <h2 class="track-title" id="track-title">Cargando música...</h2>
-                    <p class="track-artist" id="track-artist">Voz del Shaddai Radio</p>
-                    <div class="track-meta">
-                        <span id="current-time">00:00</span>
-                        <span id="total-time">00:00</span>
-                        <span id="bitrate">128 kbps</span>
+                <div class="broadcast-time" id="broadcast-time">Cargando...</div>
+            </div>
+
+            <!-- Now Playing -->
+            <div class="now-playing-card">
+                <div class="track-display">
+                    <div class="album-art">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <div class="track-info">
+                        <h2 class="track-title" id="track-title">Sintonizando emisora...</h2>
+                        <p class="track-artist" id="track-artist">Voz del Shaddai Radio</p>
+                        <div class="track-meta">
+                            <span id="current-time">00:00</span>
+                            <span id="track-duration">00:00</span>
+                            <span id="bitrate">128 kbps</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+        <!-- Listener Controls (Solo volumen y power) -->
+        <section class="listener-controls">
+            <h3 class="controls-title">CONTROLES DEL OYENTE</h3>
+            <div class="control-group">
+                <div class="power-control">
+                    <button class="power-btn" id="power-btn" title="Encender/Apagar radio">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                    <span style="color: var(--gray); font-size: 0.9rem;">ON/OFF</span>
                 </div>
-                <div class="progress-time">
-                    <span id="progress-current">00:00</span>
-                    <span id="progress-total">00:00</span>
+                
+                <div class="volume-control">
+                    <div class="volume-display">
+                        <div class="volume-icon">
+                            <i class="fas fa-volume-up" id="volume-icon"></i>
+                        </div>
+                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
+                        <div class="volume-value" id="volume-value">70%</div>
+                    </div>
+                    <span style="color: var(--gray); font-size: 0.9rem;">VOLUMEN</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Main Controls -->
-        <div class="controls-container">
-            <div class="main-controls">
-                <button class="control-btn" id="prev-btn" title="Canción anterior">
-                    <i class="fas fa-step-backward"></i>
-                </button>
-                
-                <button class="control-btn primary" id="play-btn" title="Reproducir/Pausar">
-                    <i class="fas fa-play"></i>
-                </button>
-                
-                <button class="control-btn" id="next-btn" title="Siguiente canción">
-                    <i class="fas fa-step-forward"></i>
-                </button>
+            <div style="text-align: center; margin-top: 2rem; color: var(--gray); font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Los controles de reproducción son automáticos del sistema
             </div>
+        </section>
 
-            <!-- Secondary Controls -->
-            <div class="secondary-controls">
-                <button class="secondary-btn" id="shuffle-btn" title="Modo aleatorio">
-                    <i class="fas fa-random"></i> Aleatorio
-                </button>
-                
-                <button class="secondary-btn" id="repeat-btn" title="Modo repetición">
-                    <i class="fas fa-redo"></i> Repetir
-                </button>
-                
-                <button class="secondary-btn" id="refresh-btn" title="Recargar lista">
-                    <i class="fas fa-sync-alt"></i> Recargar
-                </button>
+        <!-- Espectro Musical -->
+        <section class="spectrum-section">
+            <div class="spectrum-title">
+                <i class="fas fa-wave-square"></i> Espectro Musical en Vivo
             </div>
-        </div>
+            <div class="spectrum-container">
+                <canvas id="spectrum-canvas"></canvas>
+            </div>
+        </section>
 
-        <!-- Volume -->
-        <div class="volume-section">
-            <div class="volume-title">
-                <i class="fas fa-volume-up"></i> Control de Volumen
-            </div>
-            <div class="volume-control">
-                <div class="volume-icon">
-                    <i class="fas fa-volume-down" id="volume-icon"></i>
+        <!-- System Info -->
+        <section class="system-info">
+            <h3 style="margin-bottom: 1rem; color: var(--light);">Información del Sistema</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-title">MODO DE TRANSMISIÓN</div>
+                    <div class="info-value">RADIO EMISORA</div>
                 </div>
-                <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
-                <div class="volume-value" id="volume-value">70%</div>
+                <div class="info-card">
+                    <div class="info-title">REPRODUCCIÓN</div>
+                    <div class="info-value" id="playback-mode">ALEATORIA AUTOMÁTICA</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-title">TOTAL DE CANCIONES</div>
+                    <div class="info-value" id="total-songs">0</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-title">TIEMPO TRANSCURRIDO</div>
+                    <div class="info-value" id="uptime">00:00:00</div>
+                </div>
             </div>
-        </div>
-
-        <!-- Playlist -->
-        <div class="playlist-section">
-            <div class="playlist-header">
-                <h3 class="playlist-title">Lista de Reproducción</h3>
-                <span class="playlist-count" id="playlist-count">0 canciones</span>
-            </div>
-            <div class="playlist" id="playlist">
-                <!-- Canciones se cargarán aquí -->
-            </div>
-        </div>
-
-        <!-- Share Section -->
-        <div class="share-section">
-            <h3 class="share-title">¡Comparte esta radio!</h3>
-            <div class="share-buttons">
-                <button class="share-btn facebook" id="share-facebook">
-                    <i class="fab fa-facebook-f"></i> Facebook
-                </button>
-                <button class="share-btn twitter" id="share-twitter">
-                    <i class="fab fa-twitter"></i> Twitter
-                </button>
-                <button class="share-btn whatsapp" id="share-whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </button>
-                <button class="share-btn" id="share-link">
-                    <i class="fas fa-link"></i> Copiar Enlace
-                </button>
-            </div>
-        </div>
+        </section>
     </div>
 
     <!-- Notification -->
     <div class="notification" id="notification">
-        <i class="fas fa-info-circle notification-icon"></i>
+        <i class="fas fa-info-circle"></i>
         <div>
             <strong id="notification-title">Notificación</strong>
             <p id="notification-message">Mensaje de notificación</p>
@@ -1011,10 +689,10 @@
     </div>
 
     <script>
-        // ============== SISTEMA DE RADIO CON ESPECTRO MUSICAL ==============
-        class RadioSystemWithSpectrum {
+        // ============== SISTEMA DE RADIO EMISORA ==============
+        class RadioStationSystem {
             constructor() {
-                // Configuración
+                // Configuración del sistema
                 this.config = {
                     githubUser: 'cl7adv',
                     repo: 'Voz-del-Shaddai-Online',
@@ -1032,24 +710,33 @@
                     
                     supportedFormats: ['mp3', 'm4a', 'wav', 'ogg'],
                     defaultVolume: 0.7,
-                    autoPlay: true
+                    shuffleMode: true, // Siempre aleatorio
+                    autoRepeat: true,  // Siempre repetir toda la lista
+                    crossfadeDuration: 2000, // 2 segundos de fade entre canciones
+                    
+                    // Sistema de oyentes (simulado)
+                    listenerUpdateInterval: 30000, // Actualizar cada 30 segundos
+                    minListeners: 5,
+                    maxListeners: 150
                 };
 
-                // Estado
+                // Estado del sistema
                 this.state = {
                     tracks: [],
                     currentTrackIndex: 0,
                     isPlaying: false,
-                    isShuffled: false,
-                    repeatMode: 'none',
+                    isPoweredOn: true, // Radio encendida por defecto
                     volume: this.config.defaultVolume,
                     currentSource: 0,
-                    visualizerMode: 'bars',
+                    shuffleQueue: [],
                     audioContext: null,
                     analyser: null,
-                    sourceNode: null,
                     dataArray: null,
-                    animationFrame: null
+                    animationFrame: null,
+                    startTime: Date.now(),
+                    listeners: 0,
+                    currentTime: 0,
+                    nextTrackTimer: null
                 };
 
                 // Elementos DOM
@@ -1062,7 +749,7 @@
                 this.canvas = null;
                 this.ctx = null;
                 
-                // Inicializar
+                // Inicializar el sistema
                 this.init();
             }
 
@@ -1073,7 +760,18 @@
                 this.setupAudioEvents();
                 this.initSpectrum();
                 await this.loadTracks();
+                this.startSystem();
                 this.hideLoadingScreen();
+                
+                // Iniciar simulador de oyentes
+                this.startListenerSimulator();
+                
+                // Iniciar actualización de tiempo
+                this.updateBroadcastTime();
+                setInterval(() => this.updateBroadcastTime(), 60000);
+                
+                // Iniciar contador de uptime
+                setInterval(() => this.updateUptime(), 1000);
             }
 
             cacheElements() {
@@ -1082,53 +780,29 @@
                     loadingDetails: document.getElementById('loading-details'),
                     app: document.getElementById('app'),
                     
-                    // Track info
+                    // Información de transmisión
                     trackTitle: document.getElementById('track-title'),
                     trackArtist: document.getElementById('track-artist'),
+                    currentTime: document.getElementById('current-time'),
+                    broadcastTime: document.getElementById('broadcast-time'),
                     
-                    // Progress
-                    progressFill: document.getElementById('progress-fill'),
-                    progressBar: document.getElementById('progress-bar'),
-                    progressCurrent: document.getElementById('progress-current'),
-                    progressTotal: document.getElementById('progress-total'),
+                    // Estadísticas
+                    listenerCount: document.getElementById('listener-count'),
+                    broadcastStatus: document.getElementById('broadcast-status'),
+                    totalSongs: document.getElementById('total-songs'),
+                    playbackMode: document.getElementById('playback-mode'),
+                    uptime: document.getElementById('uptime'),
                     
-                    // Controls
-                    playBtn: document.getElementById('play-btn'),
-                    prevBtn: document.getElementById('prev-btn'),
-                    nextBtn: document.getElementById('next-btn'),
-                    shuffleBtn: document.getElementById('shuffle-btn'),
-                    repeatBtn: document.getElementById('repeat-btn'),
-                    refreshBtn: document.getElementById('refresh-btn'),
-                    
-                    // Volume
+                    // Controles del oyente
+                    powerBtn: document.getElementById('power-btn'),
                     volumeSlider: document.getElementById('volume-slider'),
                     volumeValue: document.getElementById('volume-value'),
                     volumeIcon: document.getElementById('volume-icon'),
                     
-                    // Playlist
-                    playlist: document.getElementById('playlist'),
-                    playlistCount: document.getElementById('playlist-count'),
-                    
-                    // Connection
-                    connectionStatus: document.getElementById('connection-status'),
-                    
-                    // Spectrum
+                    // Espectro
                     spectrumCanvas: document.getElementById('spectrum-canvas'),
                     
-                    // Spectrum mode buttons
-                    modeBars: document.getElementById('mode-bars'),
-                    modeWave: document.getElementById('mode-wave'),
-                    modeCircle: document.getElementById('mode-circle'),
-                    modeParticles: document.getElementById('mode-particles'),
-                    modeSpectrum: document.getElementById('mode-spectrum'),
-                    
-                    // Share buttons
-                    shareFacebook: document.getElementById('share-facebook'),
-                    shareTwitter: document.getElementById('share-twitter'),
-                    shareWhatsapp: document.getElementById('share-whatsapp'),
-                    shareLink: document.getElementById('share-link'),
-                    
-                    // Notification
+                    // Notificación
                     notification: document.getElementById('notification'),
                     notificationTitle: document.getElementById('notification-title'),
                     notificationMessage: document.getElementById('notification-message')
@@ -1136,73 +810,10 @@
             }
 
             setupEventListeners() {
-                // Controles principales
-                this.elements.playBtn.addEventListener('click', () => this.togglePlay());
-                this.elements.prevBtn.addEventListener('click', () => this.previousTrack());
-                this.elements.nextBtn.addEventListener('click', () => this.nextTrack());
-                this.elements.shuffleBtn.addEventListener('click', () => this.toggleShuffle());
-                this.elements.repeatBtn.addEventListener('click', () => this.toggleRepeat());
-                this.elements.refreshBtn.addEventListener('click', () => this.refreshTracks());
-                
-                // Modos del espectro
-                this.elements.modeBars.addEventListener('click', () => this.setVisualizerMode('bars'));
-                this.elements.modeWave.addEventListener('click', () => this.setVisualizerMode('wave'));
-                this.elements.modeCircle.addEventListener('click', () => this.setVisualizerMode('circle'));
-                this.elements.modeParticles.addEventListener('click', () => this.setVisualizerMode('particles'));
-                this.elements.modeSpectrum.addEventListener('click', () => this.setVisualizerMode('spectrum'));
-                
-                // Volumen
+                // Controles del oyente (solo power y volumen)
+                this.elements.powerBtn.addEventListener('click', () => this.togglePower());
                 this.elements.volumeSlider.addEventListener('input', (e) => {
                     this.setVolume(e.target.value / 100);
-                });
-                
-                // Barra de progreso
-                this.elements.progressBar.addEventListener('click', (e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const percentage = (e.clientX - rect.left) / rect.width;
-                    this.seek(percentage);
-                });
-                
-                // Compartir
-                this.elements.shareFacebook.addEventListener('click', () => this.shareFacebook());
-                this.elements.shareTwitter.addEventListener('click', () => this.shareTwitter());
-                this.elements.shareWhatsapp.addEventListener('click', () => this.shareWhatsapp());
-                this.elements.shareLink.addEventListener('click', () => this.copyLink());
-                
-                // Atajos de teclado
-                document.addEventListener('keydown', (e) => {
-                    if (e.target.tagName === 'INPUT') return;
-                    
-                    switch(e.code) {
-                        case 'Space':
-                            e.preventDefault();
-                            this.togglePlay();
-                            break;
-                        case 'ArrowRight':
-                            e.preventDefault();
-                            this.nextTrack();
-                            break;
-                        case 'ArrowLeft':
-                            e.preventDefault();
-                            this.previousTrack();
-                            break;
-                        case 'KeyM':
-                            e.preventDefault();
-                            this.toggleMute();
-                            break;
-                        case 'KeyS':
-                            e.preventDefault();
-                            this.toggleShuffle();
-                            break;
-                        case 'KeyR':
-                            e.preventDefault();
-                            this.toggleRepeat();
-                            break;
-                        case 'KeyV':
-                            e.preventDefault();
-                            this.cycleVisualizerMode();
-                            break;
-                    }
                 });
             }
 
@@ -1215,12 +826,12 @@
                 this.audio.addEventListener('pause', () => this.onPause());
             }
 
-            // ============== ESPECTRO MUSICAL ==============
+            // ============== ESPECTRO MUSICAL FUNCIONAL ==============
             initSpectrum() {
                 this.canvas = this.elements.spectrumCanvas;
                 this.ctx = this.canvas.getContext('2d');
                 
-                // Configurar tamaño
+                // Configurar tamaño inicial
                 this.resizeCanvas();
                 window.addEventListener('resize', () => this.resizeCanvas());
             }
@@ -1234,27 +845,29 @@
             initAudioAnalyser() {
                 try {
                     // Crear AudioContext
-                    if (!this.state.audioContext) {
-                        this.state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                        this.state.analyser = this.state.audioContext.createAnalyser();
-                        
-                        // Conectar el audio al analizador
-                        this.state.sourceNode = this.state.audioContext.createMediaElementSource(this.audio);
-                        this.state.sourceNode.connect(this.state.analyser);
-                        this.state.analyser.connect(this.state.audioContext.destination);
-                        
-                        // Configurar analizador
-                        this.state.analyser.fftSize = 2048; // Más detalle para el espectro
-                        const bufferLength = this.state.analyser.frequencyBinCount;
-                        this.state.dataArray = new Uint8Array(bufferLength);
-                    }
+                    this.state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.state.analyser = this.state.audioContext.createAnalyser();
+                    
+                    // Conectar el audio al analizador
+                    const source = this.state.audioContext.createMediaElementSource(this.audio);
+                    source.connect(this.state.analyser);
+                    this.state.analyser.connect(this.state.audioContext.destination);
+                    
+                    // Configurar analizador
+                    this.state.analyser.fftSize = 256;
+                    const bufferLength = this.state.analyser.frequencyBinCount;
+                    this.state.dataArray = new Uint8Array(bufferLength);
+                    
                 } catch (error) {
-                    console.warn('No se pudo inicializar el analizador de audio:', error);
+                    console.warn('AudioContext no disponible:', error);
                 }
             }
 
             startSpectrum() {
-                if (!this.state.analyser || !this.state.dataArray) {
+                if (!this.state.isPlaying || !this.state.isPoweredOn) return;
+                
+                // Inicializar analizador si no existe
+                if (!this.state.audioContext || this.state.audioContext.state === 'suspended') {
                     this.initAudioAnalyser();
                 }
                 
@@ -1263,6 +876,14 @@
                 }
                 
                 const draw = () => {
+                    if (!this.state.isPlaying || !this.state.isPoweredOn) {
+                        if (this.state.animationFrame) {
+                            cancelAnimationFrame(this.state.animationFrame);
+                            this.state.animationFrame = null;
+                        }
+                        return;
+                    }
+                    
                     this.state.animationFrame = requestAnimationFrame(draw);
                     
                     if (!this.state.analyser || !this.state.dataArray) return;
@@ -1273,287 +894,68 @@
                     // Limpiar canvas
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                     
-                    // Dibujar según el modo
-                    switch(this.state.visualizerMode) {
-                        case 'bars':
-                            this.drawBars();
-                            break;
-                        case 'wave':
-                            this.drawWave();
-                            break;
-                        case 'circle':
-                            this.drawCircle();
-                            break;
-                        case 'particles':
-                            this.drawParticles();
-                            break;
-                        case 'spectrum':
-                            this.drawSpectrum();
-                            break;
-                    }
+                    // Dibujar espectro mejorado
+                    this.drawEnhancedSpectrum();
                 };
                 
                 draw();
             }
 
-            drawBars() {
+            drawEnhancedSpectrum() {
                 const width = this.canvas.width;
                 const height = this.canvas.height;
-                const barCount = 128;
+                const barCount = 64; // Menos barras para mejor rendimiento
                 const barWidth = width / barCount;
                 
+                // Fondo con gradiente
+                const gradient = this.ctx.createLinearGradient(0, 0, 0, height);
+                gradient.addColorStop(0, 'rgba(26, 115, 232, 0.1)');
+                gradient.addColorStop(1, 'rgba(234, 67, 53, 0.1)');
+                this.ctx.fillStyle = gradient;
+                this.ctx.fillRect(0, 0, width, height);
+                
+                // Dibujar barras
                 for(let i = 0; i < barCount; i++) {
                     const dataIndex = Math.floor(i * this.state.dataArray.length / barCount);
-                    const barHeight = (this.state.dataArray[dataIndex] / 255) * height;
+                    const barHeight = (this.state.dataArray[dataIndex] / 255) * height * 0.8;
                     
-                    // Gradiente de color basado en la frecuencia
-                    const hue = (i / barCount) * 360;
-                    this.ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+                    // Color basado en la altura de la barra
+                    const intensity = barHeight / (height * 0.8);
+                    const hue = 200 + (intensity * 160); // Azul a rojo
                     
-                    // Dibujar barra con sombra
-                    this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
-                    this.ctx.shadowBlur = 15;
-                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 1, barHeight);
+                    // Gradiente para cada barra
+                    const barGradient = this.ctx.createLinearGradient(0, height - barHeight, 0, height);
+                    barGradient.addColorStop(0, `hsla(${hue}, 100%, 60%, 0.9)`);
+                    barGradient.addColorStop(1, `hsla(${hue}, 100%, 30%, 0.3)`);
                     
-                    // Restaurar sombra
-                    this.ctx.shadowBlur = 0;
-                    
-                    // Añadir brillo en la parte superior
-                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 1, 2);
-                }
-            }
-
-            drawWave() {
-                const width = this.canvas.width;
-                const height = this.canvas.height;
-                const sliceWidth = width / this.state.dataArray.length;
-                
-                this.ctx.beginPath();
-                this.ctx.lineWidth = 2;
-                this.ctx.lineJoin = 'round';
-                
-                let x = 0;
-                for(let i = 0; i < this.state.dataArray.length; i++) {
-                    const v = this.state.dataArray[i] / 128.0;
-                    const y = v * height / 2;
-                    
-                    if(i === 0) {
-                        this.ctx.moveTo(x, y);
-                    } else {
-                        this.ctx.lineTo(x, y);
-                    }
-                    
-                    x += sliceWidth;
-                }
-                
-                // Gradiente para la línea
-                const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
-                gradient.addColorStop(0, '#4361ee');
-                gradient.addColorStop(0.5, '#4cc9f0');
-                gradient.addColorStop(1, '#7209b7');
-                
-                this.ctx.strokeStyle = gradient;
-                this.ctx.stroke();
-                
-                // Relleno con opacidad
-                this.ctx.lineTo(width, height);
-                this.ctx.lineTo(0, height);
-                this.ctx.closePath();
-                this.ctx.fillStyle = 'rgba(67, 97, 238, 0.1)';
-                this.ctx.fill();
-            }
-
-            drawCircle() {
-                const centerX = this.canvas.width / 2;
-                const centerY = this.canvas.height / 2;
-                const radius = Math.min(centerX, centerY) * 0.8;
-                
-                // Círculo base
-                this.ctx.beginPath();
-                this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-                this.ctx.lineWidth = 2;
-                this.ctx.stroke();
-                
-                // Puntos alrededor del círculo
-                const points = 128;
-                const angleStep = (2 * Math.PI) / points;
-                
-                for(let i = 0; i < points; i++) {
-                    const angle = i * angleStep;
-                    const dataIndex = Math.floor(i * this.state.dataArray.length / points);
-                    const amplitude = this.state.dataArray[dataIndex] / 255;
-                    
-                    // Posición del punto
-                    const pointRadius = radius * (1 + amplitude * 0.3);
-                    const x = centerX + Math.cos(angle) * pointRadius;
-                    const y = centerY + Math.sin(angle) * pointRadius;
-                    
-                    // Tamaño y color del punto
-                    const pointSize = 2 + amplitude * 4;
-                    const hue = (i / points) * 360;
-                    
-                    // Dibujar punto
-                    this.ctx.beginPath();
-                    this.ctx.arc(x, y, pointSize, 0, 2 * Math.PI);
-                    this.ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
-                    this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
-                    this.ctx.shadowBlur = 10;
-                    this.ctx.fill();
-                    
-                    // Restaurar sombra
-                    this.ctx.shadowBlur = 0;
-                    
-                    // Conectar puntos
-                    if(i > 0) {
-                        const prevAngle = (i - 1) * angleStep;
-                        const prevDataIndex = Math.floor((i - 1) * this.state.dataArray.length / points);
-                        const prevAmplitude = this.state.dataArray[prevDataIndex] / 255;
-                        const prevPointRadius = radius * (1 + prevAmplitude * 0.3);
-                        
-                        const prevX = centerX + Math.cos(prevAngle) * prevPointRadius;
-                        const prevY = centerY + Math.sin(prevAngle) * prevPointRadius;
-                        
-                        this.ctx.beginPath();
-                        this.ctx.moveTo(prevX, prevY);
-                        this.ctx.lineTo(x, y);
-                        this.ctx.strokeStyle = `rgba(76, 201, 240, ${0.3 + amplitude * 0.7})`;
-                        this.ctx.lineWidth = 1;
-                        this.ctx.stroke();
-                    }
-                }
-            }
-
-            drawParticles() {
-                const width = this.canvas.width;
-                const height = this.canvas.height;
-                
-                // Fondo semi-transparente para efecto de trazo
-                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                this.ctx.fillRect(0, 0, width, height);
-                
-                // Crear partículas si no existen
-                if (!this.particles) {
-                    this.particles = [];
-                    for(let i = 0; i < 150; i++) {
-                        this.particles.push({
-                            x: Math.random() * width,
-                            y: Math.random() * height,
-                            size: Math.random() * 3 + 1,
-                            speedX: (Math.random() - 0.5) * 2,
-                            speedY: (Math.random() - 0.5) * 2,
-                            color: this.getRandomColor(),
-                            frequency: Math.floor(Math.random() * this.state.dataArray.length)
-                        });
-                    }
-                }
-                
-                // Actualizar y dibujar partículas
-                this.particles.forEach((particle, index) => {
-                    // Obtener energía de la frecuencia correspondiente
-                    const energy = this.state.dataArray[particle.frequency] / 255;
-                    
-                    // Mover partícula con influencia de la música
-                    particle.x += particle.speedX * (1 + energy * 3);
-                    particle.y += particle.speedY * (1 + energy * 3);
-                    
-                    // Rebote en los bordes
-                    if (particle.x < 0 || particle.x > width) particle.speedX *= -1;
-                    if (particle.y < 0 || particle.y > height) particle.speedY *= -1;
-                    
-                    // Mantener dentro del canvas
-                    particle.x = Math.max(0, Math.min(width, particle.x));
-                    particle.y = Math.max(0, Math.min(height, particle.y));
-                    
-                    // Actualizar frecuencia ocasionalmente
-                    if (Math.random() < 0.01) {
-                        particle.frequency = Math.floor(Math.random() * this.state.dataArray.length);
-                    }
-                    
-                    // Dibujar partícula
-                    this.ctx.beginPath();
-                    const currentSize = particle.size * (1 + energy * 2);
-                    this.ctx.arc(particle.x, particle.y, currentSize, 0, Math.PI * 2);
-                    
-                    // Gradiente para la partícula
-                    const gradient = this.ctx.createRadialGradient(
-                        particle.x, particle.y, 0,
-                        particle.x, particle.y, currentSize
-                    );
-                    gradient.addColorStop(0, particle.color);
-                    gradient.addColorStop(1, 'rgba(67, 97, 238, 0.3)');
-                    
-                    this.ctx.fillStyle = gradient;
-                    this.ctx.fill();
-                    
-                    // Añadir brillo
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, currentSize * 0.3, 0, Math.PI * 2);
-                    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                    this.ctx.fill();
-                    
-                    // Conectar partículas cercanas
-                    for(let j = index + 1; j < this.particles.length; j++) {
-                        const otherParticle = this.particles[j];
-                        const dx = particle.x - otherParticle.x;
-                        const dy = particle.y - otherParticle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 100) {
-                            this.ctx.beginPath();
-                            this.ctx.moveTo(particle.x, particle.y);
-                            this.ctx.lineTo(otherParticle.x, otherParticle.y);
-                            this.ctx.strokeStyle = `rgba(76, 201, 240, ${0.3 - distance/100})`;
-                            this.ctx.lineWidth = 1;
-                            this.ctx.stroke();
-                        }
-                    }
-                });
-            }
-
-            drawSpectrum() {
-                const width = this.canvas.width;
-                const height = this.canvas.height;
-                
-                // Fondo
-                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-                this.ctx.fillRect(0, 0, width, height);
-                
-                // Dibujar espectro de frecuencia
-                const barWidth = width / this.state.dataArray.length;
-                
-                for(let i = 0; i < this.state.dataArray.length; i++) {
-                    const value = this.state.dataArray[i];
-                    const percent = value / 255;
-                    const barHeight = height * percent;
-                    
-                    // Color basado en la frecuencia (arcoíris)
-                    const hue = (i / this.state.dataArray.length) * 360;
-                    
-                    // Gradiente vertical para cada barra
-                    const gradient = this.ctx.createLinearGradient(0, height - barHeight, 0, height);
-                    gradient.addColorStop(0, `hsl(${hue}, 100%, 50%)`);
-                    gradient.addColorStop(1, `hsl(${hue}, 100%, 20%)`);
-                    
-                    this.ctx.fillStyle = gradient;
-                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth, barHeight);
+                    // Dibujar barra
+                    this.ctx.fillStyle = barGradient;
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 2, barHeight);
                     
                     // Efecto de brillo
-                    this.ctx.fillStyle = `rgba(255, 255, 255, ${percent * 0.3})`;
-                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth, 2);
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + intensity * 0.3})`;
+                    this.ctx.fillRect(i * barWidth, height - barHeight, barWidth - 2, 2);
+                    
+                    // Sombra
+                    this.ctx.shadowColor = `hsla(${hue}, 100%, 50%, 0.5)`;
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowOffsetX = 0;
+                    this.ctx.shadowOffsetY = 0;
+                    
+                    // Restaurar sombra
+                    this.ctx.shadowBlur = 0;
                 }
                 
                 // Línea superior suave
                 this.ctx.beginPath();
                 this.ctx.lineWidth = 2;
                 this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                this.ctx.lineJoin = 'round';
                 
-                for(let i = 0; i < this.state.dataArray.length; i++) {
-                    const value = this.state.dataArray[i];
-                    const percent = value / 255;
-                    const barHeight = height * percent;
-                    const x = i * (width / this.state.dataArray.length);
+                for(let i = 0; i < barCount; i++) {
+                    const dataIndex = Math.floor(i * this.state.dataArray.length / barCount);
+                    const barHeight = (this.state.dataArray[dataIndex] / 255) * height * 0.8;
+                    const x = i * barWidth + (barWidth / 2);
                     const y = height - barHeight;
                     
                     if(i === 0) {
@@ -1565,46 +967,17 @@
                 this.ctx.stroke();
             }
 
-            getRandomColor() {
-                const colors = ['#4361ee', '#4cc9f0', '#7209b7', '#f72585', '#3a0ca3'];
-                return colors[Math.floor(Math.random() * colors.length)];
-            }
-
-            setVisualizerMode(mode) {
-                this.state.visualizerMode = mode;
-                
-                // Actualizar botones activos
-                document.querySelectorAll('.spectrum-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                const activeBtn = document.querySelector(`[data-mode="${mode}"]`);
-                if (activeBtn) activeBtn.classList.add('active');
-                
-                // Reiniciar visualizador
-                if (this.state.isPlaying) {
-                    this.startSpectrum();
-                }
-            }
-
-            cycleVisualizerMode() {
-                const modes = ['bars', 'wave', 'circle', 'particles', 'spectrum'];
-                const currentIndex = modes.indexOf(this.state.visualizerMode);
-                const nextIndex = (currentIndex + 1) % modes.length;
-                this.setVisualizerMode(modes[nextIndex]);
-            }
-
-            // ============== CARGA DE MÚSICA ==============
+            // ============== CARGA Y GESTIÓN DE MÚSICA ==============
             async loadTracks() {
                 try {
-                    this.updateLoadingStatus('Conectando con GitHub...');
+                    this.updateLoadingStatus('Conectando con el servidor de música...');
                     
                     const apiUrl = `https://api.github.com/repos/${this.config.githubUser}/${this.config.repo}/contents/${this.config.musicFolder}`;
                     const response = await fetch(apiUrl);
                     
                     if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
                     
-                    this.updateLoadingStatus('Obteniendo lista de canciones...');
+                    this.updateLoadingStatus('Cargando lista de reproducción...');
                     
                     const files = await response.json();
                     
@@ -1618,38 +991,47 @@
                         .map((file, index) => ({
                             id: index + 1,
                             name: file.name,
-                            size: file.size,
-                            type: file.name.split('.').pop().toLowerCase(),
                             url: this.getTrackUrl(file.name),
                             duration: 0,
-                            played: false
+                            lastPlayed: 0
                         }));
                     
                     if (this.state.tracks.length === 0) {
-                        throw new Error('No se encontraron archivos de audio');
+                        throw new Error('No se encontraron archivos de música');
                     }
                     
-                    this.updateLoadingStatus(`${this.state.tracks.length} canciones encontradas`);
+                    this.updateLoadingStatus(`${this.state.tracks.length} canciones cargadas`);
                     
                     // Actualizar UI
-                    this.updateTrackCount();
-                    this.updatePlaylist();
-                    this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Conectado';
-                    this.elements.connectionStatus.style.color = 'var(--success)';
+                    this.elements.totalSongs.textContent = this.state.tracks.length;
+                    this.elements.broadcastStatus.textContent = 'EN VIVO';
+                    this.elements.broadcastStatus.style.color = 'var(--success)';
                     
-                    // Cargar primera canción
-                    if (this.config.autoPlay && this.state.tracks.length > 0) {
-                        await this.loadTrack(0);
-                    }
+                    // Crear cola aleatoria inicial
+                    this.generateShuffleQueue();
                     
-                    this.showNotification('¡Sistema listo!', `${this.state.tracks.length} canciones cargadas`, 'success');
+                    this.showNotification('Emisora lista', `${this.state.tracks.length} canciones en lista`, 'success');
                     
                 } catch (error) {
-                    console.error('Error cargando canciones:', error);
-                    this.showNotification('Error de conexión', error.message, 'error');
-                    this.elements.connectionStatus.innerHTML = '<i class="fas fa-circle"></i> Error';
-                    this.elements.connectionStatus.style.color = 'var(--danger)';
+                    console.error('Error cargando música:', error);
+                    this.showNotification('Error de conexión', 'Verificando fuentes alternativas...', 'error');
+                    
+                    // Intentar cargar algunas canciones de ejemplo
+                    this.loadFallbackTracks();
                 }
+            }
+
+            loadFallbackTracks() {
+                // Canciones de ejemplo como fallback
+                this.state.tracks = [
+                    { id: 1, name: 'Alabanza Cristiana - Canción 1', url: '', duration: 180 },
+                    { id: 2, name: 'Alabanza Cristiana - Canción 2', url: '', duration: 210 },
+                    { id: 3, name: 'Alabanza Cristiana - Canción 3', url: '', duration: 195 }
+                ];
+                
+                this.elements.totalSongs.textContent = this.state.tracks.length;
+                this.generateShuffleQueue();
+                this.showNotification('Modo demostración', 'Usando lista de ejemplo', 'warning');
             }
 
             getTrackUrl(filename) {
@@ -1657,44 +1039,108 @@
                 return sourceFunc(this.config.githubUser, this.config.repo, this.config.musicFolder, filename);
             }
 
-            // ============== REPRODUCCIÓN ==============
-            async loadTrack(index) {
-                if (index < 0 || index >= this.state.tracks.length) return;
+            generateShuffleQueue() {
+                // Crear una cola aleatoria de reproducción
+                this.state.shuffleQueue = [...this.state.tracks]
+                    .sort(() => Math.random() - 0.5)
+                    .map(track => track.id);
                 
-                this.state.currentTrackIndex = index;
-                const track = this.state.tracks[index];
+                console.log('Cola aleatoria generada:', this.state.shuffleQueue);
+            }
+
+            getNextTrackIndex() {
+                if (this.config.shuffleMode) {
+                    // Modo aleatorio: obtener siguiente de la cola
+                    if (this.state.shuffleQueue.length === 0) {
+                        this.generateShuffleQueue(); // Regenerar si está vacía
+                    }
+                    
+                    const nextId = this.state.shuffleQueue.shift();
+                    return this.state.tracks.findIndex(track => track.id === nextId);
+                } else {
+                    // Modo secuencial
+                    return (this.state.currentTrackIndex + 1) % this.state.tracks.length;
+                }
+            }
+
+            // ============== SISTEMA DE TRANSMISIÓN ==============
+            startSystem() {
+                // Iniciar reproducción automática
+                this.playNextTrack();
+                
+                // Configurar temporizador para siguiente canción
+                this.setupNextTrackTimer();
+            }
+
+            async playNextTrack() {
+                if (this.state.tracks.length === 0) {
+                    console.log('No hay canciones disponibles');
+                    return;
+                }
+                
+                // Obtener siguiente canción
+                this.state.currentTrackIndex = this.getNextTrackIndex();
+                const track = this.state.tracks[this.state.currentTrackIndex];
                 
                 try {
-                    this.updatePlayButton();
+                    // Actualizar UI
                     this.elements.trackTitle.textContent = this.formatTrackName(track.name);
-                    this.updatePlaylist();
+                    this.elements.trackArtist.textContent = 'Voz del Shaddai Radio';
                     
-                    // Detener audio actual
+                    // Detener audio actual si está reproduciendo
                     if (this.state.isPlaying) {
                         this.audio.pause();
                         this.state.isPlaying = false;
                     }
                     
-                    // Cargar nueva pista
+                    // Cargar y reproducir nueva canción
                     const url = this.getTrackUrl(track.name);
                     this.audio.src = url;
-                    await this.audio.load();
+                    this.audio.load();
                     
-                    // Reproducir
-                    if (this.config.autoPlay) {
+                    // Esperar a que cargue
+                    await new Promise((resolve, reject) => {
+                        const onCanPlay = () => {
+                            this.audio.removeEventListener('canplay', onCanPlay);
+                            resolve();
+                        };
+                        
+                        const onError = () => {
+                            this.audio.removeEventListener('error', onError);
+                            reject(new Error('Error cargando audio'));
+                        };
+                        
+                        this.audio.addEventListener('canplay', onCanPlay);
+                        this.audio.addEventListener('error', onError);
+                        
+                        setTimeout(() => reject(new Error('Timeout')), 10000);
+                    });
+                    
+                    // Iniciar reproducción
+                    if (this.state.isPoweredOn) {
                         await this.play();
                     }
                     
-                    track.played = true;
+                    // Registrar tiempo de reproducción
+                    track.lastPlayed = Date.now();
+                    
+                    // Programar siguiente canción
+                    this.setupNextTrackTimer();
                     
                 } catch (error) {
-                    console.error('Error cargando track:', error);
-                    this.showNotification('Error', `No se pudo cargar: ${track.name}`, 'error');
-                    setTimeout(() => this.nextTrack(), 2000);
+                    console.error('Error reproduciendo:', error);
+                    
+                    // Intentar siguiente canción después de un retraso
+                    setTimeout(() => {
+                        this.showNotification('Error', 'Saltando a siguiente canción', 'error');
+                        this.playNextTrack();
+                    }, 3000);
                 }
             }
 
             async play() {
+                if (!this.state.isPoweredOn) return;
+                
                 try {
                     // Reanudar AudioContext si está suspendido
                     if (this.state.audioContext && this.state.audioContext.state === 'suspended') {
@@ -1703,92 +1149,61 @@
                     
                     await this.audio.play();
                     this.state.isPlaying = true;
-                    this.updatePlayButton();
                     
                     // Iniciar espectro
                     this.startSpectrum();
                     
-                    this.showNotification('Reproduciendo', this.formatTrackName(this.state.tracks[this.state.currentTrackIndex].name), 'success');
+                    // Actualizar UI
+                    this.elements.powerBtn.classList.remove('off');
+                    
+                    console.log('Reproduciendo:', this.state.tracks[this.state.currentTrackIndex].name);
                     
                 } catch (error) {
-                    console.error('Error reproduciendo:', error);
+                    console.error('Error al reproducir:', error);
                     this.state.isPlaying = false;
-                    this.updatePlayButton();
-                    
-                    if (error.name === 'NotAllowedError') {
-                        this.showNotification('Haz clic en play', 'El navegador requiere interacción', 'warning');
-                    }
                 }
             }
 
-            pause() {
-                this.audio.pause();
-                this.state.isPlaying = false;
-                this.updatePlayButton();
-                
-                // Detener espectro
-                if (this.state.animationFrame) {
-                    cancelAnimationFrame(this.state.animationFrame);
-                    this.state.animationFrame = null;
+            setupNextTrackTimer() {
+                // Limpiar temporizador anterior
+                if (this.state.nextTrackTimer) {
+                    clearTimeout(this.state.nextTrackTimer);
                 }
+                
+                // Calcular tiempo para siguiente canción (90% de la duración para fade)
+                const currentDuration = this.audio.duration || 180; // 3 minutos por defecto
+                const nextTrackTime = (currentDuration * 0.9) * 1000; // 90% de la duración en ms
+                
+                // Programar siguiente canción
+                this.state.nextTrackTimer = setTimeout(() => {
+                    this.playNextTrack();
+                }, nextTrackTime);
+                
+                console.log('Siguiente canción en:', Math.round(nextTrackTime / 1000), 'segundos');
             }
 
-            togglePlay() {
-                if (!this.audio.src) {
-                    if (this.state.tracks.length > 0) {
-                        this.loadTrack(this.state.currentTrackIndex);
-                    }
-                    return;
-                }
+            // ============== CONTROLES DEL OYENTE ==============
+            togglePower() {
+                this.state.isPoweredOn = !this.state.isPoweredOn;
                 
-                if (this.state.isPlaying) {
-                    this.pause();
-                } else {
+                if (this.state.isPoweredOn) {
+                    // Encender radio
+                    this.elements.powerBtn.classList.remove('off');
                     this.play();
-                }
-            }
-
-            nextTrack() {
-                if (this.state.tracks.length === 0) return;
-                
-                let nextIndex;
-                
-                if (this.state.isShuffled) {
-                    nextIndex = this.getRandomTrackIndex();
+                    this.showNotification('Radio encendida', 'Sintonizando emisora...', 'success');
                 } else {
-                    nextIndex = (this.state.currentTrackIndex + 1) % this.state.tracks.length;
-                }
-                
-                this.loadTrack(nextIndex);
-            }
-
-            previousTrack() {
-                if (this.state.tracks.length === 0) return;
-                
-                let prevIndex;
-                
-                if (this.state.isShuffled) {
-                    prevIndex = this.getRandomTrackIndex();
-                } else {
-                    prevIndex = (this.state.currentTrackIndex - 1 + this.state.tracks.length) % this.state.tracks.length;
-                }
-                
-                this.loadTrack(prevIndex);
-            }
-
-            getRandomTrackIndex() {
-                if (this.state.tracks.length <= 1) return 0;
-                
-                let newIndex;
-                do {
-                    newIndex = Math.floor(Math.random() * this.state.tracks.length);
-                } while (newIndex === this.state.currentTrackIndex);
-                return newIndex;
-            }
-
-            seek(percentage) {
-                if (this.audio.duration) {
-                    this.audio.currentTime = percentage * this.audio.duration;
+                    // Apagar radio
+                    this.elements.powerBtn.classList.add('off');
+                    this.audio.pause();
+                    this.state.isPlaying = false;
+                    
+                    // Detener espectro
+                    if (this.state.animationFrame) {
+                        cancelAnimationFrame(this.state.animationFrame);
+                        this.state.animationFrame = null;
+                    }
+                    
+                    this.showNotification('Radio apagada', '', 'info');
                 }
             }
 
@@ -1801,131 +1216,81 @@
                 // Actualizar icono
                 if (value === 0) {
                     this.elements.volumeIcon.className = 'fas fa-volume-mute';
-                } else if (value < 0.5) {
+                } else if (value < 0.3) {
                     this.elements.volumeIcon.className = 'fas fa-volume-down';
+                } else if (value < 0.7) {
+                    this.elements.volumeIcon.className = 'fas fa-volume-up';
                 } else {
                     this.elements.volumeIcon.className = 'fas fa-volume-up';
                 }
             }
 
-            toggleMute() {
-                if (this.audio.volume > 0) {
-                    this.setVolume(0);
-                } else {
-                    this.setVolume(this.config.defaultVolume);
-                }
-            }
-
-            toggleShuffle() {
-                this.state.isShuffled = !this.state.isShuffled;
-                this.elements.shuffleBtn.classList.toggle('active', this.state.isShuffled);
-                
-                this.showNotification(
-                    'Modo aleatorio',
-                    this.state.isShuffled ? 'Activado' : 'Desactivado',
-                    'info'
+            // ============== SISTEMA DE OYENTES ==============
+            startListenerSimulator() {
+                // Inicializar con algunos oyentes
+                this.state.listeners = Math.floor(
+                    Math.random() * (this.config.maxListeners - this.config.minListeners) + this.config.minListeners
                 );
-            }
-
-            toggleRepeat() {
-                const modes = ['none', 'one', 'all'];
-                const currentIndex = modes.indexOf(this.state.repeatMode);
-                this.state.repeatMode = modes[(currentIndex + 1) % modes.length];
+                this.updateListenerCount();
                 
-                this.audio.loop = this.state.repeatMode === 'one';
+                // Simular cambios en oyentes
+                setInterval(() => {
+                    this.simulateListenerChange();
+                }, this.config.listenerUpdateInterval);
+            }
+
+            simulateListenerChange() {
+                // Cambio aleatorio de ±10 oyentes
+                const change = Math.floor(Math.random() * 20) - 10;
+                this.state.listeners = Math.max(
+                    this.config.minListeners,
+                    Math.min(this.config.maxListeners, this.state.listeners + change)
+                );
                 
-                const modeNames = ['Sin repetición', 'Repetir una', 'Repetir todas'];
-                this.elements.repeatBtn.innerHTML = `<i class="fas ${this.getRepeatIcon(this.state.repeatMode)}"></i> ${modeNames[(currentIndex + 1) % modeNames.length]}`;
-                this.elements.repeatBtn.classList.toggle('active', this.state.repeatMode !== 'none');
-                
-                this.showNotification('Modo repetir', modeNames[(currentIndex + 1) % modeNames.length], 'info');
+                this.updateListenerCount();
             }
 
-            getRepeatIcon(mode) {
-                switch(mode) {
-                    case 'none': return 'redo';
-                    case 'one': return 'redo';
-                    case 'all': return 'infinity';
-                    default: return 'redo';
-                }
-            }
-
-            // ============== COMPARTIR ==============
-            shareFacebook() {
-                const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
-            }
-
-            shareTwitter() {
-                const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
-                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-            }
-
-            shareWhatsapp() {
-                const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent('🎵 Escucha Voz del Shaddai Radio - Música Cristiana 24/7 🌟');
-                window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
-            }
-
-            async copyLink() {
-                try {
-                    await navigator.clipboard.writeText(window.location.href);
-                    this.showNotification('Enlace copiado', '¡Comparte esta radio con otros!', 'success');
-                } catch (error) {
-                    // Fallback para navegadores antiguos
-                    const input = document.createElement('input');
-                    input.value = window.location.href;
-                    document.body.appendChild(input);
-                    input.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(input);
-                    this.showNotification('Enlace copiado', '¡Comparte esta radio con otros!', 'success');
-                }
+            updateListenerCount() {
+                this.elements.listenerCount.textContent = this.state.listeners;
             }
 
             // ============== ACTUALIZACIÓN DE UI ==============
             updateProgress() {
                 if (!this.audio.duration || isNaN(this.audio.duration)) return;
                 
-                const current = this.audio.currentTime;
+                this.state.currentTime = this.audio.currentTime;
                 const duration = this.audio.duration;
-                const percentage = (current / duration) * 100;
                 
-                this.elements.progressFill.style.width = `${percentage}%`;
+                // Actualizar tiempos
+                this.elements.currentTime.textContent = this.formatTime(this.state.currentTime);
                 
-                const currentStr = this.formatTime(current);
-                const durationStr = this.formatTime(duration);
-                
-                this.elements.progressCurrent.textContent = currentStr;
-                this.elements.progressTotal.textContent = durationStr;
+                // Actualizar duración si está disponible
+                if (duration && !isNaN(duration)) {
+                    const track = this.state.tracks[this.state.currentTrackIndex];
+                    if (!track.duration || track.duration !== duration) {
+                        track.duration = duration;
+                    }
+                }
             }
 
-            updatePlayButton() {
-                const icon = this.state.isPlaying ? 'fa-pause' : 'fa-play';
-                this.elements.playBtn.innerHTML = `<i class="fas ${icon}"></i>`;
-            }
-
-            updatePlaylist() {
-                this.elements.playlist.innerHTML = '';
-                
-                this.state.tracks.forEach((track, index) => {
-                    const item = document.createElement('div');
-                    item.className = `playlist-item ${index === this.state.currentTrackIndex ? 'active' : ''}`;
-                    item.innerHTML = `
-                        <div class="playlist-item-number">${index + 1}</div>
-                        <div class="playlist-item-title">${this.formatTrackName(track.name)}</div>
-                        <div class="playlist-item-duration">${this.formatTime(track.duration || 0)}</div>
-                    `;
-                    
-                    item.addEventListener('click', () => this.loadTrack(index));
-                    this.elements.playlist.appendChild(item);
+            updateBroadcastTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('es-ES', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
                 });
+                this.elements.broadcastTime.textContent = `Hora: ${timeString}`;
             }
 
-            updateTrackCount() {
-                this.elements.playlistCount.textContent = `${this.state.tracks.length} canciones`;
+            updateUptime() {
+                const uptime = Date.now() - this.state.startTime;
+                const hours = Math.floor(uptime / 3600000);
+                const minutes = Math.floor((uptime % 3600000) / 60000);
+                const seconds = Math.floor((uptime % 60000) / 1000);
+                
+                this.elements.uptime.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
 
             updateLoadingStatus(message) {
@@ -1953,43 +1318,41 @@
                 if (this.audio.duration && !isNaN(this.audio.duration)) {
                     track.duration = this.audio.duration;
                 }
-                this.updatePlaylist();
+                
+                // Actualizar tiempo total si está disponible
+                if (track.duration) {
+                    const durationElement = document.getElementById('track-duration');
+                    if (durationElement) {
+                        durationElement.textContent = this.formatTime(track.duration);
+                    }
+                }
             }
 
             onTrackEnded() {
-                switch (this.state.repeatMode) {
-                    case 'one':
-                        this.audio.currentTime = 0;
-                        this.play();
-                        break;
-                    case 'all':
-                        this.nextTrack();
-                        break;
-                    case 'none':
-                    default:
-                        if (this.state.currentTrackIndex < this.state.tracks.length - 1) {
-                            this.nextTrack();
-                        } else {
-                            this.pause();
-                        }
-                        break;
-                }
+                // Reproducir siguiente canción automáticamente
+                console.log('Canción finalizada, reproduciendo siguiente...');
+                this.playNextTrack();
             }
 
             onAudioError(error) {
                 console.error('Error de audio:', error);
-                this.showNotification('Error de reproducción', 'Saltando a siguiente canción', 'error');
-                setTimeout(() => this.nextTrack(), 2000);
+                
+                // Cambiar a siguiente fuente si es posible
+                this.state.currentSource = (this.state.currentSource + 1) % this.config.sources.length;
+                
+                // Intentar siguiente canción
+                setTimeout(() => {
+                    this.showNotification('Error de audio', 'Saltando a siguiente canción', 'error');
+                    this.playNextTrack();
+                }, 3000);
             }
 
             onPlay() {
                 this.state.isPlaying = true;
-                this.updatePlayButton();
             }
 
             onPause() {
                 this.state.isPlaying = false;
-                this.updatePlayButton();
             }
 
             // ============== NOTIFICACIONES ==============
@@ -1997,24 +1360,20 @@
                 this.elements.notificationTitle.textContent = title;
                 this.elements.notificationMessage.textContent = message;
                 
-                this.elements.notification.className = `notification ${type}`;
-                this.elements.notification.querySelector('.notification-icon').className = 
-                    `fas ${this.getNotificationIcon(type)} notification-icon`;
+                // Establecer color según tipo
+                let color = 'var(--primary)';
+                if (type === 'success') color = 'var(--success)';
+                if (type === 'error') color = 'var(--secondary)';
                 
+                this.elements.notification.style.borderLeftColor = color;
+                
+                // Mostrar
                 this.elements.notification.classList.add('show');
                 
+                // Ocultar después de 3 segundos
                 setTimeout(() => {
                     this.elements.notification.classList.remove('show');
                 }, 3000);
-            }
-
-            getNotificationIcon(type) {
-                switch (type) {
-                    case 'success': return 'fa-check-circle';
-                    case 'error': return 'fa-exclamation-circle';
-                    case 'warning': return 'fa-exclamation-triangle';
-                    default: return 'fa-info-circle';
-                }
             }
 
             // ============== UTILIDADES ==============
@@ -2024,51 +1383,27 @@
                     setTimeout(() => {
                         this.elements.loadingScreen.style.display = 'none';
                         this.elements.app.style.display = 'block';
-                        
                         setTimeout(() => {
                             this.elements.app.classList.add('app-loaded');
-                            
-                            // Animar elementos
-                            document.querySelectorAll('.spectrum-section, .now-playing, .controls-container, .volume-section, .playlist-section, .share-section').forEach((el, i) => {
-                                el.style.animationDelay = `${i * 0.1}s`;
-                                el.classList.add('animate-fade-in');
-                            });
-                            
                         }, 50);
                     }, 500);
-                }, 1000);
-            }
-
-            async refreshTracks() {
-                this.showNotification('Actualizando', 'Buscando nueva música...', 'info');
-                await this.loadTracks();
+                }, 1500);
             }
         }
 
-        // ============== INICIAR APLICACIÓN ==============
+        // ============== INICIAR SISTEMA ==============
         document.addEventListener('DOMContentLoaded', () => {
-            window.radioSystem = new RadioSystemWithSpectrum();
+            window.radioStation = new RadioStationSystem();
             
             // Mostrar instrucciones
             setTimeout(() => {
-                if (window.radioSystem.state.tracks.length > 0) {
-                    window.radioSystem.showNotification(
-                        '¡Bienvenido!',
-                        'Usa las flechas del teclado para navegar y ESPACIO para play/pause',
-                        'info'
-                    );
-                }
-            }, 4000);
+                window.radioStation.showNotification(
+                    'Bienvenido a Voz del Shaddai Radio',
+                    'Emisora cristiana en vivo 24/7',
+                    'success'
+                );
+            }, 2000);
         });
-
-        // ============== FUNCIONES GLOBALES ==============
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
     </script>
 </body>
 </html>
