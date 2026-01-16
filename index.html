@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voz del Shaddai Online - Emisora Tropical</title>
+    <title>Voz del Shaddai Online - Música Cristiana</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -138,7 +138,7 @@
         }
 
         .play-btn:hover {
-            background-color: #2980b9;
+            background-color: #2f35e1;
             transform: scale(1.05);
         }
 
@@ -225,12 +225,20 @@
             color: #70a1ff;
         }
 
-        .status-message {
-            margin-top: 10px;
-            padding: 10px;
+        .progress-bar {
+            width: 100%;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            font-size: 0.9rem;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #ffa502;
+            transition: width 0.3s;
         }
 
         .loading {
@@ -317,20 +325,12 @@
             display: none;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+        .status-message {
             margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress {
-            width: 0%;
-            height: 100%;
-            background: #ffa502;
-            transition: width 0.3s;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
@@ -380,9 +380,9 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-broadcast-tower"></i> Voz del Shaddai Online</h1>
-            <p>Tu emisora tropical con música directa desde GitHub</p>
+            <p>Música Cristiana MP3 - Alabanza y Adoración</p>
             <div class="radio-icon">
-                <i class="fas fa-music"></i>
+                <i class="fas fa-cross"></i>
             </div>
         </header>
 
@@ -397,7 +397,7 @@
                         <i class="fas fa-play"></i>
                     </button>
                     
-                    <button class="next-btn" id="nextBtn" title="Siguiente canción aleatoria">
+                    <button class="next-btn" id="nextBtn" title="Siguiente canción">
                         <i class="fas fa-random"></i>
                     </button>
                     
@@ -410,15 +410,15 @@
                 
                 <div class="now-playing">
                     <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
-                    <div class="song-title" id="currentSong">Esperando música...</div>
-                    <div class="song-genre" id="currentGenre">-</div>
+                    <div class="song-title" id="currentSong">Selecciona una canción</div>
+                    <div class="song-genre" id="currentGenre">Música Cristiana</div>
                     <div class="progress-bar">
                         <div class="progress" id="progressBar"></div>
                     </div>
                     <div class="loading" id="loading">Cargando música...</div>
                     <div class="error" id="errorMessage"></div>
                     <div class="status-message" id="statusMessage">
-                        <i class="fas fa-info-circle"></i> Modo aleatorio activo
+                        <i class="fas fa-info-circle"></i> Emisora de música cristiana MP3
                     </div>
                 </div>
                 
@@ -431,16 +431,14 @@
         </div>
         
         <div class="footer">
-            <p>Música desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #70a1ff; text-decoration: none;">GitHub Repository</a></p>
-            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Emisora Voz del Shaddai - Reproducción aleatoria</p>
+            <p><i class="fas fa-cross" style="color: #ffa502;"></i> Música Cristiana MP3 - Alabanza y Adoración</p>
+            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Voz del Shaddai - Bendiciones</p>
         </div>
     </div>
 
     <script>
-        // Lista de canciones DIRECTAMENTE desde tu repositorio de GitHub
-        // Estas son URLs RAW reales que deberían funcionar
+        // Lista de música cristiana MP3 (enlaces reales a música cristiana)
         const songs = [
-            // Archivos de música desde tu repositorio
             {
                 title: "Alabanza y Adoración 1",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3",
@@ -467,12 +465,12 @@
                 genre: "Gospel"
             },
             {
-                title: "Coritos 1",
+                title: "Coritos Cristianos 1",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3",
                 genre: "Coritos"
             },
             {
-                title: "Coritos 2",
+                title: "Coritos Cristianos 2",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%202.mp3",
                 genre: "Coritos"
             },
@@ -512,7 +510,7 @@
                 genre: "Himno"
             },
             {
-                title: "Hay Poder",
+                title: "Hay Poder en la Sangre",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hay%20Poder.mp3",
                 genre: "Gospel"
             },
@@ -532,7 +530,7 @@
                 genre: "Alabanza"
             },
             {
-                title: "Mi Vida Esta en Ti",
+                title: "Mi Vida Esta en Ti Señor",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Mi%20Vida%20Esta%20en%20Ti.mp3",
                 genre: "Alabanza"
             },
@@ -552,12 +550,12 @@
                 genre: "Reflexión"
             },
             {
-                title: "Puedes Confiar",
+                title: "Puedes Confiar en Dios",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Puedes%20Confiar.mp3",
                 genre: "Alabanza"
             },
             {
-                title: "Renuévame",
+                title: "Renuévame Señor",
                 url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3",
                 genre: "Alabanza"
             },
@@ -590,6 +588,7 @@
         let currentVolume = 0.7;
         let currentSongIndex = -1;
         let shuffledSongs = [];
+        let isRandomMode = true;
         
         // Elementos del DOM
         const powerBtn = document.getElementById('powerBtn');
@@ -630,6 +629,17 @@
             return song;
         }
 
+        // Función para obtener la siguiente canción secuencial
+        function getNextSequentialSong() {
+            if (currentSongIndex === -1) {
+                currentSongIndex = 0;
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songs.length;
+            }
+            
+            return songs[currentSongIndex];
+        }
+
         // Función para actualizar la lista de canciones en la interfaz
         function updateSongList() {
             songListContainer.innerHTML = '';
@@ -637,7 +647,7 @@
             songs.forEach((song, index) => {
                 const songItem = document.createElement('div');
                 songItem.className = 'song-item';
-                if (index === currentSongIndex) {
+                if (index === currentSongIndex && isPlaying) {
                     songItem.classList.add('active');
                 }
                 
@@ -648,10 +658,19 @@
                 `;
                 
                 songItem.addEventListener('click', () => {
-                    // Encontrar el índice de esta canción en la lista original
-                    const songIndex = songs.findIndex(s => s.title === song.title);
-                    if (songIndex !== -1) {
-                        playSpecificSong(songIndex);
+                    // Si estamos en modo aleatorio, cambiar a secuencial para esta selección
+                    const wasRandom = isRandomMode;
+                    isRandomMode = false;
+                    
+                    currentSongIndex = index;
+                    playCurrentSong();
+                    
+                    // Restaurar modo aleatorio si estaba activo
+                    if (wasRandom) {
+                        setTimeout(() => {
+                            isRandomMode = true;
+                            statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Modo aleatorio activo`;
+                        }, 100);
                     }
                 });
                 
@@ -659,23 +678,23 @@
             });
         }
 
-        // Función para reproducir una canción específica
-        function playSpecificSong(index) {
-            currentSongIndex = index;
-            playCurrentSong();
-        }
-
         // Función para reproducir la canción actual
         function playCurrentSong() {
             if (!isPoweredOn || songs.length === 0) return;
             
-            // Si no hay canción seleccionada, obtener una aleatoria
-            if (currentSongIndex === -1 || currentSongIndex >= songs.length) {
+            let song;
+            
+            if (isRandomMode) {
+                // Modo aleatorio
                 const randomSong = getRandomSong();
                 currentSongIndex = songs.findIndex(s => s.title === randomSong.title);
+                song = randomSong;
+                statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Modo aleatorio activo`;
+            } else {
+                // Modo secuencial
+                song = getNextSequentialSong();
+                statusMessageEl.innerHTML = `<i class="fas fa-list-ol"></i> Modo secuencial`;
             }
-            
-            const song = songs[currentSongIndex];
             
             showLoading(`Cargando: ${song.title}...`);
             
@@ -697,7 +716,6 @@
                     currentGenreEl.textContent = song.genre;
                     hideLoading();
                     errorMessageEl.style.display = 'none';
-                    statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Reproduciendo en modo aleatorio`;
                     
                     // Actualizar el icono del radio
                     document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
@@ -710,7 +728,7 @@
                     hideLoading();
                     
                     if (error.name === 'NotAllowedError') {
-                        errorMessageEl.textContent = "Haz clic en el botón de play para comenzar la reproducción.";
+                        errorMessageEl.textContent = "Por favor, haz clic en el botón de play para comenzar.";
                         errorMessageEl.style.display = 'block';
                     } else if (error.name === 'AbortError') {
                         errorMessageEl.textContent = "Error de carga. Intentando siguiente canción...";
@@ -728,10 +746,6 @@
         // Función para reproducir siguiente canción
         function playNextSong() {
             if (songs.length === 0) return;
-            
-            // Obtener una canción aleatoria
-            const randomSong = getRandomSong();
-            currentSongIndex = songs.findIndex(s => s.title === randomSong.title);
             
             playCurrentSong();
         }
@@ -763,8 +777,8 @@
                 shuffleSongs();
                 
                 currentSongEl.textContent = "Listo para reproducir";
-                currentGenreEl.textContent = `${songs.length} canciones cargadas`;
-                statusMessageEl.innerHTML = `<i class="fas fa-check-circle"></i> Emisora encendida - Modo aleatorio activo`;
+                currentGenreEl.textContent = "Música Cristiana";
+                statusMessageEl.innerHTML = `<i class="fas fa-cross"></i> ${songs.length} canciones cristianas cargadas`;
                 
                 document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
                 
@@ -796,11 +810,24 @@
             if (!isPoweredOn || songs.length === 0) return;
             
             if (!isPlaying) {
-                // Si no hay canción seleccionada, obtener una aleatoria
+                // Si no hay canción seleccionada, empezar con una
                 if (currentSongIndex === -1) {
                     playNextSong();
                 } else {
-                    playCurrentSong();
+                    // Reanudar reproducción
+                    const playPromise = audioPlayer.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            isPlaying = true;
+                            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                            currentSongEl.innerHTML = songs[currentSongIndex].title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                            document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
+                        }).catch(error => {
+                            console.error("Error al reanudar:", error);
+                            playCurrentSong();
+                        });
+                    }
                 }
             } else {
                 audioPlayer.pause();
@@ -836,6 +863,23 @@
             
             const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
             progressBar.style.width = `${progress}%`;
+            
+            // Actualizar tiempo actual en el estado
+            const currentTime = formatTime(audioPlayer.currentTime);
+            const duration = formatTime(audioPlayer.duration);
+            
+            if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
+                statusMessageEl.innerHTML = `${isRandomMode ? '<i class="fas fa-random"></i> Aleatorio' : '<i class="fas fa-list-ol"></i> Secuencial'} | ${currentTime} / ${duration}`;
+            }
+        }
+
+        // Formatear tiempo (segundos a MM:SS)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
         // Inicializar eventos
@@ -856,12 +900,14 @@
                 setTimeout(playNextSong, 2000);
             });
             
-            // Inicializar canciones
+            // Mezclar canciones inicialmente
             shuffleSongs();
+            
+            // Actualizar lista de canciones
             updateSongList();
             
             // Mostrar información inicial
-            statusMessageEl.innerHTML = `<i class="fas fa-music"></i> ${songs.length} canciones cargadas desde GitHub`;
+            statusMessageEl.innerHTML = `<i class="fas fa-cross"></i> Emisora de música cristiana MP3 - ${songs.length} canciones`;
         }
 
         // Inicializar la aplicación cuando cargue la página
