@@ -3,1613 +3,593 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📻 Voz del Shaddai Radio - Emisora Online Continua</title>
-    
-    <!-- Meta Tags -->
-    <meta name="description" content="📻 Emisora Cristiana Online - Reproducción continua sin interrupciones. Crossfade profesional para una experiencia perfecta.">
-    
-    <!-- Estilos y Fuentes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Favicon en base64 -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>">
-    
+    <title>Voz del Shaddai Online - Emisora Tropical</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== VARIABLES Y RESET ===== */
-        :root {
-            --primary: #1a73e8;
-            --primary-dark: #0d47a1;
-            --primary-light: #4285f4;
-            --secondary: #ea4335;
-            --accent: #fbbc05;
-            --success: #34a853;
-            --dark: #202124;
-            --darker: #171717;
-            --light: #ffffff;
-            --gray: #9aa0a6;
-            
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
-            --radius: 16px;
-            
-            --transition: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            color: var(--light);
+            background: linear-gradient(to bottom right, #0a3d62, #079992, #38ada9, #78e08f);
+            color: #fff;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             overflow-x: hidden;
         }
 
-        /* ===== LOADING SCREEN ===== */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
             width: 100%;
-            height: 100%;
-            background: var(--darker);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-content {
-            text-align: center;
-            max-width: 500px;
-            padding: 2rem;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--primary-light);
-            animation: spin 1s linear infinite;
-            margin: 0 auto 2rem;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ===== MAIN APP ===== */
-        #app {
-            display: none;
-            min-height: 100vh;
-            padding: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .app-loaded {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* ===== HEADER ===== */
-        .radio-header {
-            background: rgba(32, 33, 36, 0.9);
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header {
+            background: linear-gradient(to right, #1e5799, #207cca, #2989d8, #7db9e8);
+            padding: 25px;
             text-align: center;
-        }
-
-        .radio-brand {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .radio-logo {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: var(--shadow-lg);
-            animation: pulse 2s infinite;
             position: relative;
+            overflow: hidden;
         }
 
-        .radio-logo::after {
-            content: '';
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .radio-icon {
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse-ring 2s infinite;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
-        @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(1.3); opacity: 0; }
-        }
-
-        .radio-info h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--light);
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .radio-tagline {
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* ===== BROADCAST INFO ===== */
-        .broadcast-info {
-            background: rgba(32, 33, 36, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .broadcast-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .stat-item {
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--light);
-        }
-
-        /* ===== NOW PLAYING ===== */
-        .now-playing-card {
-            background: linear-gradient(135deg, rgba(26, 115, 232, 0.2), rgba(234, 67, 53, 0.2));
-            border-radius: var(--radius);
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .now-playing-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
-            animation: shine 3s infinite linear;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .track-display {
-            position: relative;
-            z-index: 1;
-        }
-
-        .album-art-container {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 1.5rem;
-            position: relative;
-        }
-
-        .album-art {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+        .main-content {
+            padding: 30px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            box-shadow: var(--shadow-lg);
-            animation: rotate 20s linear infinite;
-            animation-play-state: paused;
+            flex-direction: column;
+            gap: 25px;
         }
 
-        .album-art.playing {
-            animation-play-state: running;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .album-art::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .track-info {
-            margin-top: 1.5rem;
-        }
-
-        .track-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-            color: var(--light);
-            min-height: 3rem;
-        }
-
-        .track-artist {
-            color: var(--primary-light);
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            min-height: 2rem;
-        }
-
-        .track-meta {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-top: 1rem;
-        }
-
-        /* ===== CROSSFADE INDICATOR ===== */
-        .crossfade-section {
-            background: rgba(32, 33, 36, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-        }
-
-        .crossfade-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .crossfade-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .crossfade-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-            margin: 1rem 0;
-        }
-
-        .crossfade-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            width: 0%;
-            border-radius: 4px;
-            transition: width 0.1s linear;
-        }
-
-        .crossfade-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        /* ===== PROGRESS BAR ===== */
-        .progress-section {
-            background: rgba(32, 33, 36, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-        }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: var(--gray);
-            font-size: 1rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.1s linear;
-        }
-
-        /* ===== RADIO CONTROLS ===== */
-        .radio-controls {
-            background: rgba(32, 33, 36, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-        }
-
-        .controls-group {
+        .player-section {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 20px;
         }
 
-        .power-section {
+        .player-controls {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
         }
 
         .power-btn {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+            background-color: #e74c3c;
             border: none;
-            background: linear-gradient(135deg, var(--success), #2e7d32);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             color: white;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .power-btn:hover {
+            background-color: #c0392b;
             transform: scale(1.05);
         }
 
-        .power-btn.off {
-            background: linear-gradient(135deg, var(--secondary), #c62828);
+        .power-btn.on {
+            background-color: #2ecc71;
         }
 
-        .power-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .power-btn.on:hover {
+            background-color: #27ae60;
         }
 
-        .power-btn:hover::after {
-            opacity: 1;
+        .play-btn {
+            background-color: #3498db;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .volume-section {
-            width: 100%;
-            max-width: 400px;
+        .play-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
         }
 
-        .volume-display {
+        .volume-control {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 15px;
             width: 100%;
-            margin-bottom: 1rem;
+            max-width: 300px;
         }
 
-        .volume-icon {
-            font-size: 2rem;
-            color: var(--primary-light);
-            width: 60px;
-            text-align: center;
+        .volume-control i {
+            font-size: 1.5rem;
         }
 
         .volume-slider {
-            flex: 1;
-            height: 12px;
+            flex-grow: 1;
             -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+            appearance: none;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
             outline: none;
         }
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #fff;
             border-radius: 50%;
-            background: var(--primary);
             cursor: pointer;
-            border: 4px solid var(--light);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .volume-value {
-            width: 70px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary-light);
-            background: rgba(0,0,0,0.3);
-            padding: 0.5rem;
-            border-radius: 8px;
-        }
-
-        /* ===== NEXT TRACK ===== */
-        .next-track-section {
-            background: rgba(32, 33, 36, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-        }
-
-        .next-track-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .next-track-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
+        .now-playing {
+            background-color: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-        }
-
-        .next-track-name {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--light);
-        }
-
-        .next-track-time {
-            font-size: 1rem;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* ===== STATUS INDICATORS ===== */
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0 auto;
-            max-width: 200px;
-        }
-
-        .status-online {
-            background: rgba(52, 168, 83, 0.2);
-            color: var(--success);
-            border: 2px solid rgba(52, 168, 83, 0.4);
-            animation: pulse-status 2s infinite;
-        }
-
-        .status-offline {
-            background: rgba(234, 67, 53, 0.2);
-            color: var(--secondary);
-            border: 2px solid rgba(234, 67, 53, 0.4);
-        }
-
-        @keyframes pulse-status {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* ===== NOTIFICATION ===== */
-        .notification {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--dark);
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transform: translateX(120%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            max-width: 400px;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        /* ===== FOOTER ===== */
-        .radio-footer {
+            padding: 15px;
+            width: 100%;
             text-align: center;
-            padding: 2rem;
-            color: var(--gray);
+            margin-top: 10px;
+        }
+
+        .now-playing h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #f1c40f;
+        }
+
+        .song-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .song-genre {
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .genres-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .genres-section h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .genre-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .genre-btn {
+            background-color: rgba(52, 152, 219, 0.8);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .genre-btn:hover {
+            background-color: rgba(41, 128, 185, 0.9);
+            transform: translateY(-3px);
+        }
+
+        .genre-btn.active {
+            background-color: #e74c3c;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        /* ===== RESPONSIVE ADJUSTMENTS ===== */
+        .tropical-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .palm-leaf {
+            position: absolute;
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.05);
+            transform: rotate(-30deg);
+            top: 10%;
+            right: -5%;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.05);
+            bottom: 10%;
+            left: -5%;
+            transform: rotate(20deg);
+        }
+
+        .sun {
+            position: absolute;
+            font-size: 12rem;
+            color: rgba(255, 255, 255, 0.03);
+            top: -5%;
+            left: 10%;
+        }
+
         @media (max-width: 768px) {
-            .radio-logo {
-                width: 100px;
-                height: 100px;
-                font-size: 2.5rem;
+            .container {
+                margin: 10px;
             }
             
-            .radio-info h1 {
+            header h1 {
                 font-size: 2rem;
             }
             
-            .album-art-container {
-                width: 150px;
-                height: 150px;
+            .player-controls {
+                flex-direction: column;
+                gap: 15px;
             }
             
-            .album-art {
-                font-size: 3rem;
+            .volume-control {
+                max-width: 100%;
             }
             
-            .track-title {
-                font-size: 1.8rem;
-            }
-            
-            .track-artist {
-                font-size: 1.2rem;
-            }
-            
-            .broadcast-stats {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-            
-            .volume-display {
-                gap: 1rem;
-            }
-            
-            .volume-slider {
-                height: 10px;
+            .genre-buttons {
+                justify-content: center;
             }
         }
 
-        @media (max-width: 480px) {
-            .radio-logo {
-                width: 80px;
-                height: 80px;
-                font-size: 2rem;
-            }
-            
-            .radio-info h1 {
-                font-size: 1.8rem;
-            }
-            
-            .album-art-container {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .album-art {
-                font-size: 2.5rem;
-            }
-            
-            .track-title {
-                font-size: 1.5rem;
-            }
-            
-            .power-btn {
-                width: 80px;
-                height: 80px;
-                font-size: 2rem;
-            }
-            
-            .volume-icon {
-                font-size: 1.5rem;
-                width: 40px;
-            }
-            
-            .volume-value {
-                font-size: 1.2rem;
-                width: 60px;
-            }
+        /* Animación para el indicador de reproducción */
+        @keyframes playing {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .playing-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            animation: playing 1.5s infinite;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <h1 style="font-family: 'Montserrat', sans-serif; font-size: 2.5rem; color: white; margin-bottom: 1rem;">
-                VOZ DEL SHADDAI
-            </h1>
-            <p style="color: var(--gray); margin-bottom: 2rem;">Iniciando emisora online...</p>
-            <div id="loading-details" style="color: var(--gray);"></div>
-        </div>
+    <!-- Decoración tropical -->
+    <div class="tropical-decoration">
+        <div class="sun"><i class="fas fa-sun"></i></div>
+        <div class="palm-leaf"><i class="fas fa-leaf"></i></div>
+        <div class="flower"><i class="fas fa-spa"></i></div>
     </div>
 
-    <!-- Main App -->
-    <div id="app">
-        <!-- Header -->
-        <header class="radio-header">
-            <div class="radio-brand">
-                <div class="radio-logo">
-                    <i class="fas fa-broadcast-tower"></i>
-                </div>
-                <div class="radio-info">
-                    <h1>VOZ DEL SHADDAI RADIO</h1>
-                    <p class="radio-tagline">Emisora Cristiana Online - Reproducción Continua</p>
-                    <div class="status-indicator status-online" id="broadcast-status">
-                        <i class="fas fa-circle" style="font-size: 0.8rem;"></i>
-                        <span>TRANSMITIENDO EN VIVO</span>
-                    </div>
-                </div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-broadcast-tower"></i> Voz del Shaddai Online</h1>
+            <p>Tu emisora tropical con la mejor música</p>
+            <div class="radio-icon">
+                <i class="fas fa-music"></i>
             </div>
         </header>
 
-        <!-- Broadcast Info -->
-        <section class="broadcast-info">
-            <div style="font-size: 1.1rem; color: var(--gray); margin-bottom: 0.5rem;">
-                <i class="fas fa-satellite-dish"></i> Emisora Online - Solo Escucha
-            </div>
-            <div class="broadcast-stats">
-                <div class="stat-item">
-                    <div class="stat-label">CANCIONES EN LISTA</div>
-                    <div class="stat-value" id="total-tracks">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">TIEMPO TRANSMITIENDO</div>
-                    <div class="stat-value" id="broadcast-time">00:00</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">PRÓXIMA CANCIÓN</div>
-                    <div class="stat-value" id="next-in">--:--</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Now Playing -->
-        <section class="now-playing-card">
-            <div class="track-display">
-                <div class="album-art-container">
-                    <div class="album-art" id="album-art">
-                        <i class="fas fa-music"></i>
-                    </div>
-                </div>
-                <div class="track-info">
-                    <h2 class="track-title" id="track-title">Sintonizando emisora...</h2>
-                    <p class="track-artist" id="track-artist">
-                        Voz del Shaddai Radio
-                    </p>
-                    <div class="track-meta">
-                        <span id="current-time">00:00</span>
-                        <span id="track-duration">00:00</span>
-                        <span id="time-remaining">-00:00</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Crossfade Indicator -->
-        <section class="crossfade-section">
-            <div class="crossfade-title">
-                <i class="fas fa-exchange-alt"></i> Transición Automática
-            </div>
-            <div class="crossfade-info">
-                <span id="current-fade-status">Sistema de crossfade activo</span>
-                <span id="fade-duration">Duración: 4 segundos</span>
-            </div>
-            <div class="crossfade-bar">
-                <div class="crossfade-progress" id="crossfade-progress"></div>
-            </div>
-            <div class="crossfade-labels">
-                <span>Canción actual</span>
-                <span id="fade-percentage">0%</span>
-                <span>Siguiente canción</span>
-            </div>
-        </section>
-
-        <!-- Progress Bar -->
-        <section class="progress-section">
-            <div class="progress-info">
-                <span id="progress-current">00:00</span>
-                <span id="progress-total">00:00</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <div style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray);">
-                <span id="next-change">Próximo cambio automático en: --:--</span>
-            </div>
-        </section>
-
-        <!-- Radio Controls -->
-        <section class="radio-controls">
-            <div class="controls-group">
-                <div class="power-section">
-                    <button class="power-btn" id="power-btn" title="Encender/Apagar radio">
+        <div class="main-content">
+            <div class="player-section">
+                <div class="player-controls">
+                    <button class="power-btn" id="powerBtn">
                         <i class="fas fa-power-off"></i>
                     </button>
-                    <span style="color: var(--gray); font-size: 1rem;">ENCENDER / APAGAR</span>
+                    
+                    <button class="play-btn" id="playBtn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    
+                    <div class="volume-control">
+                        <i class="fas fa-volume-down"></i>
+                        <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
                 </div>
                 
-                <div class="volume-section">
-                    <div class="volume-display">
-                        <div class="volume-icon">
-                            <i class="fas fa-volume-up" id="volume-icon"></i>
-                        </div>
-                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
-                        <div class="volume-value" id="volume-value">70%</div>
-                    </div>
-                    <span style="color: var(--gray); font-size: 1rem; text-align: center; display: block;">CONTROL DE VOLUMEN</span>
+                <div class="now-playing">
+                    <h3>Reproduciendo ahora:</h3>
+                    <div class="song-title" id="currentSong">Selecciona un género y pulsa Play</div>
+                    <div class="song-genre" id="currentGenre">-</div>
                 </div>
             </div>
-        </section>
-
-        <!-- Next Track -->
-        <section class="next-track-section">
-            <div class="next-track-title">
-                <i class="fas fa-forward"></i> Próxima Canción
-            </div>
-            <div class="next-track-info">
-                <div class="next-track-name" id="next-track-name">Cargando siguiente canción...</div>
-                <div class="next-track-time">
-                    <i class="far fa-clock"></i>
-                    <span id="next-track-time">En --:--</span>
+            
+            <div class="genres-section">
+                <h2><i class="fas fa-list-music"></i> Géneros Musicales</h2>
+                <div class="genre-buttons" id="genreButtons">
+                    <!-- Los botones se generarán con JavaScript -->
                 </div>
             </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="radio-footer">
-            <p>📻 Voz del Shaddai Radio - Emisora Online Continua</p>
-            <p style="margin-top: 0.5rem; font-size: 0.8rem;">
-                Reproducción automática sin interrupciones · Transiciones suaves con crossfade profesional
-            </p>
-        </footer>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-info-circle"></i>
-        <div>
-            <strong id="notification-title">Notificación</strong>
-            <p id="notification-message">Mensaje de notificación</p>
+        </div>
+        
+        <div class="footer">
+            <p>Música cortesía de Voz del Shaddai Online | Reproduciendo desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #78e08f;">GitHub Repository</a></p>
+            <p>Diseño tropical con HTML, CSS y JavaScript</p>
         </div>
     </div>
 
     <script>
-        // ============== SISTEMA DE RADIO ONLINE - MODO EMISORA ==============
-        class RadioOnlineSystem {
-            constructor() {
-                // Configuración del sistema
-                this.config = {
-                    // Información del repositorio
-                    githubUser: 'cl7adv',
-                    repo: 'Voz-del-Shaddai-Online',
-                    musicFolder: 'musica',
-                    branch: 'main',
-                    
-                    // URLs para GitHub
-                    githubApi: 'https://api.github.com',
-                    githubRaw: 'https://raw.githubusercontent.com',
-                    
-                    // Configuración de crossfade (PRIORIDAD)
-                    crossfadeDuration: 4000, // 4 segundos para transición más suave
-                    fadeStartPercentage: 85, // Iniciar fade más temprano para evitar cortes
-                    fadeCurve: 'easeInOut',
-                    
-                    // Sistema de reproducción
-                    defaultVolume: 0.7,
-                    autoStart: true, // Comienza a reproducir automáticamente
-                    
-                    // Control de tiempo
-                    updateInterval: 100, // Actualizar UI cada 100ms
-                    spectrumUpdate: 60, // Actualizar espectro cada 60ms
-                    
-                    // Tiempo de buffer
-                    preloadBuffer: 5000 // Pre-cargar 5 segundos antes
-                };
+        // Lista de géneros y canciones (simuladas)
+        // En un caso real, aquí pondrías las URL reales de los archivos de música
+        const musicGenres = {
+            "Salsa": [
+                { title: "Salsa Caliente", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa1.mp3" },
+                { title: "Ritmo Caribeño", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa2.mp3" },
+                { title: "Bailando con Shaddai", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa3.mp3" }
+            ],
+            "Bachata": [
+                { title: "Bachata Romántica", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata1.mp3" },
+                { title: "Suspiros Tropicales", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata2.mp3" },
+                { title: "Noche de Luna", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata3.mp3" }
+            ],
+            "Merengue": [
+                { title: "Merengue Fiestero", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue1.mp3" },
+                { title: "Ritmo Dominicano", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue2.mp3" },
+                { title: "Fiesta en la Playa", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue3.mp3" }
+            ],
+            "Reguetón": [
+                { title: "Flow Caribeño", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton1.mp3" },
+                { title: "Ritmo Urbano", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton2.mp3" },
+                { title: "Vibra Tropical", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton3.mp3" }
+            ],
+            "Gospel": [
+                { title: "Alabanza Shaddai", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel1.mp3" },
+                { title: "Cielo en la Tierra", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel2.mp3" },
+                { title: "Fe y Esperanza", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel3.mp3" }
+            ],
+            "Baladas": [
+                { title: "Amor Eterno", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada1.mp3" },
+                { title: "Serenata Tropical", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada2.mp3" },
+                { title: "Recuerdos del Alma", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada3.mp3" }
+            ]
+        };
 
-                // Estado del sistema
-                this.state = {
-                    // Lista de reproducción
-                    tracks: [],
-                    currentTrackIndex: 0,
-                    nextTrackIndex: 1,
-                    
-                    // Estado de reproducción
-                    isPlaying: false,
-                    isPoweredOn: true,
-                    volume: this.config.defaultVolume,
-                    
-                    // Sistema de crossfade
-                    isCrossfading: false,
-                    crossfadeProgress: 0,
-                    currentAudio: null,
-                    nextAudio: null,
-                    fadeInterval: null,
-                    
-                    // Temporizadores
-                    trackStartTime: 0,
-                    nextTrackTimer: null,
-                    preloadTimer: null,
-                    broadcastTimer: null,
-                    broadcastStartTime: Date.now(),
-                    
-                    // Elementos de audio
-                    audioElements: [],
-                    
-                    // Estadísticas
-                    totalPlayTime: 0,
-                    tracksPlayed: 0
-                };
+        // Variables de estado
+        let audioPlayer = new Audio();
+        let isPlaying = false;
+        let isPoweredOn = false;
+        let currentGenre = "Salsa";
+        let currentSongIndex = 0;
+        let currentVolume = 0.7;
 
-                // Inicializar
-                this.init();
+        // Elementos del DOM
+        const powerBtn = document.getElementById('powerBtn');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const currentSongEl = document.getElementById('currentSong');
+        const currentGenreEl = document.getElementById('currentGenre');
+        const genreButtonsContainer = document.getElementById('genreButtons');
+
+        // Inicializar la emisora
+        function initRadio() {
+            // Crear botones de géneros
+            for (const genre in musicGenres) {
+                const button = document.createElement('button');
+                button.className = 'genre-btn';
+                if (genre === currentGenre) button.classList.add('active');
+                button.textContent = genre;
+                button.addEventListener('click', () => selectGenre(genre));
+                genreButtonsContainer.appendChild(button);
             }
+            
+            // Configurar audio player
+            audioPlayer.volume = currentVolume;
+            audioPlayer.addEventListener('ended', playNextSong);
+            
+            // Actualizar la canción actual
+            updateCurrentSong();
+        }
 
-            async init() {
-                this.cacheElements();
-                this.setupEventListeners();
-                await this.loadTracksFromGitHub();
-                this.createAudioElements();
-                this.startSystem();
-                this.hideLoadingScreen();
-            }
-
-            cacheElements() {
-                this.elements = {
-                    loadingScreen: document.getElementById('loading-screen'),
-                    loadingDetails: document.getElementById('loading-details'),
-                    app: document.getElementById('app'),
-                    
-                    // Información de emisora
-                    broadcastStatus: document.getElementById('broadcast-status'),
-                    totalTracks: document.getElementById('total-tracks'),
-                    broadcastTime: document.getElementById('broadcast-time'),
-                    nextIn: document.getElementById('next-in'),
-                    
-                    // Información de canción
-                    trackTitle: document.getElementById('track-title'),
-                    trackArtist: document.getElementById('track-artist'),
-                    albumArt: document.getElementById('album-art'),
-                    currentTime: document.getElementById('current-time'),
-                    trackDuration: document.getElementById('track-duration'),
-                    timeRemaining: document.getElementById('time-remaining'),
-                    
-                    // Progress
-                    progressFill: document.getElementById('progress-fill'),
-                    progressCurrent: document.getElementById('progress-current'),
-                    progressTotal: document.getElementById('progress-total'),
-                    nextChange: document.getElementById('next-change'),
-                    
-                    // Crossfade
-                    crossfadeProgress: document.getElementById('crossfade-progress'),
-                    fadePercentage: document.getElementById('fade-percentage'),
-                    currentFadeStatus: document.getElementById('current-fade-status'),
-                    fadeDuration: document.getElementById('fade-duration'),
-                    
-                    // Next track
-                    nextTrackName: document.getElementById('next-track-name'),
-                    nextTrackTime: document.getElementById('next-track-time'),
-                    
-                    // Controls
-                    powerBtn: document.getElementById('power-btn'),
-                    volumeSlider: document.getElementById('volume-slider'),
-                    volumeValue: document.getElementById('volume-value'),
-                    volumeIcon: document.getElementById('volume-icon'),
-                    
-                    // Notification
-                    notification: document.getElementById('notification'),
-                    notificationTitle: document.getElementById('notification-title'),
-                    notificationMessage: document.getElementById('notification-message')
-                };
-            }
-
-            setupEventListeners() {
-                // Control de encendido/apagado
-                this.elements.powerBtn.addEventListener('click', () => this.togglePower());
-                
-                // Control de volumen
-                this.elements.volumeSlider.addEventListener('input', (e) => {
-                    this.setVolume(e.target.value / 100);
-                });
-                
-                // Actualizar UI periódicamente
-                setInterval(() => this.updateUI(), this.config.updateInterval);
-                
-                // Actualizar tiempo de transmisión
-                setInterval(() => this.updateBroadcastTime(), 1000);
-            }
-
-            // ============== CARGA DE CANCIONES DESDE GITHUB ==============
-            async loadTracksFromGitHub() {
-                try {
-                    this.updateLoadingStatus('Conectando con el servidor de música...');
-                    
-                    const apiUrl = `${this.config.githubApi}/repos/${this.config.githubUser}/${this.config.repo}/contents/${this.config.musicFolder}`;
-                    
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`Error al conectar con GitHub: ${response.status}`);
-                    }
-                    
-                    const files = await response.json();
-                    
-                    // Filtrar solo archivos MP3
-                    const mp3Files = files.filter(file => 
-                        file.type === 'file' && 
-                        file.name.toLowerCase().endsWith('.mp3')
-                    );
-                    
-                    if (mp3Files.length === 0) {
-                        throw new Error('No se encontraron canciones MP3');
-                    }
-                    
-                    // Crear lista de canciones
-                    this.state.tracks = mp3Files.map((file, index) => ({
-                        id: index,
-                        name: this.formatTrackName(file.name),
-                        filename: file.name,
-                        url: `${this.config.githubRaw}/${this.config.githubUser}/${this.config.repo}/${this.config.branch}/${this.config.musicFolder}/${encodeURIComponent(file.name)}`,
-                        size: file.size,
-                        artist: 'Voz del Shaddai',
-                        duration: null
-                    }));
-                    
-                    // Actualizar estadísticas
-                    this.elements.totalTracks.textContent = this.state.tracks.length;
-                    
-                    this.updateLoadingStatus(`Se encontraron ${this.state.tracks.length} canciones`);
-                    this.showNotification('Lista cargada', `${this.state.tracks.length} canciones disponibles`, 'success');
-                    
-                } catch (error) {
-                    console.error('Error cargando canciones:', error);
-                    this.showNotification('Modo offline', 'Usando lista de demostración', 'warning');
-                    this.loadFallbackTracks();
-                }
-            }
-
-            formatTrackName(filename) {
-                // Limpiar nombre del archivo para mostrar
-                let name = filename.replace('.mp3', '');
-                name = name.replace(/[_\-]/g, ' ');
-                name = name.split(' ')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                    .join(' ');
-                return name;
-            }
-
-            loadFallbackTracks() {
-                // Canciones de demostración como fallback
-                this.state.tracks = [
-                    {
-                        id: 0,
-                        name: 'Alabanza en el Espíritu',
-                        filename: 'alabanza.mp3',
-                        url: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
-                        size: 3200000,
-                        artist: 'Voz del Shaddai',
-                        duration: null
-                    },
-                    {
-                        id: 1,
-                        name: 'Cánticos de Adoración',
-                        filename: 'adoracion.mp3',
-                        url: 'https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3',
-                        size: 2800000,
-                        artist: 'Coros Celestiales',
-                        duration: null
-                    },
-                    {
-                        id: 2,
-                        name: 'Gloria al Altísimo',
-                        filename: 'gloria.mp3',
-                        url: 'https://assets.mixkit.co/music/preview/mixkit-deep-urban-623.mp3',
-                        size: 3500000,
-                        artist: 'Alabanza Eterna',
-                        duration: null
-                    }
-                ];
-                
-                this.elements.totalTracks.textContent = this.state.tracks.length;
-            }
-
-            // ============== SISTEMA DE AUDIO Y CROSSFADE ==============
-            createAudioElements() {
-                // Crear elementos de audio (solo 2 para crossfade)
-                this.state.currentAudio = new Audio();
-                this.state.currentAudio.crossOrigin = "anonymous";
-                this.state.currentAudio.preload = "auto";
-                this.state.currentAudio.volume = this.state.volume;
-                
-                this.state.nextAudio = new Audio();
-                this.state.nextAudio.crossOrigin = "anonymous";
-                this.state.nextAudio.preload = "auto";
-                this.state.nextAudio.volume = 0; // Inicia en 0 para crossfade
-                
-                // Configurar eventos
-                this.setupAudioEvents(this.state.currentAudio, 'current');
-                this.setupAudioEvents(this.state.nextAudio, 'next');
-            }
-
-            setupAudioEvents(audio, type) {
-                audio.addEventListener('loadedmetadata', () => this.onTrackLoaded(type));
-                audio.addEventListener('error', (e) => this.onAudioError(e, type));
-                audio.addEventListener('ended', () => this.onTrackEnded(type));
-                audio.addEventListener('canplay', () => this.onCanPlay(type));
-            }
-
-            // ============== SISTEMA PRINCIPAL DE REPRODUCCIÓN ==============
-            async startSystem() {
-                if (this.state.tracks.length === 0) {
-                    this.showNotification('Error', 'No hay canciones disponibles', 'error');
-                    return;
-                }
-                
-                // Cargar primera canción
-                await this.loadTrack(this.state.currentTrackIndex, 'current');
-                
-                // Cargar siguiente canción
-                await this.loadTrack(this.state.nextTrackIndex, 'next');
-                
-                // Iniciar reproducción si está configurado
-                if (this.config.autoStart && this.state.isPoweredOn) {
-                    setTimeout(() => {
-                        this.playCurrentTrack();
-                    }, 1000);
-                }
-            }
-
-            async loadTrack(trackIndex, type) {
-                if (trackIndex < 0 || trackIndex >= this.state.tracks.length) return;
-                
-                const track = this.state.tracks[trackIndex];
-                const audio = type === 'current' ? this.state.currentAudio : this.state.nextAudio;
-                
-                try {
-                    audio.src = track.url;
-                    await audio.load();
-                    
-                    if (type === 'current') {
-                        // Actualizar información de la canción actual
-                        this.updateTrackInfo(track);
-                    } else if (type === 'next') {
-                        // Actualizar información de la siguiente canción
-                        this.elements.nextTrackName.textContent = track.name;
-                    }
-                    
-                } catch (error) {
-                    console.error(`Error cargando ${type} track:`, error);
-                }
-            }
-
-            updateTrackInfo(track) {
-                this.elements.trackTitle.textContent = track.name;
-                this.elements.trackArtist.textContent = track.artist;
-                
-                // Actualizar colores del álbum
-                this.updateAlbumArtColors();
-                
-                // Actualizar estadísticas
-                this.state.tracksPlayed++;
-            }
-
-            // ============== CROSSFADE PROFESIONAL ==============
-            async playCurrentTrack() {
-                if (!this.state.isPoweredOn || this.state.tracks.length === 0) return;
-                
-                try {
-                    // Iniciar reproducción
-                    await this.state.currentAudio.play();
-                    this.state.isPlaying = true;
-                    this.state.trackStartTime = Date.now();
-                    
-                    // Actualizar UI
-                    this.elements.powerBtn.classList.remove('off');
-                    this.elements.albumArt.classList.add('playing');
-                    this.elements.broadcastStatus.className = 'status-indicator status-online';
-                    this.elements.broadcastStatus.innerHTML = '<i class="fas fa-circle" style="font-size: 0.8rem;"></i><span>TRANSMITIENDO EN VIVO</span>';
-                    
-                    // Programar crossfade
-                    this.scheduleCrossfade();
-                    
-                    this.showNotification('Emisora activa', 'Reproducción continua iniciada', 'success');
-                    
-                } catch (error) {
-                    console.error('Error al reproducir:', error);
-                    this.state.isPlaying = false;
-                    
-                    // Intentar con siguiente canción
-                    setTimeout(() => {
-                        this.nextTrack();
-                    }, 2000);
-                }
-            }
-
-            scheduleCrossfade() {
-                // Limpiar temporizadores anteriores
-                if (this.state.nextTrackTimer) clearTimeout(this.state.nextTrackTimer);
-                if (this.state.preloadTimer) clearTimeout(this.state.preloadTimer);
-                
-                const currentAudio = this.state.currentAudio;
-                const duration = currentAudio.duration || 180; // 3 minutos por defecto
-                
-                // Calcular tiempo para iniciar crossfade
-                const fadeStartTime = (duration * (this.config.fadeStartPercentage / 100)) * 1000;
-                const timeUntilFade = fadeStartTime - this.config.crossfadeDuration;
-                
-                // Programar inicio de crossfade
-                this.state.nextTrackTimer = setTimeout(() => {
-                    this.startCrossfade();
-                }, Math.max(0, timeUntilFade));
-                
-                // Programar pre-carga de siguiente canción
-                const preloadTime = Math.max(0, timeUntilFade - this.config.preloadBuffer);
-                this.state.preloadTimer = setTimeout(() => {
-                    if (!this.state.isCrossfading) {
-                        this.state.nextAudio.load();
-                    }
-                }, preloadTime);
-                
-                // Actualizar UI con tiempo del próximo cambio
-                this.updateNextChangeTime(timeUntilFade);
-            }
-
-            async startCrossfade() {
-                if (this.state.isCrossfading || !this.state.isPoweredOn) return;
-                
-                console.log('Iniciando crossfade profesional...');
-                this.state.isCrossfading = true;
-                this.elements.currentFadeStatus.textContent = 'Transición en progreso...';
-                
-                const startTime = Date.now();
-                const duration = this.config.crossfadeDuration;
-                
-                // Detener temporizador anterior
-                if (this.state.fadeInterval) {
-                    clearInterval(this.state.fadeInterval);
-                }
-                
-                // Iniciar reproducción de la siguiente canción
-                try {
-                    await this.state.nextAudio.play();
-                } catch (error) {
-                    console.error('Error iniciando siguiente canción:', error);
-                }
-                
-                // Fade out de la canción actual y fade in de la siguiente
-                const startVolume = this.state.volume;
-                
-                this.state.fadeInterval = setInterval(() => {
-                    const elapsed = Date.now() - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    
-                    // Actualizar progreso visual
-                    this.state.crossfadeProgress = progress;
-                    this.elements.crossfadeProgress.style.width = (progress * 100) + '%';
-                    this.elements.fadePercentage.textContent = Math.round(progress * 100) + '%';
-                    
-                    // Aplicar curva de fade suave
-                    const fadeOut = this.easeInOutCubic(progress);
-                    const fadeIn = this.easeInOutQuad(progress);
-                    
-                    // Crossfade: bajar volumen actual, subir volumen siguiente
-                    if (this.state.currentAudio) {
-                        this.state.currentAudio.volume = Math.max(0, startVolume * (1 - fadeOut));
-                    }
-                    
-                    if (this.state.nextAudio) {
-                        this.state.nextAudio.volume = Math.min(this.state.volume, this.state.volume * fadeIn);
-                    }
-                    
-                    // Completar crossfade
-                    if (progress >= 1) {
-                        clearInterval(this.state.fadeInterval);
-                        this.completeCrossfade();
-                    }
-                    
-                }, 16); // ~60fps
-            }
-
-            easeInOutCubic(x) {
-                return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-            }
-
-            easeInOutQuad(x) {
-                return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-            }
-
-            completeCrossfade() {
-                console.log('Crossfade completado sin cortes');
-                
-                // Detener canción actual completamente
-                if (this.state.currentAudio) {
-                    this.state.currentAudio.pause();
-                    this.state.currentAudio.currentTime = 0;
-                    this.state.currentAudio.volume = 0;
-                }
-                
-                // Cambiar referencias
-                const oldCurrent = this.state.currentAudio;
-                this.state.currentAudio = this.state.nextAudio;
-                
-                // Ajustar volumen final
-                this.state.currentAudio.volume = this.state.volume;
-                
-                // Actualizar índices
-                this.state.currentTrackIndex = this.state.nextTrackIndex;
-                this.state.nextTrackIndex = (this.state.nextTrackIndex + 1) % this.state.tracks.length;
-                
-                // Crear nuevo elemento para siguiente canción
-                this.state.nextAudio = new Audio();
-                this.state.nextAudio.crossOrigin = "anonymous";
-                this.state.nextAudio.preload = "auto";
-                this.state.nextAudio.volume = 0;
-                this.setupAudioEvents(this.state.nextAudio, 'next');
-                
-                // Cargar nueva siguiente canción
-                const nextTrack = this.state.tracks[this.state.nextTrackIndex];
-                this.state.nextAudio.src = nextTrack.url;
-                
-                // Actualizar información de UI
-                const currentTrack = this.state.tracks[this.state.currentTrackIndex];
-                this.updateTrackInfo(currentTrack);
-                this.elements.nextTrackName.textContent = nextTrack.name;
-                
-                // Actualizar colores del álbum
-                this.updateAlbumArtColors();
-                
-                // Limpiar elemento antiguo
-                setTimeout(() => {
-                    if (oldCurrent) {
-                        oldCurrent.src = '';
-                        oldCurrent.load();
-                    }
-                }, 1000);
-                
-                // Reiniciar estado
-                this.state.isCrossfading = false;
-                this.state.crossfadeProgress = 0;
-                this.elements.crossfadeProgress.style.width = '0%';
-                this.elements.fadePercentage.textContent = '0%';
-                this.elements.currentFadeStatus.textContent = 'Sistema de crossfade activo';
-                
-                // Programar siguiente transición
-                this.scheduleCrossfade();
-            }
-
-            nextTrack() {
-                // Saltar a siguiente canción (para manejo de errores)
-                this.state.currentTrackIndex = (this.state.currentTrackIndex + 1) % this.state.tracks.length;
-                this.state.nextTrackIndex = (this.state.currentTrackIndex + 1) % this.state.tracks.length;
-                
-                // Recargar tracks
-                this.loadTrack(this.state.currentTrackIndex, 'current');
-                this.loadTrack(this.state.nextTrackIndex, 'next');
-                
-                // Continuar reproducción si estaba activa
-                if (this.state.isPlaying) {
-                    setTimeout(() => {
-                        this.playCurrentTrack();
-                    }, 1000);
-                }
-            }
-
-            // ============== CONTROLES DE USUARIO ==============
-            togglePower() {
-                this.state.isPoweredOn = !this.state.isPoweredOn;
-                
-                if (this.state.isPoweredOn) {
-                    // Encender radio
-                    this.elements.powerBtn.classList.remove('off');
-                    this.playCurrentTrack();
-                    this.showNotification('Emisora activada', 'Reproducción continua iniciada', 'success');
-                } else {
-                    // Apagar radio
-                    this.elements.powerBtn.classList.add('off');
-                    this.state.currentAudio.pause();
-                    this.state.isPlaying = false;
-                    this.elements.albumArt.classList.remove('playing');
-                    
-                    this.elements.broadcastStatus.className = 'status-indicator status-offline';
-                    this.elements.broadcastStatus.innerHTML = '<i class="fas fa-circle" style="font-size: 0.8rem;"></i><span>EMISORA APAGADA</span>';
-                    
-                    this.showNotification('Emisora apagada', 'Reproducción detenida', 'info');
-                }
-            }
-
-            setVolume(value) {
-                this.state.volume = Math.max(0, Math.min(1, value));
-                
-                // Aplicar volumen solo a la canción actual (la siguiente está en 0 hasta crossfade)
-                if (this.state.currentAudio) {
-                    this.state.currentAudio.volume = this.state.volume;
-                }
-                
-                // Actualizar UI
-                const percentage = Math.round(this.state.volume * 100);
-                this.elements.volumeValue.textContent = percentage + '%';
-                this.elements.volumeSlider.value = percentage;
-                
-                // Actualizar icono de volumen
-                let icon = 'fa-volume-up';
-                if (percentage === 0) icon = 'fa-volume-mute';
-                else if (percentage < 30) icon = 'fa-volume-down';
-                else if (percentage < 70) icon = 'fa-volume-low';
-                
-                this.elements.volumeIcon.className = 'fas ' + icon;
-            }
-
-            // ============== ACTUALIZACIÓN DE UI ==============
-            updateUI() {
-                if (!this.state.currentAudio || !this.state.isPlaying) return;
-                
-                const currentTime = this.state.currentAudio.currentTime;
-                const duration = this.state.currentAudio.duration || 1;
-                const progress = (currentTime / duration) * 100;
-                
-                // Actualizar barras de progreso
-                this.elements.progressFill.style.width = progress + '%';
-                
-                // Actualizar tiempos
-                this.elements.currentTime.textContent = this.formatTime(currentTime);
-                this.elements.progressCurrent.textContent = this.formatTime(currentTime);
-                
-                if (duration && !isNaN(duration)) {
-                    this.elements.trackDuration.textContent = this.formatTime(duration);
-                    this.elements.progressTotal.textContent = this.formatTime(duration);
-                    this.elements.timeRemaining.textContent = '-' + this.formatTime(duration - currentTime);
-                }
-            }
-
-            updateBroadcastTime() {
-                if (!this.state.isPlaying) return;
-                
-                const elapsed = Date.now() - this.state.broadcastStartTime;
-                const hours = Math.floor(elapsed / 3600000);
-                const minutes = Math.floor((elapsed % 3600000) / 60000);
-                const seconds = Math.floor((elapsed % 60000) / 1000);
-                
-                let timeStr = '';
-                if (hours > 0) {
-                    timeStr = hours.toString().padStart(2, '0') + ':' + 
-                             minutes.toString().padStart(2, '0') + ':' + 
-                             seconds.toString().padStart(2, '0');
-                } else {
-                    timeStr = minutes.toString().padStart(2, '0') + ':' + 
-                             seconds.toString().padStart(2, '0');
-                }
-                
-                this.elements.broadcastTime.textContent = timeStr;
-            }
-
-            updateNextChangeTime(timeUntilFade) {
-                if (timeUntilFade <= 0) return;
-                
-                const minutes = Math.floor(timeUntilFade / 60000);
-                const seconds = Math.floor((timeUntilFade % 60000) / 1000);
-                
-                this.elements.nextChange.textContent = `Próximo cambio automático en: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-                this.elements.nextTrackTime.textContent = `En ${minutes}:${seconds.toString().padStart(2, '0')}`;
-                this.elements.nextIn.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            }
-
-            updateAlbumArtColors() {
-                // Generar colores únicos para cada canción
-                const hue = (this.state.currentTrackIndex * 137) % 360;
-                const color1 = `hsl(${hue}, 80%, 45%)`;
-                const color2 = `hsl(${(hue + 60) % 360}, 80%, 45%)`;
-                
-                this.elements.albumArt.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
-            }
-
-            formatTime(seconds) {
-                if (isNaN(seconds)) return '00:00';
-                
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
-            }
-
-            // ============== EVENT HANDLERS ==============
-            onTrackLoaded(type) {
-                if (type === 'current') {
-                    const track = this.state.tracks[this.state.currentTrackIndex];
-                    if (track) {
-                        track.duration = this.state.currentAudio.duration;
-                    }
-                }
-            }
-
-            onAudioError(error, type) {
-                console.error(`Error en audio ${type}:`, error);
-                
-                if (type === 'current') {
-                    this.showNotification('Error de reproducción', 'Saltando a siguiente canción...', 'warning');
-                    
-                    // Saltar a siguiente canción
-                    setTimeout(() => {
-                        this.nextTrack();
-                    }, 1000);
-                }
-            }
-
-            onTrackEnded(type) {
-                if (type === 'current' && !this.state.isCrossfading) {
-                    // Si termina sin crossfade (fallback)
-                    this.nextTrack();
-                }
-            }
-
-            onCanPlay(type) {
-                if (type === 'next') {
-                    console.log('Siguiente canción lista para reproducir');
-                }
-            }
-
-            // ============== NOTIFICACIONES ==============
-            showNotification(title, message, type = 'info') {
-                this.elements.notificationTitle.textContent = title;
-                this.elements.notificationMessage.textContent = message;
-                
-                // Configurar color según tipo
-                let borderColor = '#1a73e8';
-                if (type === 'success') borderColor = '#34a853';
-                if (type === 'error') borderColor = '#ea4335';
-                if (type === 'warning') borderColor = '#fbbc05';
-                
-                this.elements.notification.style.borderLeftColor = borderColor;
-                
-                // Mostrar notificación
-                this.elements.notification.classList.add('show');
-                
-                // Ocultar después de 3 segundos
-                setTimeout(() => {
-                    this.elements.notification.classList.remove('show');
-                }, 3000);
-            }
-
-            // ============== LOADING ==============
-            updateLoadingStatus(message) {
-                if (this.elements.loadingDetails) {
-                    this.elements.loadingDetails.textContent = message;
-                }
-            }
-
-            hideLoadingScreen() {
-                setTimeout(() => {
-                    this.elements.loadingScreen.style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        this.elements.loadingScreen.style.display = 'none';
-                        this.elements.app.style.display = 'block';
-                        
-                        setTimeout(() => {
-                            this.elements.app.classList.add('app-loaded');
-                        }, 50);
-                    }, 500);
-                }, 1000);
+        // Seleccionar un género
+        function selectGenre(genre) {
+            currentGenre = genre;
+            currentSongIndex = 0;
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === genre) btn.classList.add('active');
+            });
+            
+            updateCurrentSong();
+            
+            // Si está reproduciendo, cambiar a la primera canción del nuevo género
+            if (isPlaying && isPoweredOn) {
+                playCurrentSong();
             }
         }
 
-        // ============== INICIAR SISTEMA ==============
-        document.addEventListener('DOMContentLoaded', () => {
-            window.radioSystem = new RadioOnlineSystem();
-        });
+        // Actualizar la información de la canción actual
+        function updateCurrentSong() {
+            const songs = musicGenres[currentGenre];
+            if (songs && songs[currentSongIndex]) {
+                currentSongEl.textContent = songs[currentSongIndex].title;
+                currentGenreEl.textContent = currentGenre;
+            }
+        }
+
+        // Reproducir la canción actual
+        function playCurrentSong() {
+            if (!isPoweredOn) return;
+            
+            const songs = musicGenres[currentGenre];
+            if (!songs || !songs[currentSongIndex]) return;
+            
+            // En un caso real, usaríamos la URL real del archivo de música
+            // Para este ejemplo, usaremos un archivo de audio genérico
+            // Si quisieras usar los archivos reales de GitHub, deberías tener las URL correctas
+            audioPlayer.src = songs[currentSongIndex].url;
+            audioPlayer.play()
+                .then(() => {
+                    isPlaying = true;
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    currentSongEl.innerHTML = songs[currentSongIndex].title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                })
+                .catch(error => {
+                    console.error("Error al reproducir:", error);
+                    // Si hay error, usar audio de prueba
+                    audioPlayer.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+                    audioPlayer.play();
+                });
+        }
+
+        // Reproducir siguiente canción
+        function playNextSong() {
+            const songs = musicGenres[currentGenre];
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            updateCurrentSong();
+            playCurrentSong();
+        }
+
+        // Alternar encendido/apagado
+        function togglePower() {
+            isPoweredOn = !isPoweredOn;
+            
+            if (isPoweredOn) {
+                powerBtn.classList.add('on');
+                playBtn.disabled = false;
+                playBtn.style.opacity = "1";
+                currentSongEl.textContent = "Selecciona un género y pulsa Play";
+                currentGenreEl.textContent = "Emisora encendida";
+            } else {
+                powerBtn.classList.remove('on');
+                playBtn.disabled = true;
+                playBtn.style.opacity = "0.6";
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                
+                if (isPlaying) {
+                    audioPlayer.pause();
+                    isPlaying = false;
+                }
+                
+                currentSongEl.textContent = "Emisora apagada";
+                currentGenreEl.textContent = "-";
+            }
+        }
+
+        // Alternar reproducción/pausa
+        function togglePlay() {
+            if (!isPoweredOn) return;
+            
+            if (!isPlaying) {
+                playCurrentSong();
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                currentSongEl.innerHTML = currentSongEl.textContent.replace(' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>', '');
+            }
+        }
+
+        // Cambiar volumen
+        function changeVolume() {
+            currentVolume = volumeSlider.value / 100;
+            audioPlayer.volume = currentVolume;
+            
+            // Cambiar icono según el volumen
+            const volumeIcons = document.querySelectorAll('.volume-control i');
+            if (currentVolume === 0) {
+                volumeIcons[0].className = 'fas fa-volume-mute';
+                volumeIcons[1].className = 'fas fa-volume-mute';
+            } else if (currentVolume < 0.5) {
+                volumeIcons[0].className = 'fas fa-volume-down';
+                volumeIcons[1].className = 'fas fa-volume-down';
+            } else {
+                volumeIcons[0].className = 'fas fa-volume-up';
+                volumeIcons[1].className = 'fas fa-volume-up';
+            }
+        }
+
+        // Event listeners
+        powerBtn.addEventListener('click', togglePower);
+        playBtn.addEventListener('click', togglePlay);
+        volumeSlider.addEventListener('input', changeVolume);
+
+        // Inicializar cuando la página cargue
+        window.addEventListener('DOMContentLoaded', initRadio);
+        
+        // Para simular una experiencia de radio, si se activa un género diferente mientras se reproduce,
+        // cambiará automáticamente a la primera canción de ese género
+        function simulateRadio() {
+            if (isPlaying && isPoweredOn) {
+                // Cambiar aleatoriamente de género cada 3 canciones
+                if (currentSongIndex === 0) {
+                    const genres = Object.keys(musicGenres);
+                    const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+                    if (randomGenre !== currentGenre) {
+                        selectGenre(randomGenre);
+                    }
+                }
+            }
+        }
+
+        // Simular cambios automáticos como una radio real
+        setInterval(simulateRadio, 60000);
     </script>
 </body>
 </html>
