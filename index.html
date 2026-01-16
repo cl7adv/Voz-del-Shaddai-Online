@@ -26,7 +26,7 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -37,7 +37,6 @@
             z-index: 1;
         }
 
-        /* Fondo animado con olas */
         .wave-bg {
             position: absolute;
             bottom: 0;
@@ -175,6 +174,24 @@
             transform: scale(1.05);
         }
 
+        .next-btn {
+            background-color: #ffa502;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .next-btn:hover {
+            background-color: #e59400;
+            transform: scale(1.05);
+        }
+
         .volume-control {
             display: flex;
             align-items: center;
@@ -212,6 +229,28 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
+        .mode-control {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .mode-btn.active {
+            background: #ffa502;
+            box-shadow: 0 0 10px rgba(255, 165, 2, 0.5);
+        }
+
         .now-playing {
             background: linear-gradient(to right, rgba(255, 165, 2, 0.2), rgba(255, 165, 2, 0.1));
             border-radius: 10px;
@@ -240,46 +279,94 @@
             color: #70a1ff;
         }
 
-        .genres-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .song-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
-        .genres-section h2 {
-            font-size: 1.5rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 8px;
+        .status-message {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            font-style: italic;
+            color: #70a1ff;
+            margin-top: 10px;
+        }
+
+        .song-list-container {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .song-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .song-list-header h4 {
             color: #ffa502;
         }
 
-        .genre-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .genre-btn {
-            background: linear-gradient(to right, #3498db, #2ecc71);
+        .refresh-btn {
+            background: rgba(255, 165, 2, 0.3);
             border: none;
             color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
+            padding: 5px 10px;
+            border-radius: 15px;
             cursor: pointer;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 165, 2, 0.5);
+        }
+
+        .song-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .song-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .song-item.active {
+            background: rgba(255, 165, 2, 0.2);
+            color: #ffa502;
+        }
+
+        .song-number {
+            width: 30px;
+            text-align: center;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-right: 10px;
         }
 
-        .genre-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        .song-name {
+            flex-grow: 1;
         }
 
-        .genre-btn.active {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            box-shadow: 0 0 15px rgba(255, 126, 95, 0.7);
+        .song-duration {
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
 
         .footer {
@@ -325,31 +412,6 @@
             left: 10%;
         }
 
-        .song-list {
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .song-item {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .song-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .song-item.active {
-            background: rgba(255, 165, 2, 0.2);
-            color: #ffa502;
-        }
-
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -368,16 +430,11 @@
                 max-width: 100%;
             }
             
-            .genre-buttons {
-                justify-content: center;
-            }
-            
             .song-title {
                 font-size: 1.2rem;
             }
         }
 
-        /* Animación para el indicador de reproducción */
         @keyframes playing {
             0% { transform: scale(1); opacity: 0.7; }
             50% { transform: scale(1.2); opacity: 1; }
@@ -391,11 +448,13 @@
             animation: playing 1.5s infinite;
         }
         
-        .loading {
-            display: none;
-            font-style: italic;
-            color: #70a1ff;
+        .error {
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 10px;
+            border-radius: 5px;
             margin-top: 10px;
+            display: none;
         }
     </style>
 </head>
@@ -416,7 +475,7 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-broadcast-tower"></i> Voz del Shaddai Online</h1>
-            <p>Tu emisora tropical con la mejor música</p>
+            <p>Tu emisora tropical con música directa desde GitHub</p>
             <div class="radio-icon">
                 <i class="fas fa-music"></i>
             </div>
@@ -433,6 +492,10 @@
                         <i class="fas fa-play"></i>
                     </button>
                     
+                    <button class="next-btn" id="nextBtn" title="Siguiente canción">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                    
                     <div class="volume-control">
                         <i class="fas fa-volume-down"></i>
                         <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
@@ -440,247 +503,286 @@
                     </div>
                 </div>
                 
-                <div class="now-playing">
-                    <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
-                    <div class="song-title" id="currentSong">Selecciona un género y pulsa Play</div>
-                    <div class="song-genre" id="currentGenre">-</div>
-                    <div class="loading" id="loading">Cargando música...</div>
+                <div class="mode-control">
+                    <button class="mode-btn active" id="modeRandom" title="Reproducción aleatoria">
+                        <i class="fas fa-random"></i> Aleatorio
+                    </button>
+                    <button class="mode-btn" id="modeSequential" title="Reproducción en orden">
+                        <i class="fas fa-list-ol"></i> Secuencial
+                    </button>
+                    <button class="mode-btn" id="modeLoop" title="Repetir canción">
+                        <i class="fas fa-redo"></i> Repetir
+                    </button>
                 </div>
                 
-                <div class="song-list" id="songList">
-                    <!-- Lista de canciones se generará aquí -->
+                <div class="now-playing">
+                    <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
+                    <div class="song-title" id="currentSong">Esperando música...</div>
+                    <div class="song-genre" id="currentGenre">-</div>
+                    <div class="song-info" id="songInfo">Cargando lista de canciones...</div>
+                    <div class="loading" id="loading">Cargando música...</div>
+                    <div class="error" id="errorMessage"></div>
                 </div>
-            </div>
-            
-            <div class="genres-section">
-                <h2><i class="fas fa-list-music"></i> Géneros Musicales</h2>
-                <div class="genre-buttons" id="genreButtons">
-                    <!-- Los botones se generarán con JavaScript -->
+                
+                <div class="song-list-container">
+                    <div class="song-list-header">
+                        <h4><i class="fas fa-list-music"></i> Lista de Canciones (<span id="songCount">0</span>)</h4>
+                        <button class="refresh-btn" id="refreshBtn">
+                            <i class="fas fa-sync-alt"></i> Actualizar
+                        </button>
+                    </div>
+                    <div id="songList">
+                        <!-- Lista de canciones se generará aquí -->
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="footer">
-            <p>Música cortesía de Voz del Shaddai Online | Reproduciendo desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #70a1ff; text-decoration: none;">GitHub Repository</a></p>
-            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Diseño tropical con HTML, CSS y JavaScript</p>
+            <p>Música desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #70a1ff; text-decoration: none;">GitHub Repository</a></p>
+            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Emisora Voz del Shaddai - Reproducción aleatoria activa</p>
         </div>
     </div>
 
     <script>
-        // Lista de géneros y canciones usando enlaces alternativos ya que GitHub no permite streaming directo
-        const musicGenres = {
-            "Salsa Tropical": {
-                color: "#ff7e5f",
-                songs: [
-                    { title: "Salsa Caliente", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Salsa" },
-                    { title: "Ritmo Caribeño", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", genre: "Salsa" },
-                    { title: "Bailando con Shaddai", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", genre: "Salsa" }
-                ]
-            },
-            "Bachata Romántica": {
-                color: "#3498db",
-                songs: [
-                    { title: "Bachata Romántica", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", genre: "Bachata" },
-                    { title: "Suspiros Tropicales", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", genre: "Bachata" },
-                    { title: "Noche de Luna", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", genre: "Bachata" }
-                ]
-            },
-            "Merengue Fiestero": {
-                color: "#2ecc71",
-                songs: [
-                    { title: "Merengue Fiestero", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", genre: "Merengue" },
-                    { title: "Ritmo Dominicano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", genre: "Merengue" },
-                    { title: "Fiesta en la Playa", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", genre: "Merengue" }
-                ]
-            },
-            "Reguetón Urbano": {
-                color: "#9b59b6",
-                songs: [
-                    { title: "Flow Caribeño", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", genre: "Reguetón" },
-                    { title: "Ritmo Urbano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3", genre: "Reguetón" },
-                    { title: "Vibra Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3", genre: "Reguetón" }
-                ]
-            },
-            "Gospel Inspirador": {
-                color: "#e74c3c",
-                songs: [
-                    { title: "Alabanza Shaddai", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3", genre: "Gospel" },
-                    { title: "Cielo en la Tierra", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3", genre: "Gospel" },
-                    { title: "Fe y Esperanza", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3", genre: "Gospel" }
-                ]
-            },
-            "Baladas del Alma": {
-                color: "#f1c40f",
-                songs: [
-                    { title: "Amor Eterno", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3", genre: "Balada" },
-                    { title: "Serenata Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3", genre: "Balada" },
-                    { title: "Recuerdos del Alma", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Balada" }
-                ]
-            }
-        };
-
         // Variables de estado
         let audioPlayer = new Audio();
         let isPlaying = false;
         let isPoweredOn = false;
-        let currentGenre = "Salsa Tropical";
-        let currentSongIndex = 0;
         let currentVolume = 0.7;
-
+        let currentSongIndex = 0;
+        let playMode = 'random'; // random, sequential, loop
+        let allSongs = [];
+        let shuffledSongs = [];
+        
         // Elementos del DOM
         const powerBtn = document.getElementById('powerBtn');
         const playBtn = document.getElementById('playBtn');
+        const nextBtn = document.getElementById('nextBtn');
         const volumeSlider = document.getElementById('volumeSlider');
         const currentSongEl = document.getElementById('currentSong');
         const currentGenreEl = document.getElementById('currentGenre');
-        const genreButtonsContainer = document.getElementById('genreButtons');
+        const songInfoEl = document.getElementById('songInfo');
         const songListContainer = document.getElementById('songList');
+        const songCountEl = document.getElementById('songCount');
         const loadingEl = document.getElementById('loading');
+        const errorMessageEl = document.getElementById('errorMessage');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const modeRandomBtn = document.getElementById('modeRandom');
+        const modeSequentialBtn = document.getElementById('modeSequential');
+        const modeLoopBtn = document.getElementById('modeLoop');
 
-        // Inicializar la emisora
-        function initRadio() {
-            // Crear botones de géneros
-            for (const genre in musicGenres) {
-                const button = document.createElement('button');
-                button.className = 'genre-btn';
-                if (genre === currentGenre) {
-                    button.classList.add('active');
-                    button.style.background = `linear-gradient(to right, ${musicGenres[genre].color}, ${adjustColor(musicGenres[genre].color, 20)})`;
-                }
-                button.textContent = genre;
-                button.addEventListener('click', () => selectGenre(genre));
-                genreButtonsContainer.appendChild(button);
-            }
-            
-            // Configurar audio player
-            audioPlayer.volume = currentVolume;
-            audioPlayer.addEventListener('ended', playNextSong);
-            audioPlayer.addEventListener('error', handleAudioError);
-            audioPlayer.addEventListener('loadstart', () => {
-                loadingEl.style.display = 'block';
-            });
-            audioPlayer.addEventListener('canplay', () => {
-                loadingEl.style.display = 'none';
-            });
-            
-            // Actualizar la canción actual y lista
-            updateCurrentSong();
-            updateSongList();
-            
-            // Establecer un evento para cuando el usuario interactúe (necesario para autoplay en algunos navegadores)
-            document.addEventListener('click', initAudioContext, { once: true });
-        }
-
-        // Función para ajustar color
-        function adjustColor(color, amount) {
-            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
-        }
-
-        // Inicializar contexto de audio (necesario para algunos navegadores)
-        function initAudioContext() {
-            // Solo es necesario para navegadores que bloquean autoplay
-            if (audioPlayer && audioPlayer.play) {
-                audioPlayer.play().then(() => {
-                    audioPlayer.pause();
-                }).catch(() => {
-                    // Ignorar error, solo estamos inicializando
-                });
-            }
-        }
-
-        // Seleccionar un género
-        function selectGenre(genre) {
-            currentGenre = genre;
-            currentSongIndex = 0;
-            
-            // Actualizar botones activos
-            document.querySelectorAll('.genre-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.background = '';
-                if (btn.textContent === genre) {
-                    btn.classList.add('active');
-                    btn.style.background = `linear-gradient(to right, ${musicGenres[genre].color}, ${adjustColor(musicGenres[genre].color, 20)})`;
-                }
-            });
-            
-            updateCurrentSong();
-            updateSongList();
-            
-            // Si está reproduciendo, cambiar a la primera canción del nuevo género
-            if (isPlaying && isPoweredOn) {
-                playCurrentSong();
-            }
-        }
-
-        // Actualizar la información de la canción actual
-        function updateCurrentSong() {
-            const songs = musicGenres[currentGenre].songs;
-            if (songs && songs[currentSongIndex]) {
-                currentSongEl.textContent = songs[currentSongIndex].title;
-                currentGenreEl.textContent = currentGenre;
+        // Función para cargar la lista de canciones desde GitHub
+        async function loadSongsFromGitHub() {
+            try {
+                showLoading("Cargando lista de canciones desde GitHub...");
+                errorMessageEl.style.display = 'none';
                 
-                // Actualizar elementos activos en la lista
-                document.querySelectorAll('.song-item').forEach((item, index) => {
-                    item.classList.remove('active');
-                    if (index === currentSongIndex) {
-                        item.classList.add('active');
+                // URL de la API de GitHub para obtener el contenido de la carpeta música
+                const apiUrl = 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica';
+                
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Filtrar solo archivos de audio
+                const audioFiles = data.filter(item => 
+                    item.type === 'file' && 
+                    (item.name.endsWith('.mp3') || 
+                     item.name.endsWith('.wav') || 
+                     item.name.endsWith('.ogg') ||
+                     item.name.endsWith('.m4a'))
+                );
+                
+                if (audioFiles.length === 0) {
+                    throw new Error('No se encontraron archivos de audio en la carpeta música.');
+                }
+                
+                // Crear lista de canciones
+                allSongs = audioFiles.map((file, index) => {
+                    // Extraer posible género del nombre del archivo
+                    let genre = 'Música';
+                    const fileName = file.name.toLowerCase();
+                    
+                    if (fileName.includes('salsa') || fileName.includes('merengue') || 
+                        fileName.includes('bachata') || fileName.includes('reggaeton') ||
+                        fileName.includes('gospel') || fileName.includes('balada')) {
+                        
+                        if (fileName.includes('salsa')) genre = 'Salsa';
+                        else if (fileName.includes('merengue')) genre = 'Merengue';
+                        else if (fileName.includes('bachata')) genre = 'Bachata';
+                        else if (fileName.includes('reggaeton')) genre = 'Reguetón';
+                        else if (fileName.includes('gospel')) genre = 'Gospel';
+                        else if (fileName.includes('balada')) genre = 'Balada';
                     }
+                    
+                    return {
+                        id: index,
+                        title: file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/-/g, " "),
+                        url: file.download_url,
+                        genre: genre,
+                        filename: file.name,
+                        size: file.size ? (file.size / (1024*1024)).toFixed(2) + ' MB' : 'N/A'
+                    };
                 });
+                
+                // Mezclar canciones para modo aleatorio
+                shuffleSongs();
+                
+                // Actualizar interfaz
+                updateSongList();
+                updateSongCount();
+                hideLoading();
+                
+                // Si la emisora está encendida, preparar la primera canción
+                if (isPoweredOn && allSongs.length > 0) {
+                    currentSongIndex = 0;
+                    updateCurrentSong();
+                }
+                
+                return true;
+                
+            } catch (error) {
+                console.error("Error cargando canciones:", error);
+                errorMessageEl.textContent = `Error: ${error.message}. Usando canciones de ejemplo.`;
+                errorMessageEl.style.display = 'block';
+                
+                // Cargar canciones de ejemplo como respaldo
+                loadBackupSongs();
+                return false;
             }
         }
 
-        // Actualizar la lista de canciones
+        // Función para cargar canciones de respaldo
+        function loadBackupSongs() {
+            allSongs = [
+                { id: 0, title: "Salsa Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Salsa", filename: "salsa_tropical.mp3", size: "3.2 MB" },
+                { id: 1, title: "Bachata Romántica", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", genre: "Bachata", filename: "bachata_romantica.mp3", size: "2.8 MB" },
+                { id: 2, title: "Merengue Fiestero", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", genre: "Merengue", filename: "merengue_fiestero.mp3", size: "3.5 MB" },
+                { id: 3, title: "Reguetón Urbano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", genre: "Reguetón", filename: "reggaeton_urbano.mp3", size: "3.0 MB" },
+                { id: 4, title: "Gospel Inspirador", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", genre: "Gospel", filename: "gospel_inspirador.mp3", size: "3.7 MB" },
+                { id: 5, title: "Balada del Alma", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", genre: "Balada", filename: "balada_alma.mp3", size: "2.9 MB" }
+            ];
+            
+            shuffleSongs();
+            updateSongList();
+            updateSongCount();
+            hideLoading();
+            
+            if (isPoweredOn && allSongs.length > 0) {
+                currentSongIndex = 0;
+                updateCurrentSong();
+            }
+        }
+
+        // Función para mezclar canciones
+        function shuffleSongs() {
+            shuffledSongs = [...allSongs];
+            for (let i = shuffledSongs.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledSongs[i], shuffledSongs[j]] = [shuffledSongs[j], shuffledSongs[i]];
+            }
+        }
+
+        // Función para obtener la canción actual según el modo
+        function getCurrentSong() {
+            if (playMode === 'random') {
+                return shuffledSongs[currentSongIndex];
+            } else {
+                return allSongs[currentSongIndex];
+            }
+        }
+
+        // Función para actualizar la lista de canciones en la interfaz
         function updateSongList() {
             songListContainer.innerHTML = '';
-            const songs = musicGenres[currentGenre].songs;
             
-            songs.forEach((song, index) => {
+            const songsToShow = playMode === 'random' ? shuffledSongs : allSongs;
+            
+            songsToShow.forEach((song, index) => {
                 const songItem = document.createElement('div');
                 songItem.className = 'song-item';
-                if (index === currentSongIndex) {
+                if (index === currentSongIndex && isPlaying) {
                     songItem.classList.add('active');
                 }
+                
                 songItem.innerHTML = `
-                    <i class="fas fa-music" style="margin-right: 10px; color: ${musicGenres[currentGenre].color};"></i>
-                    ${song.title}
-                    <span style="float: right; font-size: 0.8rem; opacity: 0.7;">${song.genre}</span>
+                    <div class="song-number">${index + 1}</div>
+                    <div class="song-name">
+                        <strong>${song.title}</strong><br>
+                        <small>${song.genre} • ${song.size}</small>
+                    </div>
+                    <div class="song-duration">
+                        ${index === currentSongIndex && isPlaying ? '<i class="fas fa-play playing-indicator"></i>' : ''}
+                    </div>
                 `;
+                
                 songItem.addEventListener('click', () => {
-                    currentSongIndex = index;
+                    if (playMode === 'random') {
+                        // Encontrar el índice en shuffledSongs
+                        currentSongIndex = index;
+                    } else {
+                        // Encontrar el índice en allSongs
+                        currentSongIndex = allSongs.findIndex(s => s.id === song.id);
+                    }
+                    
                     updateCurrentSong();
                     if (isPlaying && isPoweredOn) {
                         playCurrentSong();
                     }
                 });
+                
                 songListContainer.appendChild(songItem);
             });
         }
 
-        // Manejar errores de audio
-        function handleAudioError() {
-            console.error("Error al cargar el archivo de audio.");
-            loadingEl.style.display = 'none';
-            currentSongEl.innerHTML = "Error cargando la canción. Intentando siguiente... <i class='fas fa-exclamation-triangle'></i>";
-            
-            // Intentar con la siguiente canción después de un breve retraso
-            setTimeout(playNextSong, 2000);
+        // Función para actualizar el contador de canciones
+        function updateSongCount() {
+            songCountEl.textContent = allSongs.length;
         }
 
-        // Reproducir la canción actual
-        function playCurrentSong() {
-            if (!isPoweredOn) return;
+        // Función para actualizar la canción actual en la interfaz
+        function updateCurrentSong() {
+            if (allSongs.length === 0) return;
             
-            const songs = musicGenres[currentGenre].songs;
-            if (!songs || !songs[currentSongIndex]) return;
+            const song = getCurrentSong();
+            currentSongEl.textContent = song.title;
+            currentGenreEl.textContent = song.genre;
+            songInfoEl.textContent = `Archivo: ${song.filename} • Tamaño: ${song.size}`;
             
+            // Actualizar elementos activos en la lista
+            updateSongList();
+        }
+
+        // Función para mostrar estado de carga
+        function showLoading(message) {
+            loadingEl.textContent = message;
             loadingEl.style.display = 'block';
+        }
+
+        // Función para ocultar estado de carga
+        function hideLoading() {
+            loadingEl.style.display = 'none';
+        }
+
+        // Función para reproducir la canción actual
+        function playCurrentSong() {
+            if (!isPoweredOn || allSongs.length === 0) return;
+            
+            const song = getCurrentSong();
+            
+            showLoading(`Cargando: ${song.title}...`);
             
             // Detener audio actual
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
             
             // Asignar nueva fuente
-            audioPlayer.src = songs[currentSongIndex].url;
+            audioPlayer.src = song.url;
             
             // Reproducir
             const playPromise = audioPlayer.play();
@@ -689,26 +791,77 @@
                 playPromise.then(() => {
                     isPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    currentSongEl.innerHTML = songs[currentSongIndex].title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
-                    loadingEl.style.display = 'none';
+                    currentSongEl.innerHTML = song.title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                    hideLoading();
+                    errorMessageEl.style.display = 'none';
+                    
+                    // Actualizar el icono del radio
+                    document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
                 })
                 .catch(error => {
                     console.error("Error al reproducir:", error);
-                    loadingEl.style.display = 'none';
-                    currentSongEl.innerHTML = "Haz clic en play para comenzar";
+                    hideLoading();
                     
-                    // En algunos navegadores necesitamos interacción del usuario
-                    alert("Por favor, haz clic en el botón de play para comenzar la reproducción.");
+                    if (error.name === 'NotAllowedError') {
+                        errorMessageEl.textContent = "Error: El navegador bloqueó la reproducción automática. Haz clic en el botón de play.";
+                        errorMessageEl.style.display = 'block';
+                    } else {
+                        errorMessageEl.textContent = `Error al reproducir ${song.title}. Intentando siguiente canción...`;
+                        errorMessageEl.style.display = 'block';
+                        setTimeout(playNextSong, 2000);
+                    }
                 });
             }
         }
 
-        // Reproducir siguiente canción
+        // Función para reproducir siguiente canción
         function playNextSong() {
-            const songs = musicGenres[currentGenre].songs;
-            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            if (allSongs.length === 0) return;
+            
+            if (playMode === 'loop') {
+                // En modo loop, reproducir la misma canción de nuevo
+                playCurrentSong();
+                return;
+            }
+            
+            // Avanzar al siguiente índice
+            currentSongIndex = (currentSongIndex + 1) % (playMode === 'random' ? shuffledSongs.length : allSongs.length);
+            
+            // Si estamos al final y es modo secuencial, volver al inicio
+            if (playMode === 'sequential' && currentSongIndex === 0) {
+                // Podríamos añadir un mensaje de "Fin de la lista" aquí si queremos
+            }
+            
             updateCurrentSong();
             playCurrentSong();
+        }
+
+        // Función para cambiar modo de reproducción
+        function changePlayMode(mode) {
+            playMode = mode;
+            
+            // Actualizar botones activos
+            modeRandomBtn.classList.remove('active');
+            modeSequentialBtn.classList.remove('active');
+            modeLoopBtn.classList.remove('active');
+            
+            if (mode === 'random') {
+                modeRandomBtn.classList.add('active');
+                shuffleSongs();
+                currentSongIndex = 0;
+            } else if (mode === 'sequential') {
+                modeSequentialBtn.classList.add('active');
+                currentSongIndex = 0;
+            } else if (mode === 'loop') {
+                modeLoopBtn.classList.add('active');
+            }
+            
+            updateCurrentSong();
+            updateSongList();
+            
+            if (isPlaying && isPoweredOn) {
+                playCurrentSong();
+            }
         }
 
         // Alternar encendido/apagado
@@ -718,14 +871,26 @@
             if (isPoweredOn) {
                 powerBtn.classList.add('on');
                 playBtn.disabled = false;
+                nextBtn.disabled = false;
                 playBtn.style.opacity = "1";
-                currentSongEl.textContent = "Selecciona una canción y pulsa Play";
-                currentGenreEl.textContent = "Emisora encendida";
+                nextBtn.style.opacity = "1";
+                
+                // Si no hay canciones cargadas, cargarlas
+                if (allSongs.length === 0) {
+                    loadSongsFromGitHub();
+                } else {
+                    currentSongEl.textContent = "Selecciona una canción y pulsa Play";
+                    currentGenreEl.textContent = "Emisora encendida";
+                    songInfoEl.textContent = `${allSongs.length} canciones disponibles`;
+                }
+                
                 document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
             } else {
                 powerBtn.classList.remove('on');
                 playBtn.disabled = true;
+                nextBtn.disabled = true;
                 playBtn.style.opacity = "0.6";
+                nextBtn.style.opacity = "0.6";
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 
                 if (isPlaying) {
@@ -735,21 +900,28 @@
                 
                 currentSongEl.textContent = "Emisora apagada";
                 currentGenreEl.textContent = "-";
+                songInfoEl.textContent = "Enciende la emisora para comenzar";
                 document.querySelector('.radio-icon').style.animation = 'none';
             }
         }
 
         // Alternar reproducción/pausa
         function togglePlay() {
-            if (!isPoweredOn) return;
+            if (!isPoweredOn || allSongs.length === 0) return;
             
             if (!isPlaying) {
+                // Si no hay canción seleccionada, seleccionar la primera
+                if (currentSongIndex < 0 || currentSongIndex >= (playMode === 'random' ? shuffledSongs.length : allSongs.length)) {
+                    currentSongIndex = 0;
+                    updateCurrentSong();
+                }
                 playCurrentSong();
             } else {
                 audioPlayer.pause();
                 isPlaying = false;
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 currentSongEl.innerHTML = currentSongEl.textContent.replace(' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>', '');
+                document.querySelector('.radio-icon').style.animation = 'pulse 2s infinite';
             }
         }
 
@@ -772,21 +944,71 @@
             }
         }
 
-        // Event listeners
-        powerBtn.addEventListener('click', togglePower);
-        playBtn.addEventListener('click', togglePlay);
-        volumeSlider.addEventListener('input', changeVolume);
+        // Inicializar eventos
+        function initEvents() {
+            powerBtn.addEventListener('click', togglePower);
+            playBtn.addEventListener('click', togglePlay);
+            nextBtn.addEventListener('click', playNextSong);
+            volumeSlider.addEventListener('input', changeVolume);
+            refreshBtn.addEventListener('click', () => {
+                loadSongsFromGitHub();
+            });
+            
+            modeRandomBtn.addEventListener('click', () => changePlayMode('random'));
+            modeSequentialBtn.addEventListener('click', () => changePlayMode('sequential'));
+            modeLoopBtn.addEventListener('click', () => changePlayMode('loop'));
+            
+            // Configurar audio player
+            audioPlayer.volume = currentVolume;
+            audioPlayer.addEventListener('ended', playNextSong);
+            audioPlayer.addEventListener('error', function(e) {
+                console.error("Error de audio:", e);
+                errorMessageEl.textContent = "Error al cargar el audio. Intentando siguiente canción...";
+                errorMessageEl.style.display = 'block';
+                setTimeout(playNextSong, 2000);
+            });
+            
+            // Para permitir autoplay en algunos navegadores
+            document.addEventListener('click', function initAudioOnce() {
+                if (audioPlayer && audioPlayer.play) {
+                    audioPlayer.play().then(() => {
+                        audioPlayer.pause();
+                        audioPlayer.currentTime = 0;
+                    }).catch(() => {});
+                }
+                document.removeEventListener('click', initAudioOnce);
+            });
+        }
 
-        // Inicializar cuando la página cargue
-        window.addEventListener('DOMContentLoaded', initRadio);
-        
-        // Cambiar automáticamente de canción cuando termine
-        audioPlayer.addEventListener('ended', playNextSong);
-        
-        // Para actualizar el tiempo de reproducción (opcional)
-        audioPlayer.addEventListener('timeupdate', () => {
-            // Podríamos añadir una barra de progreso aquí si quisiéramos
-        });
+        // Inicializar la aplicación
+        function initApp() {
+            initEvents();
+            
+            // Cargar canciones al inicio
+            loadSongsFromGitHub();
+            
+            // Actualizar la interfaz cada 10 segundos para mostrar estado actual
+            setInterval(() => {
+                if (isPlaying && isPoweredOn) {
+                    const time = audioPlayer.currentTime;
+                    const duration = audioPlayer.duration;
+                    
+                    if (!isNaN(duration) && duration > 0) {
+                        const percent = (time / duration * 100).toFixed(1);
+                        const timeStr = `${Math.floor(time / 60)}:${Math.floor(time % 60).toString().padStart(2, '0')} / ${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, '0')}`;
+                        
+                        // Actualizar info de canción actual
+                        const song = getCurrentSong();
+                        if (song) {
+                            songInfoEl.textContent = `Archivo: ${song.filename} • ${timeStr} (${percent}%)`;
+                        }
+                    }
+                }
+            }, 10000);
+        }
+
+        // Iniciar cuando la página cargue
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
