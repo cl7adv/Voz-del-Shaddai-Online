@@ -50,6 +50,7 @@
             color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
+            cursor: default;
         }
 
         /* ===== LOADING SCREEN ===== */
@@ -506,6 +507,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 6px;
             outline: none;
+            cursor: pointer;
         }
 
         .volume-slider::-webkit-slider-thumb {
@@ -662,6 +664,69 @@
             transform: translateX(0);
         }
 
+        /* ===== INTERACTION REQUIRED MESSAGE ===== */
+        .interaction-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(23, 23, 23, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            backdrop-filter: blur(10px);
+        }
+
+        .interaction-content {
+            background: rgba(32, 33, 36, 0.95);
+            border-radius: var(--radius);
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .interaction-icon {
+            font-size: 4rem;
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .interaction-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .interaction-content p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .interaction-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .interaction-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
         /* ===== FOOTER ===== */
         .radio-footer {
             text-align: center;
@@ -712,6 +777,15 @@
             
             .volume-slider {
                 height: 10px;
+            }
+            
+            .interaction-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .interaction-content h2 {
+                font-size: 1.5rem;
             }
         }
 
@@ -770,6 +844,22 @@
         </div>
     </div>
 
+    <!-- Interaction Required Message -->
+    <div id="interaction-message" class="interaction-message" style="display: none;">
+        <div class="interaction-content">
+            <div class="interaction-icon">
+                <i class="fas fa-hand-pointer"></i>
+            </div>
+            <h2>¡Interacción Requerida!</h2>
+            <p>Para cumplir con las políticas de los navegadores modernos, necesitas interactuar con la página para iniciar la reproducción de audio.</p>
+            <p>Por favor, haz clic en el botón de abajo para activar la radio:</p>
+            <button class="interaction-btn" id="enable-audio-btn">
+                <i class="fas fa-play-circle"></i>
+                ACTIVAR REPRODUCCIÓN
+            </button>
+        </div>
+    </div>
+
     <!-- Main App -->
     <div id="app">
         <!-- Header -->
@@ -781,9 +871,9 @@
                 <div class="radio-info">
                     <h1>VOZ DEL SHADDAI RADIO</h1>
                     <p class="radio-tagline">Emisora Cristiana Online - Reproducción Continua</p>
-                    <div class="status-indicator status-online" id="broadcast-status">
+                    <div class="status-indicator status-offline" id="broadcast-status">
                         <i class="fas fa-circle" style="font-size: 0.8rem;"></i>
-                        <span>TRANSMITIENDO EN VIVO</span>
+                        <span>ESPERANDO INTERACCIÓN</span>
                     </div>
                 </div>
             </div>
@@ -819,7 +909,7 @@
                     </div>
                 </div>
                 <div class="track-info">
-                    <h2 class="track-title" id="track-title">Sintonizando emisora...</h2>
+                    <h2 class="track-title" id="track-title">Haz clic en "Activar Radio"</h2>
                     <p class="track-artist" id="track-artist">
                         Voz del Shaddai Radio
                     </p>
@@ -838,7 +928,7 @@
                 <i class="fas fa-exchange-alt"></i> Transición Automática
             </div>
             <div class="crossfade-info">
-                <span id="current-fade-status">Sistema de crossfade activo</span>
+                <span id="current-fade-status">Esperando activación...</span>
                 <span id="fade-duration">Duración: 4 segundos</span>
             </div>
             <div class="crossfade-bar">
@@ -861,7 +951,7 @@
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
             <div style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray);">
-                <span id="next-change">Próximo cambio automático en: --:--</span>
+                <span id="next-change">Activa la radio para comenzar la reproducción</span>
             </div>
         </section>
 
@@ -869,10 +959,10 @@
         <section class="radio-controls">
             <div class="controls-group">
                 <div class="power-section">
-                    <button class="power-btn" id="power-btn" title="Encender/Apagar radio">
+                    <button class="power-btn off" id="power-btn" title="Encender/Apagar radio">
                         <i class="fas fa-power-off"></i>
                     </button>
-                    <span style="color: var(--gray); font-size: 1rem;">ENCENDER / APAGAR</span>
+                    <span style="color: var(--gray); font-size: 1rem;">PRIMERO ACTIVA LA RADIO</span>
                 </div>
                 
                 <div class="volume-section">
@@ -887,7 +977,7 @@
                 </div>
 
                 <div class="shuffle-section">
-                    <button class="shuffle-btn" id="shuffle-btn" title="Activar/Desactivar reproducción aleatoria">
+                    <button class="shuffle-btn active" id="shuffle-btn" title="Activar/Desactivar reproducción aleatoria">
                         <i class="fas fa-random"></i>
                         <span id="shuffle-text">ALEATORIO: ON</span>
                     </button>
@@ -901,10 +991,10 @@
                 <i class="fas fa-forward"></i> Próxima Canción
             </div>
             <div class="next-track-info">
-                <div class="next-track-name" id="next-track-name">Cargando siguiente canción...</div>
+                <div class="next-track-name" id="next-track-name">Activa la radio para comenzar</div>
                 <div class="next-track-time">
                     <i class="far fa-clock"></i>
-                    <span id="next-track-time">En --:--</span>
+                    <span id="next-track-time">Esperando...</span>
                 </div>
             </div>
         </section>
@@ -953,7 +1043,7 @@
                     
                     // Sistema de reproducción
                     defaultVolume: 0.7,
-                    autoStart: true, // Comienza a reproducir automáticamente
+                    autoStart: false, // NO inicia automáticamente - requiere interacción del usuario
                     
                     // Control de tiempo
                     updateInterval: 100, // Actualizar UI cada 100ms
@@ -975,8 +1065,9 @@
                     
                     // Estado de reproducción
                     isPlaying: false,
-                    isPoweredOn: true,
+                    isPoweredOn: false, // Comienza apagado hasta interacción del usuario
                     volume: this.config.defaultVolume,
+                    userInteracted: false, // Nuevo: para rastrear interacción del usuario
                     
                     // Sistema de crossfade
                     isCrossfading: false,
@@ -1012,8 +1103,11 @@
                 this.setupEventListeners();
                 await this.loadTracksFromGitHub();
                 this.createAudioElements();
-                this.startSystem();
                 this.hideLoadingScreen();
+                
+                // Mostrar mensaje de interacción requerida
+                this.showInteractionMessage();
+                
                 this.updateShuffleButton();
             }
 
@@ -1022,6 +1116,8 @@
                     loadingScreen: document.getElementById('loading-screen'),
                     loadingDetails: document.getElementById('loading-details'),
                     app: document.getElementById('app'),
+                    interactionMessage: document.getElementById('interaction-message'),
+                    enableAudioBtn: document.getElementById('enable-audio-btn'),
                     
                     // Información de emisora
                     broadcastStatus: document.getElementById('broadcast-status'),
@@ -1070,15 +1166,38 @@
 
             setupEventListeners() {
                 // Control de encendido/apagado
-                this.elements.powerBtn.addEventListener('click', () => this.togglePower());
+                this.elements.powerBtn.addEventListener('click', () => {
+                    if (this.state.userInteracted) {
+                        this.togglePower();
+                    } else {
+                        this.showNotification('Interacción requerida', 'Primero activa la radio haciendo clic en "ACTIVAR REPRODUCCIÓN"', 'warning');
+                    }
+                });
                 
                 // Control de volumen
                 this.elements.volumeSlider.addEventListener('input', (e) => {
                     this.setVolume(e.target.value / 100);
                 });
                 
-                // Control de modo aleatorio (NUEVO)
+                // Control de modo aleatorio
                 this.elements.shuffleBtn.addEventListener('click', () => this.toggleShuffleMode());
+                
+                // Botón para activar audio
+                this.elements.enableAudioBtn.addEventListener('click', () => this.enableAudioPlayback());
+                
+                // Permitir cualquier clic en la página como interacción
+                document.addEventListener('click', () => {
+                    if (!this.state.userInteracted) {
+                        this.enableAudioPlayback();
+                    }
+                }, { once: true });
+                
+                // También permitir interacción por teclado
+                document.addEventListener('keydown', () => {
+                    if (!this.state.userInteracted) {
+                        this.enableAudioPlayback();
+                    }
+                }, { once: true });
                 
                 // Actualizar UI periódicamente
                 setInterval(() => this.updateUI(), this.config.updateInterval);
@@ -1087,20 +1206,50 @@
                 setInterval(() => this.updateBroadcastTime(), 1000);
             }
 
-            // ============== SISTEMA DE REPRODUCCIÓN ALEATORIA (NUEVO) ==============
+            // ============== MANEJO DE INTERACCIÓN DEL USUARIO ==============
+            enableAudioPlayback() {
+                if (this.state.userInteracted) return;
+                
+                this.state.userInteracted = true;
+                this.state.isPoweredOn = true;
+                
+                // Ocultar mensaje de interacción
+                this.elements.interactionMessage.style.display = 'none';
+                
+                // Actualizar UI
+                this.elements.powerBtn.classList.remove('off');
+                this.elements.broadcastStatus.className = 'status-indicator status-online';
+                this.elements.broadcastStatus.innerHTML = '<i class="fas fa-circle" style="font-size: 0.8rem;"></i><span>TRANSMITIENDO EN VIVO</span>';
+                this.elements.trackTitle.textContent = 'Iniciando reproducción...';
+                this.elements.nextChange.textContent = 'Cargando primera canción...';
+                
+                // Iniciar el sistema de radio
+                this.startSystem();
+                
+                this.showNotification('¡Radio activada!', 'La reproducción comenzará en breve', 'success');
+            }
+
+            showInteractionMessage() {
+                setTimeout(() => {
+                    if (!this.state.userInteracted) {
+                        this.elements.interactionMessage.style.display = 'flex';
+                    }
+                }, 1000);
+            }
+
+            // ============== SISTEMA DE REPRODUCCIÓN ALEATORIA ==============
             getRandomTrackIndex() {
                 if (this.state.tracks.length <= 1) return 0;
                 
                 // Evitar repetir la misma canción
                 let randomIndex;
                 let attempts = 0;
-                const maxAttempts = 20; // Evitar bucle infinito
+                const maxAttempts = 20;
                 
                 do {
                     randomIndex = Math.floor(Math.random() * this.state.tracks.length);
                     attempts++;
                     
-                    // Si hemos intentado muchas veces, permitir cualquier canción
                     if (attempts >= maxAttempts) {
                         break;
                     }
@@ -1127,13 +1276,18 @@
             }
 
             toggleShuffleMode() {
+                if (!this.state.userInteracted) {
+                    this.showNotification('Interacción requerida', 'Primero activa la radio', 'warning');
+                    return;
+                }
+                
                 this.config.shuffleMode = !this.config.shuffleMode;
                 this.updateShuffleButton();
                 
                 if (this.config.shuffleMode) {
                     this.showNotification('Modo aleatorio activado', 'Las canciones se reproducirán en orden aleatorio', 'info');
                     
-                    // Si ya hay canciones, actualizar la siguiente canción a una aleatoria
+                    // Actualizar siguiente canción a una aleatoria
                     if (this.state.tracks.length > 0) {
                         this.state.nextTrackIndex = this.getRandomTrackIndex();
                         if (this.state.nextAudio) {
@@ -1217,7 +1371,6 @@
             }
 
             formatTrackName(filename) {
-                // Limpiar nombre del archivo para mostrar
                 let name = filename.replace('.mp3', '');
                 name = name.replace(/[_\-]/g, ' ');
                 name = name.split(' ')
@@ -1227,7 +1380,6 @@
             }
 
             loadFallbackTracks() {
-                // Canciones de demostración como fallback
                 this.state.tracks = [
                     {
                         id: 0,
@@ -1255,24 +1407,6 @@
                         size: 3500000,
                         artist: 'Alabanza Eterna',
                         duration: null
-                    },
-                    {
-                        id: 3,
-                        name: 'Himnos de Fe',
-                        filename: 'himnos.mp3',
-                        url: 'https://assets.mixkit.co/music/preview/mixkit-inspiring-epic-achievement-947.mp3',
-                        size: 3000000,
-                        artist: 'Coros de Adoración',
-                        duration: null
-                    },
-                    {
-                        id: 4,
-                        name: 'Alabanza Celestial',
-                        filename: 'celestial.mp3',
-                        url: 'https://assets.mixkit.co/music/preview/mixkit-intense-epic-trailer-1558.mp3',
-                        size: 2800000,
-                        artist: 'Voz del Shaddai',
-                        duration: null
                     }
                 ];
                 
@@ -1281,16 +1415,16 @@
 
             // ============== SISTEMA DE AUDIO Y CROSSFADE ==============
             createAudioElements() {
-                // Crear elementos de audio (solo 2 para crossfade)
+                // Crear elementos de audio
                 this.state.currentAudio = new Audio();
                 this.state.currentAudio.crossOrigin = "anonymous";
-                this.state.currentAudio.preload = "auto";
-                this.state.currentAudio.volume = this.state.volume;
+                this.state.currentAudio.preload = "metadata";
+                this.state.currentAudio.volume = 0;
                 
                 this.state.nextAudio = new Audio();
                 this.state.nextAudio.crossOrigin = "anonymous";
-                this.state.nextAudio.preload = "auto";
-                this.state.nextAudio.volume = 0; // Inicia en 0 para crossfade
+                this.state.nextAudio.preload = "metadata";
+                this.state.nextAudio.volume = 0;
                 
                 // Configurar eventos
                 this.setupAudioEvents(this.state.currentAudio, 'current');
@@ -1311,11 +1445,10 @@
                     return;
                 }
                 
-                // ESTABLECER ÍNDICES ALEATORIOS AL INICIAR (si el modo aleatorio está activado)
+                // Seleccionar canciones iniciales (aleatorias si está activado)
                 if (this.config.shuffleMode) {
                     this.state.currentTrackIndex = this.getRandomTrackIndex();
                     
-                    // Obtener siguiente canción aleatoria (diferente a la actual)
                     do {
                         this.state.nextTrackIndex = this.getRandomTrackIndex();
                     } while (this.state.nextTrackIndex === this.state.currentTrackIndex);
@@ -1327,12 +1460,10 @@
                 // Cargar siguiente canción
                 await this.loadTrack(this.state.nextTrackIndex, 'next');
                 
-                // Iniciar reproducción si está configurado
-                if (this.config.autoStart && this.state.isPoweredOn) {
-                    setTimeout(() => {
-                        this.playCurrentTrack();
-                    }, 1000);
-                }
+                // Iniciar reproducción
+                setTimeout(() => {
+                    this.playCurrentTrack();
+                }, 500);
             }
 
             async loadTrack(trackIndex, type) {
@@ -1343,13 +1474,10 @@
                 
                 try {
                     audio.src = track.url;
-                    await audio.load();
                     
                     if (type === 'current') {
-                        // Actualizar información de la canción actual
                         this.updateTrackInfo(track);
                     } else if (type === 'next') {
-                        // Actualizar información de la siguiente canción
                         this.elements.nextTrackName.textContent = track.name;
                     }
                     
@@ -1361,53 +1489,70 @@
             updateTrackInfo(track) {
                 this.elements.trackTitle.textContent = track.name;
                 this.elements.trackArtist.textContent = track.artist;
-                
-                // Actualizar colores del álbum
                 this.updateAlbumArtColors();
-                
-                // Actualizar estadísticas
                 this.state.tracksPlayed++;
             }
 
             // ============== CROSSFADE PROFESIONAL ==============
             async playCurrentTrack() {
-                if (!this.state.isPoweredOn || this.state.tracks.length === 0) return;
+                if (!this.state.isPoweredOn || this.state.tracks.length === 0 || !this.state.userInteracted) return;
+                
+                // Solución al error AbortError: asegurarnos de que no haya llamadas conflictivas
+                if (this.state.currentAudio.played && this.state.currentAudio.played.length > 0) {
+                    this.state.currentAudio.currentTime = 0;
+                }
                 
                 try {
-                    // Iniciar reproducción
-                    await this.state.currentAudio.play();
+                    // Intentar reproducir con manejo de errores mejorado
+                    const playPromise = this.state.currentAudio.play();
+                    
+                    if (playPromise !== undefined) {
+                        await playPromise;
+                    }
+                    
                     this.state.isPlaying = true;
                     this.state.trackStartTime = Date.now();
+                    this.state.broadcastStartTime = Date.now();
+                    
+                    // Configurar volumen inicial
+                    this.state.currentAudio.volume = this.state.volume;
                     
                     // Actualizar UI
-                    this.elements.powerBtn.classList.remove('off');
                     this.elements.albumArt.classList.add('playing');
-                    this.elements.broadcastStatus.className = 'status-indicator status-online';
-                    this.elements.broadcastStatus.innerHTML = '<i class="fas fa-circle" style="font-size: 0.8rem;"></i><span>TRANSMITIENDO EN VIVO</span>';
+                    this.elements.currentFadeStatus.textContent = 'Sistema de crossfade activo';
                     
                     // Programar crossfade
                     this.scheduleCrossfade();
                     
-                    this.showNotification('Emisora activa', 'Reproducción continua iniciada', 'success');
+                    this.showNotification('¡Emisora en vivo!', 'Disfruta de la música continua', 'success');
                     
                 } catch (error) {
                     console.error('Error al reproducir:', error);
-                    this.state.isPlaying = false;
                     
-                    // Intentar con siguiente canción
-                    setTimeout(() => {
-                        this.nextTrack();
-                    }, 2000);
+                    // Manejo específico del error AbortError
+                    if (error.name === 'AbortError') {
+                        console.log('Play() interrumpido, reintentando...');
+                        setTimeout(() => {
+                            this.playCurrentTrack();
+                        }, 500);
+                    } else if (error.name === 'NotAllowedError') {
+                        this.showNotification('Permiso requerido', 'El navegador bloqueó la reproducción automática. Haz clic en el botón de activar.', 'warning');
+                        this.state.isPlaying = false;
+                    } else {
+                        this.state.isPlaying = false;
+                        setTimeout(() => {
+                            this.nextTrack();
+                        }, 2000);
+                    }
                 }
             }
 
             scheduleCrossfade() {
                 // Limpiar temporizadores anteriores
-                if (this.state.nextTrackTimer) clearTimeout(this.state.nextTrackTimer);
-                if (this.state.preloadTimer) clearTimeout(this.state.preloadTimer);
+                this.clearAllTimers();
                 
                 const currentAudio = this.state.currentAudio;
-                const duration = currentAudio.duration || 180; // 3 minutos por defecto
+                const duration = currentAudio.duration || 180;
                 
                 // Calcular tiempo para iniciar crossfade
                 const fadeStartTime = (duration * (this.config.fadeStartPercentage / 100)) * 1000;
@@ -1421,7 +1566,7 @@
                 // Programar pre-carga de siguiente canción
                 const preloadTime = Math.max(0, timeUntilFade - this.config.preloadBuffer);
                 this.state.preloadTimer = setTimeout(() => {
-                    if (!this.state.isCrossfading) {
+                    if (!this.state.isCrossfading && this.state.nextAudio) {
                         this.state.nextAudio.load();
                     }
                 }, preloadTime);
@@ -1430,10 +1575,15 @@
                 this.updateNextChangeTime(timeUntilFade);
             }
 
+            clearAllTimers() {
+                if (this.state.nextTrackTimer) clearTimeout(this.state.nextTrackTimer);
+                if (this.state.preloadTimer) clearTimeout(this.state.preloadTimer);
+                if (this.state.fadeInterval) clearInterval(this.state.fadeInterval);
+            }
+
             async startCrossfade() {
-                if (this.state.isCrossfading || !this.state.isPoweredOn) return;
+                if (this.state.isCrossfading || !this.state.isPoweredOn || !this.state.userInteracted) return;
                 
-                console.log('Iniciando crossfade profesional...');
                 this.state.isCrossfading = true;
                 this.elements.currentFadeStatus.textContent = 'Transición en progreso...';
                 
@@ -1441,13 +1591,14 @@
                 const duration = this.config.crossfadeDuration;
                 
                 // Detener temporizador anterior
-                if (this.state.fadeInterval) {
-                    clearInterval(this.state.fadeInterval);
-                }
+                this.clearAllTimers();
                 
-                // Iniciar reproducción de la siguiente canción
+                // Iniciar reproducción de la siguiente canción con manejo de errores
                 try {
-                    await this.state.nextAudio.play();
+                    const playPromise = this.state.nextAudio.play();
+                    if (playPromise !== undefined) {
+                        await playPromise;
+                    }
                 } catch (error) {
                     console.error('Error iniciando siguiente canción:', error);
                 }
@@ -1483,7 +1634,7 @@
                         this.completeCrossfade();
                     }
                     
-                }, 16); // ~60fps
+                }, 16);
             }
 
             easeInOutCubic(x) {
@@ -1495,8 +1646,6 @@
             }
 
             completeCrossfade() {
-                console.log('Crossfade completado sin cortes');
-                
                 // Detener canción actual completamente
                 if (this.state.currentAudio) {
                     this.state.currentAudio.pause();
@@ -1511,27 +1660,25 @@
                 // Ajustar volumen final
                 this.state.currentAudio.volume = this.state.volume;
                 
-                // OBTENER NUEVO ÍNDICE ALEATORIO PARA LA SIGUIENTE CANCIÓN
+                // OBTENER NUEVO ÍNDICE PARA LA SIGUIENTE CANCIÓN
                 this.state.currentTrackIndex = this.state.nextTrackIndex;
                 
                 if (this.config.shuffleMode) {
-                    // Modo aleatorio activado
                     do {
                         this.state.nextTrackIndex = this.getRandomTrackIndex();
                     } while (this.state.nextTrackIndex === this.state.currentTrackIndex);
                 } else {
-                    // Modo secuencial
                     this.state.nextTrackIndex = (this.state.nextTrackIndex + 1) % this.state.tracks.length;
                 }
                 
                 // Crear nuevo elemento para siguiente canción
                 this.state.nextAudio = new Audio();
                 this.state.nextAudio.crossOrigin = "anonymous";
-                this.state.nextAudio.preload = "auto";
+                this.state.nextAudio.preload = "metadata";
                 this.state.nextAudio.volume = 0;
                 this.setupAudioEvents(this.state.nextAudio, 'next');
                 
-                // Cargar nueva siguiente canción (aleatoria o secuencial)
+                // Cargar nueva siguiente canción
                 const nextTrack = this.state.tracks[this.state.nextTrackIndex];
                 this.state.nextAudio.src = nextTrack.url;
                 
@@ -1547,7 +1694,6 @@
                 setTimeout(() => {
                     if (oldCurrent) {
                         oldCurrent.src = '';
-                        oldCurrent.load();
                     }
                 }, 1000);
                 
@@ -1568,7 +1714,6 @@
                     this.state.currentTrackIndex = this.getRandomTrackIndex();
                     this.state.nextTrackIndex = this.getRandomTrackIndex();
                     
-                    // Asegurar que no sean la misma
                     while (this.state.nextTrackIndex === this.state.currentTrackIndex) {
                         this.state.nextTrackIndex = this.getRandomTrackIndex();
                     }
@@ -1591,53 +1736,71 @@
 
             // ============== CONTROLES DE USUARIO ==============
             togglePower() {
+                if (!this.state.userInteracted) {
+                    this.showNotification('Interacción requerida', 'Primero activa la radio', 'warning');
+                    return;
+                }
+                
                 this.state.isPoweredOn = !this.state.isPoweredOn;
                 
                 if (this.state.isPoweredOn) {
-                    // Encender radio - INICIAR CON CANCIÓN ALEATORIA SI EL MODO ESTÁ ACTIVADO
+                    // Encender radio
                     this.elements.powerBtn.classList.remove('off');
                     
-                    // Si está en modo aleatorio, seleccionar nueva canción aleatoria
                     if (this.config.shuffleMode) {
                         this.state.currentTrackIndex = this.getRandomTrackIndex();
                         
-                        // Obtener siguiente canción aleatoria diferente
                         do {
                             this.state.nextTrackIndex = this.getRandomTrackIndex();
                         } while (this.state.nextTrackIndex === this.state.currentTrackIndex);
                         
-                        // Cargar nueva canción aleatoria
                         this.loadTrack(this.state.currentTrackIndex, 'current').then(() => {
                             this.loadTrack(this.state.nextTrackIndex, 'next').then(() => {
                                 this.playCurrentTrack();
                             });
                         });
                     } else {
-                        // Modo secuencial
                         this.playCurrentTrack();
                     }
                     
-                    this.showNotification('Emisora activada', 'Reproducción continua iniciada', 'success');
+                    this.showNotification('Radio encendida', 'Disfruta de la música', 'success');
                 } else {
                     // Apagar radio
                     this.elements.powerBtn.classList.add('off');
-                    this.state.currentAudio.pause();
                     this.state.isPlaying = false;
+                    
+                    // Detener audio suavemente
+                    if (this.state.currentAudio) {
+                        const fadeOutVolume = this.state.currentAudio.volume;
+                        const fadeInterval = setInterval(() => {
+                            if (this.state.currentAudio.volume > 0) {
+                                this.state.currentAudio.volume = Math.max(0, this.state.currentAudio.volume - 0.1);
+                            } else {
+                                clearInterval(fadeInterval);
+                                this.state.currentAudio.pause();
+                            }
+                        }, 50);
+                    }
+                    
                     this.elements.albumArt.classList.remove('playing');
+                    this.clearAllTimers();
                     
                     this.elements.broadcastStatus.className = 'status-indicator status-offline';
                     this.elements.broadcastStatus.innerHTML = '<i class="fas fa-circle" style="font-size: 0.8rem;"></i><span>EMISORA APAGADA</span>';
                     
-                    this.showNotification('Emisora apagada', 'Reproducción detenida', 'info');
+                    this.showNotification('Radio apagada', 'Reproducción detenida', 'info');
                 }
             }
 
             setVolume(value) {
                 this.state.volume = Math.max(0, Math.min(1, value));
                 
-                // Aplicar volumen solo a la canción actual (la siguiente está en 0 hasta crossfade)
                 if (this.state.currentAudio) {
                     this.state.currentAudio.volume = this.state.volume;
+                }
+                
+                if (this.state.nextAudio && this.state.isCrossfading) {
+                    this.state.nextAudio.volume = this.state.volume;
                 }
                 
                 // Actualizar UI
@@ -1645,7 +1808,6 @@
                 this.elements.volumeValue.textContent = percentage + '%';
                 this.elements.volumeSlider.value = percentage;
                 
-                // Actualizar icono de volumen
                 let icon = 'fa-volume-up';
                 if (percentage === 0) icon = 'fa-volume-mute';
                 else if (percentage < 30) icon = 'fa-volume-down';
@@ -1709,7 +1871,6 @@
             }
 
             updateAlbumArtColors() {
-                // Generar colores únicos para cada canción
                 const hue = (this.state.currentTrackIndex * 137) % 360;
                 const color1 = `hsl(${hue}, 80%, 45%)`;
                 const color2 = `hsl(${(hue + 60) % 360}, 80%, 45%)`;
@@ -1741,7 +1902,6 @@
                 if (type === 'current') {
                     this.showNotification('Error de reproducción', 'Saltando a siguiente canción...', 'warning');
                     
-                    // Saltar a siguiente canción
                     setTimeout(() => {
                         this.nextTrack();
                     }, 1000);
@@ -1750,7 +1910,6 @@
 
             onTrackEnded(type) {
                 if (type === 'current' && !this.state.isCrossfading) {
-                    // Si termina sin crossfade (fallback)
                     this.nextTrack();
                 }
             }
@@ -1766,7 +1925,6 @@
                 this.elements.notificationTitle.textContent = title;
                 this.elements.notificationMessage.textContent = message;
                 
-                // Configurar color según tipo
                 let borderColor = '#1a73e8';
                 if (type === 'success') borderColor = '#34a853';
                 if (type === 'error') borderColor = '#ea4335';
@@ -1774,10 +1932,8 @@
                 
                 this.elements.notification.style.borderLeftColor = borderColor;
                 
-                // Mostrar notificación
                 this.elements.notification.classList.add('show');
                 
-                // Ocultar después de 3 segundos
                 setTimeout(() => {
                     this.elements.notification.classList.remove('show');
                 }, 3000);
