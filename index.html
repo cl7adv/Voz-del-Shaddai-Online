@@ -334,12 +334,14 @@
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
+            min-height: 28px;
         }
 
         .oyente-song-genre {
             font-style: italic;
             opacity: 0.9;
             color: #70a1ff;
+            min-height: 24px;
         }
 
         /* Sección Master */
@@ -507,12 +509,14 @@
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
+            min-height: 28px;
         }
 
         .master-song-genre {
             font-style: italic;
             opacity: 0.9;
             color: #70a1ff;
+            min-height: 24px;
         }
 
         .progress-bar {
@@ -615,6 +619,41 @@
             border-radius: 5px;
             font-size: 0.9rem;
             text-align: center;
+        }
+
+        .fade-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .fade-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .fade-checkbox input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .fade-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fade-time select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
         }
 
         .footer {
@@ -862,6 +901,23 @@
                     <div class="status-message" id="statusMessage">
                         <i class="fas fa-info-circle"></i> Conectando a la biblioteca de música...
                     </div>
+                    
+                    <div class="fade-controls">
+                        <div class="fade-checkbox">
+                            <input type="checkbox" id="fadeEnabled" checked>
+                            <label for="fadeEnabled">Fade entre canciones</label>
+                        </div>
+                        <div class="fade-time">
+                            <label for="fadeDuration">Duración:</label>
+                            <select id="fadeDuration">
+                                <option value="1">1 segundo</option>
+                                <option value="2" selected>2 segundos</option>
+                                <option value="3">3 segundos</option>
+                                <option value="4">4 segundos</option>
+                                <option value="5">5 segundos</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="song-list-container">
@@ -893,6 +949,8 @@
         let shuffledSongs = [];
         let isMasterMode = false;
         let isFading = false;
+        let fadeEnabled = true;
+        let fadeDuration = 2; // segundos
         
         // Elementos del DOM
         const accessScreen = document.getElementById('accessScreen');
@@ -926,6 +984,157 @@
         const statusMessageEl = document.getElementById('statusMessage');
         const songListContainer = document.getElementById('songList');
         const songCountEl = document.getElementById('songCount');
+        const fadeEnabledCheckbox = document.getElementById('fadeEnabled');
+        const fadeDurationSelect = document.getElementById('fadeDuration');
+
+        // Lista completa de canciones cristianas con enlaces directos
+        const christianSongs = [
+            {
+                title: "Generación 12 - Quiero Conocer A Jesús (Yeshua)",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Generaci%C3%B3n%2012%20-%20Quiero%20Conocer%20A%20Jes%C3%BAs%20(Yeshua)%20Nuestro%20Dios%20I%20VIDEO%20OFICIAL%20I%20M%C3%BAsica%20Cristiana%202022.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Alabanza y Adoración 1",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Alabanza y Adoración 2",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%202.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Bendecid Su Nombre",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Bendecid%20Su%20Nombre.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Canto de Victoria",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Canto%20de%20Victoria.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Celebrad a Cristo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Celebrad%20a%20Cristo.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Coritos Cristianos 1",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3",
+                genre: "Coritos"
+            },
+            {
+                title: "Coritos Cristianos 2",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%202.mp3",
+                genre: "Coritos"
+            },
+            {
+                title: "Cuan Grande Es El",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Cuan%20Grande%20Es%20El.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Digno Es El Cordero",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Digno%20Es%20El%20Cordero.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "El Poder de la Cruz",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/El%20Poder%20de%20la%20Cruz.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "En La Cruz",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/En%20La%20Cruz.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Getsemani",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Getsemani.mp3",
+                genre: "Reflexión"
+            },
+            {
+                title: "Gloria a Dios",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Gloria%20a%20Dios.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Grande Es Tu Fidelidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Grande%20Es%20Tu%20Fidelidad.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Hay Poder en la Sangre",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hay%20Poder.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Himno a la Santísima Trinidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Himno%20a%20la%20Sant%C3%ADsima%20Trinidad.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Hosanna",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hosanna.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "La Tierra Canta",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/La%20Tierra%20Canta.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Mi Vida Esta en Ti Señor",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Mi%20Vida%20Esta%20en%20Ti.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "No Hay Dios Tan Grande",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/No%20Hay%20Dios%20Tan%20Grande.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Padre Nuestro",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Padre%20Nuestro.mp3",
+                genre: "Oración"
+            },
+            {
+                title: "Paz en la Tormenta",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Paz%20en%20la%20Tormenta.mp3",
+                genre: "Reflexión"
+            },
+            {
+                title: "Puedes Confiar en Dios",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Puedes%20Confiar.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Renuévame Señor",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Santo Santo Santo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Santo%20Santo%20Santo.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Te Alabamos Señor",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Te%20Alabamos%20Se%C3%B1or.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Tu Fidelidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Tu%20Fidelidad.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Ven Espíritu Santo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Ven%20Esp%C3%ADritu%20Santo.mp3",
+                genre: "Oración"
+            }
+        ];
 
         // Función para cambiar de modo
         function setMode(isMaster) {
@@ -938,7 +1147,7 @@
                 
                 // Cargar canciones si no se han cargado
                 if (allSongs.length === 0) {
-                    loadSongsFromGitHub();
+                    loadSongs();
                 }
             } else {
                 modeIndicator.className = 'mode-indicator oyente';
@@ -954,57 +1163,20 @@
             initAudioControls();
         }
 
-        // Función para cargar canciones desde GitHub
-        async function loadSongsFromGitHub() {
+        // Función para cargar canciones
+        function loadSongs() {
             try {
-                showLoading("Conectando a la biblioteca de música...");
+                showLoading("Cargando biblioteca de música...");
                 errorMessageEl.style.display = 'none';
                 
-                // Intentar cargar desde GitHub
-                const apiUrl = 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica';
-                
-                const response = await fetch(apiUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                // Filtrar solo archivos de audio
-                const audioFiles = data.filter(item => 
-                    item.type === 'file' && 
-                    (item.name.toLowerCase().endsWith('.mp3') || 
-                     item.name.toLowerCase().endsWith('.wav') || 
-                     item.name.toLowerCase().endsWith('.ogg') ||
-                     item.name.toLowerCase().endsWith('.m4a'))
-                );
-                
-                if (audioFiles.length === 0) {
-                    throw new Error('No se encontraron archivos de audio en la carpeta música.');
-                }
-                
-                // Crear lista de canciones
-                allSongs = audioFiles.map((file, index) => {
-                    // Determinar género basado en el nombre del archivo
-                    let genre = 'Música Cristiana';
-                    const fileName = file.name.toLowerCase();
-                    
-                    if (fileName.includes('alabanza')) genre = 'Alabanza';
-                    else if (fileName.includes('adoracion')) genre = 'Adoración';
-                    else if (fileName.includes('corito')) genre = 'Coritos';
-                    else if (fileName.includes('gospel')) genre = 'Gospel';
-                    else if (fileName.includes('himno')) genre = 'Himno';
-                    else if (fileName.includes('oracion')) genre = 'Oración';
-                    
-                    return {
-                        id: index,
-                        title: file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/-/g, " "),
-                        url: file.download_url,
-                        genre: genre,
-                        filename: file.name
-                    };
-                });
+                // Usar la lista local de canciones
+                allSongs = christianSongs.map((song, index) => ({
+                    id: index,
+                    title: song.title,
+                    url: song.url,
+                    genre: song.genre,
+                    filename: song.title + ".mp3"
+                }));
                 
                 // Mezclar canciones
                 shuffleSongs();
@@ -1020,36 +1192,19 @@
                 
             } catch (error) {
                 console.error("Error cargando canciones:", error);
-                errorMessageEl.textContent = `Error: ${error.message}. Usando biblioteca local.`;
+                errorMessageEl.textContent = `Error: ${error.message}`;
                 errorMessageEl.style.display = 'block';
                 
-                // Cargar canciones de respaldo
-                loadBackupSongs();
+                // Intentar con una canción de respaldo
+                loadBackupSong();
                 return false;
             }
         }
 
-        // Función para cargar canciones de respaldo
-        function loadBackupSongs() {
+        // Función para cargar canción de respaldo
+        function loadBackupSong() {
             allSongs = [
-                { id: 0, title: "Alabanza y Adoración 1", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3", genre: "Alabanza", filename: "Alabanza y Adoración 1.mp3" },
-                { id: 1, title: "Bendecid Su Nombre", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Bendecid%20Su%20Nombre.mp3", genre: "Alabanza", filename: "Bendecid Su Nombre.mp3" },
-                { id: 2, title: "Canto de Victoria", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Canto%20de%20Victoria.mp3", genre: "Gospel", filename: "Canto de Victoria.mp3" },
-                { id: 3, title: "Coritos 1", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3", genre: "Coritos", filename: "Coritos 1.mp3" },
-                { id: 4, title: "Cuan Grande Es El", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Cuan%20Grande%20Es%20El.mp3", genre: "Himno", filename: "Cuan Grande Es El.mp3" },
-                { id: 5, title: "Digno Es El Cordero", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Digno%20Es%20El%20Cordero.mp3", genre: "Alabanza", filename: "Digno Es El Cordero.mp3" },
-                { id: 6, title: "El Poder de la Cruz", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/El%20Poder%20de%20la%20Cruz.mp3", genre: "Gospel", filename: "El Poder de la Cruz.mp3" },
-                { id: 7, title: "Gloria a Dios", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Gloria%20a%20Dios.mp3", genre: "Alabanza", filename: "Gloria a Dios.mp3" },
-                { id: 8, title: "Grande Es Tu Fidelidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Grande%20Es%20Tu%20Fidelidad.mp3", genre: "Himno", filename: "Grande Es Tu Fidelidad.mp3" },
-                { id: 9, title: "Himno a la Santísima Trinidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Himno%20a%20la%20Sant%C3%ADsima%20Trinidad.mp3", genre: "Himno", filename: "Himno a la Santísima Trinidad.mp3" },
-                { id: 10, title: "La Tierra Canta", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/La%20Tierra%20Canta.mp3", genre: "Alabanza", filename: "La Tierra Canta.mp3" },
-                { id: 11, title: "No Hay Dios Tan Grande", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/No%20Hay%20Dios%20Tan%20Grande.mp3", genre: "Alabanza", filename: "No Hay Dios Tan Grande.mp3" },
-                { id: 12, title: "Paz en la Tormenta", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Paz%20en%20la%20Tormenta.mp3", genre: "Reflexión", filename: "Paz en la Tormenta.mp3" },
-                { id: 13, title: "Renuévame", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3", genre: "Alabanza", filename: "Renuévame.mp3" },
-                { id: 14, title: "Santo Santo Santo", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Santo%20Santo%20Santo.mp3", genre: "Himno", filename: "Santo Santo Santo.mp3" },
-                { id: 15, title: "Te Alabamos Señor", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Te%20Alabamos%20Se%C3%B1or.mp3", genre: "Alabanza", filename: "Te Alabamos Señor.mp3" },
-                { id: 16, title: "Tu Fidelidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Tu%20Fidelidad.mp3", genre: "Alabanza", filename: "Tu Fidelidad.mp3" },
-                { id: 17, title: "Ven Espíritu Santo", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Ven%20Esp%C3%ADritu%20Santo.mp3", genre: "Oración", filename: "Ven Espíritu Santo.mp3" }
+                { id: 0, title: "Generación 12 - Quiero Conocer A Jesús (Yeshua)", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Generaci%C3%B3n%2012%20-%20Quiero%20Conocer%20A%20Jes%C3%BAs%20(Yeshua)%20Nuestro%20Dios%20I%20VIDEO%20OFICIAL%20I%20M%C3%BAsica%20Cristiana%202022.mp3", genre: "Alabanza", filename: "Generación 12 - Quiero Conocer A Jesús.mp3" }
             ];
             
             shuffleSongs();
@@ -1057,7 +1212,7 @@
             updateSongCount();
             hideLoading();
             
-            statusMessageEl.innerHTML = `<i class="fas fa-info-circle"></i> ${allSongs.length} canciones cargadas (modo local)`;
+            statusMessageEl.innerHTML = `<i class="fas fa-info-circle"></i> ${allSongs.length} canción cargada (modo mínimo)`;
         }
 
         // Función para mezclar canciones
@@ -1138,41 +1293,56 @@
 
         // Función para fade out (bajar volumen gradualmente)
         function fadeOut(callback) {
-            if (isFading) return;
+            if (isFading || !fadeEnabled) {
+                callback();
+                return;
+            }
             
             isFading = true;
             let vol = currentVolume;
+            const steps = fadeDuration * 10; // 10 pasos por segundo
+            const stepSize = vol / steps;
+            
             const fadeInterval = setInterval(() => {
                 if (vol > 0.1) {
-                    vol -= 0.1;
+                    vol -= stepSize;
+                    if (vol < 0) vol = 0;
                     audioPlayer.volume = vol;
                 } else {
                     clearInterval(fadeInterval);
                     audioPlayer.volume = 0;
                     callback();
-                    isFading = false;
+                    setTimeout(() => {
+                        isFading = false;
+                    }, 100);
                 }
-            }, 50);
+            }, 100);
         }
 
         // Función para fade in (subir volumen gradualmente)
         function fadeIn() {
-            if (isFading) return;
+            if (isFading || !fadeEnabled) {
+                audioPlayer.volume = currentVolume;
+                return;
+            }
             
             isFading = true;
             let vol = 0;
             audioPlayer.volume = vol;
+            const steps = fadeDuration * 10; // 10 pasos por segundo
+            const stepSize = currentVolume / steps;
             
             const fadeInterval = setInterval(() => {
                 if (vol < currentVolume) {
-                    vol += 0.1;
+                    vol += stepSize;
+                    if (vol > currentVolume) vol = currentVolume;
                     audioPlayer.volume = vol;
                 } else {
                     clearInterval(fadeInterval);
                     audioPlayer.volume = currentVolume;
                     isFading = false;
                 }
-            }, 50);
+            }, 100);
         }
 
         // Función para cambiar de canción con fade out/in
@@ -1285,7 +1455,7 @@
                     
                     // Si no hay canciones cargadas, cargarlas
                     if (allSongs.length === 0) {
-                        loadSongsFromGitHub();
+                        loadSongs();
                     } else {
                         // Reproducir una canción aleatoria
                         const randomSong = getRandomSong();
@@ -1452,11 +1622,20 @@
                 oyenteVolumeSlider.value = masterVolumeSlider.value;
             });
             
+            // Controles de fade
+            fadeEnabledCheckbox.addEventListener('change', () => {
+                fadeEnabled = fadeEnabledCheckbox.checked;
+            });
+            
+            fadeDurationSelect.addEventListener('change', () => {
+                fadeDuration = parseInt(fadeDurationSelect.value);
+            });
+            
             // Inicializar controles de audio
             initAudioControls();
             
             // Cargar canciones inicialmente (para modo oyente)
-            loadSongsFromGitHub().then(() => {
+            loadSongs().then(() => {
                 // Si se cargan canciones, establecer un mensaje inicial
                 oyenteSongTitle.textContent = "Radio Shaddai Caribe";
                 oyenteSongGenre.textContent = `${allSongs.length} canciones disponibles`;
@@ -1468,7 +1647,16 @@
         }
 
         // Inicializar cuando cargue la página
-        window.addEventListener('DOMContentLoaded', initEvents);
+        window.addEventListener('DOMContentLoaded', function() {
+            // Cargar canciones inmediatamente
+            loadSongs();
+            
+            // Inicializar eventos
+            initEvents();
+            
+            // Mostrar estado inicial
+            statusMessageEl.innerHTML = `<i class="fas fa-info-circle"></i> Listo para transmitir`;
+        });
     </script>
 </body>
 </html>
