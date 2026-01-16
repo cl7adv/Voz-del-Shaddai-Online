@@ -26,7 +26,7 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 900px;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -35,38 +35,6 @@
             border: 2px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 1;
-        }
-
-        .wave-bg {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" fill="%230099ff" opacity=".25"/></svg>');
-            animation: wave 10s linear infinite;
-        }
-
-        .wave:nth-child(2) {
-            animation: wave 15s linear infinite;
-            opacity: 0.5;
-            animation-delay: -5s;
-        }
-
-        @keyframes wave {
-            0% { transform: translateX(0) translateZ(0) scaleY(1); }
-            50% { transform: translateX(-25%) translateZ(0) scaleY(0.8); }
-            100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
         }
 
         header {
@@ -170,7 +138,7 @@
         }
 
         .play-btn:hover {
-            background-color: #2f35e1;
+            background-color: #2980b9;
             transform: scale(1.05);
         }
 
@@ -229,28 +197,6 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
-        .mode-control {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .mode-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .mode-btn.active {
-            background: #ffa502;
-            box-shadow: 0 0 10px rgba(255, 165, 2, 0.5);
-        }
-
         .now-playing {
             background: linear-gradient(to right, rgba(255, 165, 2, 0.2), rgba(255, 165, 2, 0.1));
             border-radius: 10px;
@@ -279,12 +225,6 @@
             color: #70a1ff;
         }
 
-        .song-info {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
         .status-message {
             margin-top: 10px;
             padding: 10px;
@@ -305,34 +245,8 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 15px;
-            max-height: 250px;
+            max-height: 200px;
             overflow-y: auto;
-        }
-
-        .song-list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .song-list-header h4 {
-            color: #ffa502;
-        }
-
-        .refresh-btn {
-            background: rgba(255, 165, 2, 0.3);
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .refresh-btn:hover {
-            background: rgba(255, 165, 2, 0.5);
         }
 
         .song-item {
@@ -340,8 +254,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
         }
 
         .song-item:hover {
@@ -351,22 +263,6 @@
         .song-item.active {
             background: rgba(255, 165, 2, 0.2);
             color: #ffa502;
-        }
-
-        .song-number {
-            width: 30px;
-            text-align: center;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .song-name {
-            flex-grow: 1;
-        }
-
-        .song-duration {
-            font-size: 0.8rem;
-            opacity: 0.7;
         }
 
         .footer {
@@ -412,6 +308,31 @@
             left: 10%;
         }
 
+        .error {
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #ffa502;
+            transition: width 0.3s;
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -447,25 +368,9 @@
             color: #ffa502;
             animation: playing 1.5s infinite;
         }
-        
-        .error {
-            color: #ff4757;
-            background: rgba(255, 71, 87, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <!-- Fondo animado -->
-    <div class="wave-bg">
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
-    
-    <!-- Decoración tropical -->
     <div class="tropical-decoration">
         <div class="sun"><i class="fas fa-sun"></i></div>
         <div class="palm-leaf"><i class="fas fa-leaf"></i></div>
@@ -492,8 +397,8 @@
                         <i class="fas fa-play"></i>
                     </button>
                     
-                    <button class="next-btn" id="nextBtn" title="Siguiente canción">
-                        <i class="fas fa-forward"></i>
+                    <button class="next-btn" id="nextBtn" title="Siguiente canción aleatoria">
+                        <i class="fas fa-random"></i>
                     </button>
                     
                     <div class="volume-control">
@@ -503,34 +408,21 @@
                     </div>
                 </div>
                 
-                <div class="mode-control">
-                    <button class="mode-btn active" id="modeRandom" title="Reproducción aleatoria">
-                        <i class="fas fa-random"></i> Aleatorio
-                    </button>
-                    <button class="mode-btn" id="modeSequential" title="Reproducción en orden">
-                        <i class="fas fa-list-ol"></i> Secuencial
-                    </button>
-                    <button class="mode-btn" id="modeLoop" title="Repetir canción">
-                        <i class="fas fa-redo"></i> Repetir
-                    </button>
-                </div>
-                
                 <div class="now-playing">
                     <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
                     <div class="song-title" id="currentSong">Esperando música...</div>
                     <div class="song-genre" id="currentGenre">-</div>
-                    <div class="song-info" id="songInfo">Cargando lista de canciones...</div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progressBar"></div>
+                    </div>
                     <div class="loading" id="loading">Cargando música...</div>
                     <div class="error" id="errorMessage"></div>
+                    <div class="status-message" id="statusMessage">
+                        <i class="fas fa-info-circle"></i> Modo aleatorio activo
+                    </div>
                 </div>
                 
                 <div class="song-list-container">
-                    <div class="song-list-header">
-                        <h4><i class="fas fa-list-music"></i> Lista de Canciones (<span id="songCount">0</span>)</h4>
-                        <button class="refresh-btn" id="refreshBtn">
-                            <i class="fas fa-sync-alt"></i> Actualizar
-                        </button>
-                    </div>
                     <div id="songList">
                         <!-- Lista de canciones se generará aquí -->
                     </div>
@@ -540,19 +432,163 @@
         
         <div class="footer">
             <p>Música desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #70a1ff; text-decoration: none;">GitHub Repository</a></p>
-            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Emisora Voz del Shaddai - Reproducción aleatoria activa</p>
+            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Emisora Voz del Shaddai - Reproducción aleatoria</p>
         </div>
     </div>
 
     <script>
+        // Lista de canciones DIRECTAMENTE desde tu repositorio de GitHub
+        // Estas son URLs RAW reales que deberían funcionar
+        const songs = [
+            // Archivos de música desde tu repositorio
+            {
+                title: "Alabanza y Adoración 1",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Alabanza y Adoración 2",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%202.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Bendecid Su Nombre",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Bendecid%20Su%20Nombre.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Canto de Victoria",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Canto%20de%20Victoria.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Celebrad a Cristo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Celebrad%20a%20Cristo.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Coritos 1",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3",
+                genre: "Coritos"
+            },
+            {
+                title: "Coritos 2",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%202.mp3",
+                genre: "Coritos"
+            },
+            {
+                title: "Cuan Grande Es El",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Cuan%20Grande%20Es%20El.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Digno Es El Cordero",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Digno%20Es%20El%20Cordero.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "El Poder de la Cruz",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/El%20Poder%20de%20la%20Cruz.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "En La Cruz",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/En%20La%20Cruz.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Getsemani",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Getsemani.mp3",
+                genre: "Reflexión"
+            },
+            {
+                title: "Gloria a Dios",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Gloria%20a%20Dios.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Grande Es Tu Fidelidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Grande%20Es%20Tu%20Fidelidad.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Hay Poder",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hay%20Poder.mp3",
+                genre: "Gospel"
+            },
+            {
+                title: "Himno a la Santísima Trinidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Himno%20a%20la%20Sant%C3%ADsima%20Trinidad.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Hosanna",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hosanna.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "La Tierra Canta",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/La%20Tierra%20Canta.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Mi Vida Esta en Ti",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Mi%20Vida%20Esta%20en%20Ti.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "No Hay Dios Tan Grande",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/No%20Hay%20Dios%20Tan%20Grande.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Padre Nuestro",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Padre%20Nuestro.mp3",
+                genre: "Oración"
+            },
+            {
+                title: "Paz en la Tormenta",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Paz%20en%20la%20Tormenta.mp3",
+                genre: "Reflexión"
+            },
+            {
+                title: "Puedes Confiar",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Puedes%20Confiar.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Renuévame",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Santo Santo Santo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Santo%20Santo%20Santo.mp3",
+                genre: "Himno"
+            },
+            {
+                title: "Te Alabamos Señor",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Te%20Alabamos%20Se%C3%B1or.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Tu Fidelidad",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Tu%20Fidelidad.mp3",
+                genre: "Alabanza"
+            },
+            {
+                title: "Ven Espíritu Santo",
+                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Ven%20Esp%C3%ADritu%20Santo.mp3",
+                genre: "Oración"
+            }
+        ];
+
         // Variables de estado
         let audioPlayer = new Audio();
         let isPlaying = false;
         let isPoweredOn = false;
         let currentVolume = 0.7;
-        let currentSongIndex = 0;
-        let playMode = 'random'; // random, sequential, loop
-        let allSongs = [];
+        let currentSongIndex = -1;
         let shuffledSongs = [];
         
         // Elementos del DOM
@@ -562,177 +598,60 @@
         const volumeSlider = document.getElementById('volumeSlider');
         const currentSongEl = document.getElementById('currentSong');
         const currentGenreEl = document.getElementById('currentGenre');
-        const songInfoEl = document.getElementById('songInfo');
-        const songListContainer = document.getElementById('songList');
-        const songCountEl = document.getElementById('songCount');
         const loadingEl = document.getElementById('loading');
         const errorMessageEl = document.getElementById('errorMessage');
-        const refreshBtn = document.getElementById('refreshBtn');
-        const modeRandomBtn = document.getElementById('modeRandom');
-        const modeSequentialBtn = document.getElementById('modeSequential');
-        const modeLoopBtn = document.getElementById('modeLoop');
+        const statusMessageEl = document.getElementById('statusMessage');
+        const songListContainer = document.getElementById('songList');
+        const progressBar = document.getElementById('progressBar');
 
-        // Función para cargar la lista de canciones desde GitHub
-        async function loadSongsFromGitHub() {
-            try {
-                showLoading("Cargando lista de canciones desde GitHub...");
-                errorMessageEl.style.display = 'none';
-                
-                // URL de la API de GitHub para obtener el contenido de la carpeta música
-                const apiUrl = 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica';
-                
-                const response = await fetch(apiUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                // Filtrar solo archivos de audio
-                const audioFiles = data.filter(item => 
-                    item.type === 'file' && 
-                    (item.name.endsWith('.mp3') || 
-                     item.name.endsWith('.wav') || 
-                     item.name.endsWith('.ogg') ||
-                     item.name.endsWith('.m4a'))
-                );
-                
-                if (audioFiles.length === 0) {
-                    throw new Error('No se encontraron archivos de audio en la carpeta música.');
-                }
-                
-                // Crear lista de canciones
-                allSongs = audioFiles.map((file, index) => {
-                    // Extraer posible género del nombre del archivo
-                    let genre = 'Música';
-                    const fileName = file.name.toLowerCase();
-                    
-                    if (fileName.includes('salsa') || fileName.includes('merengue') || 
-                        fileName.includes('bachata') || fileName.includes('reggaeton') ||
-                        fileName.includes('gospel') || fileName.includes('balada')) {
-                        
-                        if (fileName.includes('salsa')) genre = 'Salsa';
-                        else if (fileName.includes('merengue')) genre = 'Merengue';
-                        else if (fileName.includes('bachata')) genre = 'Bachata';
-                        else if (fileName.includes('reggaeton')) genre = 'Reguetón';
-                        else if (fileName.includes('gospel')) genre = 'Gospel';
-                        else if (fileName.includes('balada')) genre = 'Balada';
-                    }
-                    
-                    return {
-                        id: index,
-                        title: file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/-/g, " "),
-                        url: file.download_url,
-                        genre: genre,
-                        filename: file.name,
-                        size: file.size ? (file.size / (1024*1024)).toFixed(2) + ' MB' : 'N/A'
-                    };
-                });
-                
-                // Mezclar canciones para modo aleatorio
-                shuffleSongs();
-                
-                // Actualizar interfaz
-                updateSongList();
-                updateSongCount();
-                hideLoading();
-                
-                // Si la emisora está encendida, preparar la primera canción
-                if (isPoweredOn && allSongs.length > 0) {
-                    currentSongIndex = 0;
-                    updateCurrentSong();
-                }
-                
-                return true;
-                
-            } catch (error) {
-                console.error("Error cargando canciones:", error);
-                errorMessageEl.textContent = `Error: ${error.message}. Usando canciones de ejemplo.`;
-                errorMessageEl.style.display = 'block';
-                
-                // Cargar canciones de ejemplo como respaldo
-                loadBackupSongs();
-                return false;
-            }
-        }
-
-        // Función para cargar canciones de respaldo
-        function loadBackupSongs() {
-            allSongs = [
-                { id: 0, title: "Salsa Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Salsa", filename: "salsa_tropical.mp3", size: "3.2 MB" },
-                { id: 1, title: "Bachata Romántica", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", genre: "Bachata", filename: "bachata_romantica.mp3", size: "2.8 MB" },
-                { id: 2, title: "Merengue Fiestero", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", genre: "Merengue", filename: "merengue_fiestero.mp3", size: "3.5 MB" },
-                { id: 3, title: "Reguetón Urbano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", genre: "Reguetón", filename: "reggaeton_urbano.mp3", size: "3.0 MB" },
-                { id: 4, title: "Gospel Inspirador", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", genre: "Gospel", filename: "gospel_inspirador.mp3", size: "3.7 MB" },
-                { id: 5, title: "Balada del Alma", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", genre: "Balada", filename: "balada_alma.mp3", size: "2.9 MB" }
-            ];
-            
-            shuffleSongs();
-            updateSongList();
-            updateSongCount();
-            hideLoading();
-            
-            if (isPoweredOn && allSongs.length > 0) {
-                currentSongIndex = 0;
-                updateCurrentSong();
-            }
-        }
-
-        // Función para mezclar canciones
+        // Función para mezclar canciones aleatoriamente
         function shuffleSongs() {
-            shuffledSongs = [...allSongs];
+            shuffledSongs = [...songs];
             for (let i = shuffledSongs.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffledSongs[i], shuffledSongs[j]] = [shuffledSongs[j], shuffledSongs[i]];
             }
         }
 
-        // Función para obtener la canción actual según el modo
-        function getCurrentSong() {
-            if (playMode === 'random') {
-                return shuffledSongs[currentSongIndex];
-            } else {
-                return allSongs[currentSongIndex];
+        // Función para obtener la siguiente canción aleatoria
+        function getRandomSong() {
+            if (shuffledSongs.length === 0) {
+                shuffleSongs();
             }
+            
+            // Tomar la primera canción de la lista mezclada
+            const song = shuffledSongs.shift();
+            
+            // Si ya no quedan canciones, mezclar de nuevo
+            if (shuffledSongs.length === 0) {
+                shuffleSongs();
+            }
+            
+            return song;
         }
 
         // Función para actualizar la lista de canciones en la interfaz
         function updateSongList() {
             songListContainer.innerHTML = '';
             
-            const songsToShow = playMode === 'random' ? shuffledSongs : allSongs;
-            
-            songsToShow.forEach((song, index) => {
+            songs.forEach((song, index) => {
                 const songItem = document.createElement('div');
                 songItem.className = 'song-item';
-                if (index === currentSongIndex && isPlaying) {
+                if (index === currentSongIndex) {
                     songItem.classList.add('active');
                 }
                 
                 songItem.innerHTML = `
-                    <div class="song-number">${index + 1}</div>
-                    <div class="song-name">
-                        <strong>${song.title}</strong><br>
-                        <small>${song.genre} • ${song.size}</small>
-                    </div>
-                    <div class="song-duration">
-                        ${index === currentSongIndex && isPlaying ? '<i class="fas fa-play playing-indicator"></i>' : ''}
-                    </div>
+                    <i class="fas fa-music" style="margin-right: 10px; color: #ffa502;"></i>
+                    ${song.title}
+                    <span style="float: right; font-size: 0.8rem; opacity: 0.7;">${song.genre}</span>
                 `;
                 
                 songItem.addEventListener('click', () => {
-                    if (playMode === 'random') {
-                        // Encontrar el índice en shuffledSongs
-                        currentSongIndex = index;
-                    } else {
-                        // Encontrar el índice en allSongs
-                        currentSongIndex = allSongs.findIndex(s => s.id === song.id);
-                    }
-                    
-                    updateCurrentSong();
-                    if (isPlaying && isPoweredOn) {
-                        playCurrentSong();
+                    // Encontrar el índice de esta canción en la lista original
+                    const songIndex = songs.findIndex(s => s.title === song.title);
+                    if (songIndex !== -1) {
+                        playSpecificSong(songIndex);
                     }
                 });
                 
@@ -740,40 +659,23 @@
             });
         }
 
-        // Función para actualizar el contador de canciones
-        function updateSongCount() {
-            songCountEl.textContent = allSongs.length;
-        }
-
-        // Función para actualizar la canción actual en la interfaz
-        function updateCurrentSong() {
-            if (allSongs.length === 0) return;
-            
-            const song = getCurrentSong();
-            currentSongEl.textContent = song.title;
-            currentGenreEl.textContent = song.genre;
-            songInfoEl.textContent = `Archivo: ${song.filename} • Tamaño: ${song.size}`;
-            
-            // Actualizar elementos activos en la lista
-            updateSongList();
-        }
-
-        // Función para mostrar estado de carga
-        function showLoading(message) {
-            loadingEl.textContent = message;
-            loadingEl.style.display = 'block';
-        }
-
-        // Función para ocultar estado de carga
-        function hideLoading() {
-            loadingEl.style.display = 'none';
+        // Función para reproducir una canción específica
+        function playSpecificSong(index) {
+            currentSongIndex = index;
+            playCurrentSong();
         }
 
         // Función para reproducir la canción actual
         function playCurrentSong() {
-            if (!isPoweredOn || allSongs.length === 0) return;
+            if (!isPoweredOn || songs.length === 0) return;
             
-            const song = getCurrentSong();
+            // Si no hay canción seleccionada, obtener una aleatoria
+            if (currentSongIndex === -1 || currentSongIndex >= songs.length) {
+                const randomSong = getRandomSong();
+                currentSongIndex = songs.findIndex(s => s.title === randomSong.title);
+            }
+            
+            const song = songs[currentSongIndex];
             
             showLoading(`Cargando: ${song.title}...`);
             
@@ -792,21 +694,30 @@
                     isPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     currentSongEl.innerHTML = song.title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                    currentGenreEl.textContent = song.genre;
                     hideLoading();
                     errorMessageEl.style.display = 'none';
+                    statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Reproduciendo en modo aleatorio`;
                     
                     // Actualizar el icono del radio
                     document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
+                    
+                    // Actualizar lista
+                    updateSongList();
                 })
                 .catch(error => {
                     console.error("Error al reproducir:", error);
                     hideLoading();
                     
                     if (error.name === 'NotAllowedError') {
-                        errorMessageEl.textContent = "Error: El navegador bloqueó la reproducción automática. Haz clic en el botón de play.";
+                        errorMessageEl.textContent = "Haz clic en el botón de play para comenzar la reproducción.";
                         errorMessageEl.style.display = 'block';
+                    } else if (error.name === 'AbortError') {
+                        errorMessageEl.textContent = "Error de carga. Intentando siguiente canción...";
+                        errorMessageEl.style.display = 'block';
+                        setTimeout(playNextSong, 2000);
                     } else {
-                        errorMessageEl.textContent = `Error al reproducir ${song.title}. Intentando siguiente canción...`;
+                        errorMessageEl.textContent = `Error al cargar "${song.title}". Intentando siguiente canción...`;
                         errorMessageEl.style.display = 'block';
                         setTimeout(playNextSong, 2000);
                     }
@@ -816,52 +727,25 @@
 
         // Función para reproducir siguiente canción
         function playNextSong() {
-            if (allSongs.length === 0) return;
+            if (songs.length === 0) return;
             
-            if (playMode === 'loop') {
-                // En modo loop, reproducir la misma canción de nuevo
-                playCurrentSong();
-                return;
-            }
+            // Obtener una canción aleatoria
+            const randomSong = getRandomSong();
+            currentSongIndex = songs.findIndex(s => s.title === randomSong.title);
             
-            // Avanzar al siguiente índice
-            currentSongIndex = (currentSongIndex + 1) % (playMode === 'random' ? shuffledSongs.length : allSongs.length);
-            
-            // Si estamos al final y es modo secuencial, volver al inicio
-            if (playMode === 'sequential' && currentSongIndex === 0) {
-                // Podríamos añadir un mensaje de "Fin de la lista" aquí si queremos
-            }
-            
-            updateCurrentSong();
             playCurrentSong();
         }
 
-        // Función para cambiar modo de reproducción
-        function changePlayMode(mode) {
-            playMode = mode;
-            
-            // Actualizar botones activos
-            modeRandomBtn.classList.remove('active');
-            modeSequentialBtn.classList.remove('active');
-            modeLoopBtn.classList.remove('active');
-            
-            if (mode === 'random') {
-                modeRandomBtn.classList.add('active');
-                shuffleSongs();
-                currentSongIndex = 0;
-            } else if (mode === 'sequential') {
-                modeSequentialBtn.classList.add('active');
-                currentSongIndex = 0;
-            } else if (mode === 'loop') {
-                modeLoopBtn.classList.add('active');
-            }
-            
-            updateCurrentSong();
-            updateSongList();
-            
-            if (isPlaying && isPoweredOn) {
-                playCurrentSong();
-            }
+        // Función para mostrar estado de carga
+        function showLoading(message) {
+            loadingEl.textContent = message;
+            loadingEl.style.display = 'block';
+            errorMessageEl.style.display = 'none';
+        }
+
+        // Función para ocultar estado de carga
+        function hideLoading() {
+            loadingEl.style.display = 'none';
         }
 
         // Alternar encendido/apagado
@@ -875,16 +759,17 @@
                 playBtn.style.opacity = "1";
                 nextBtn.style.opacity = "1";
                 
-                // Si no hay canciones cargadas, cargarlas
-                if (allSongs.length === 0) {
-                    loadSongsFromGitHub();
-                } else {
-                    currentSongEl.textContent = "Selecciona una canción y pulsa Play";
-                    currentGenreEl.textContent = "Emisora encendida";
-                    songInfoEl.textContent = `${allSongs.length} canciones disponibles`;
-                }
+                // Mezclar canciones al encender
+                shuffleSongs();
+                
+                currentSongEl.textContent = "Listo para reproducir";
+                currentGenreEl.textContent = `${songs.length} canciones cargadas`;
+                statusMessageEl.innerHTML = `<i class="fas fa-check-circle"></i> Emisora encendida - Modo aleatorio activo`;
                 
                 document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
+                
+                // Actualizar lista
+                updateSongList();
             } else {
                 powerBtn.classList.remove('on');
                 playBtn.disabled = true;
@@ -900,22 +785,23 @@
                 
                 currentSongEl.textContent = "Emisora apagada";
                 currentGenreEl.textContent = "-";
-                songInfoEl.textContent = "Enciende la emisora para comenzar";
+                statusMessageEl.innerHTML = `<i class="fas fa-power-off"></i> Emisora apagada`;
                 document.querySelector('.radio-icon').style.animation = 'none';
+                progressBar.style.width = '0%';
             }
         }
 
         // Alternar reproducción/pausa
         function togglePlay() {
-            if (!isPoweredOn || allSongs.length === 0) return;
+            if (!isPoweredOn || songs.length === 0) return;
             
             if (!isPlaying) {
-                // Si no hay canción seleccionada, seleccionar la primera
-                if (currentSongIndex < 0 || currentSongIndex >= (playMode === 'random' ? shuffledSongs.length : allSongs.length)) {
-                    currentSongIndex = 0;
-                    updateCurrentSong();
+                // Si no hay canción seleccionada, obtener una aleatoria
+                if (currentSongIndex === -1) {
+                    playNextSong();
+                } else {
+                    playCurrentSong();
                 }
-                playCurrentSong();
             } else {
                 audioPlayer.pause();
                 isPlaying = false;
@@ -944,71 +830,42 @@
             }
         }
 
+        // Actualizar barra de progreso
+        function updateProgressBar() {
+            if (!audioPlayer.duration || !isPlaying) return;
+            
+            const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
         // Inicializar eventos
         function initEvents() {
             powerBtn.addEventListener('click', togglePower);
             playBtn.addEventListener('click', togglePlay);
             nextBtn.addEventListener('click', playNextSong);
             volumeSlider.addEventListener('input', changeVolume);
-            refreshBtn.addEventListener('click', () => {
-                loadSongsFromGitHub();
-            });
-            
-            modeRandomBtn.addEventListener('click', () => changePlayMode('random'));
-            modeSequentialBtn.addEventListener('click', () => changePlayMode('sequential'));
-            modeLoopBtn.addEventListener('click', () => changePlayMode('loop'));
             
             // Configurar audio player
             audioPlayer.volume = currentVolume;
             audioPlayer.addEventListener('ended', playNextSong);
+            audioPlayer.addEventListener('timeupdate', updateProgressBar);
             audioPlayer.addEventListener('error', function(e) {
                 console.error("Error de audio:", e);
-                errorMessageEl.textContent = "Error al cargar el audio. Intentando siguiente canción...";
+                errorMessageEl.textContent = "Error de audio. Saltando a la siguiente canción...";
                 errorMessageEl.style.display = 'block';
                 setTimeout(playNextSong, 2000);
             });
             
-            // Para permitir autoplay en algunos navegadores
-            document.addEventListener('click', function initAudioOnce() {
-                if (audioPlayer && audioPlayer.play) {
-                    audioPlayer.play().then(() => {
-                        audioPlayer.pause();
-                        audioPlayer.currentTime = 0;
-                    }).catch(() => {});
-                }
-                document.removeEventListener('click', initAudioOnce);
-            });
+            // Inicializar canciones
+            shuffleSongs();
+            updateSongList();
+            
+            // Mostrar información inicial
+            statusMessageEl.innerHTML = `<i class="fas fa-music"></i> ${songs.length} canciones cargadas desde GitHub`;
         }
 
-        // Inicializar la aplicación
-        function initApp() {
-            initEvents();
-            
-            // Cargar canciones al inicio
-            loadSongsFromGitHub();
-            
-            // Actualizar la interfaz cada 10 segundos para mostrar estado actual
-            setInterval(() => {
-                if (isPlaying && isPoweredOn) {
-                    const time = audioPlayer.currentTime;
-                    const duration = audioPlayer.duration;
-                    
-                    if (!isNaN(duration) && duration > 0) {
-                        const percent = (time / duration * 100).toFixed(1);
-                        const timeStr = `${Math.floor(time / 60)}:${Math.floor(time % 60).toString().padStart(2, '0')} / ${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, '0')}`;
-                        
-                        // Actualizar info de canción actual
-                        const song = getCurrentSong();
-                        if (song) {
-                            songInfoEl.textContent = `Archivo: ${song.filename} • ${timeStr} (${percent}%)`;
-                        }
-                    }
-                }
-            }, 10000);
-        }
-
-        // Iniciar cuando la página cargue
-        window.addEventListener('DOMContentLoaded', initApp);
+        // Inicializar la aplicación cuando cargue la página
+        window.addEventListener('DOMContentLoaded', initEvents);
     </script>
 </body>
 </html>
