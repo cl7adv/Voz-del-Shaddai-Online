@@ -14,7 +14,7 @@
         }
 
         body {
-            background: linear-gradient(to bottom right, #0a3d62, #079992, #38ada9, #78e08f);
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
             color: #fff;
             min-height: 100vh;
             display: flex;
@@ -27,16 +27,51 @@
         .container {
             width: 100%;
             max-width: 900px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Fondo animado con olas */
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" fill="%230099ff" opacity=".25"/></svg>');
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation: wave 15s linear infinite;
+            opacity: 0.5;
+            animation-delay: -5s;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0) translateZ(0) scaleY(1); }
+            50% { transform: translateX(-25%) translateZ(0) scaleY(0.8); }
+            100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
         }
 
         header {
-            background: linear-gradient(to right, #1e5799, #207cca, #2989d8, #7db9e8);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
             padding: 25px;
             text-align: center;
             position: relative;
@@ -77,7 +112,7 @@
         }
 
         .player-section {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 25px;
             display: flex;
@@ -92,10 +127,11 @@
             justify-content: center;
             gap: 20px;
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .power-btn {
-            background-color: #e74c3c;
+            background-color: #ff4757;
             border: none;
             width: 70px;
             height: 70px;
@@ -104,24 +140,25 @@
             font-size: 1.8rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .power-btn:hover {
-            background-color: #c0392b;
+            background-color: #ff3838;
             transform: scale(1.05);
         }
 
         .power-btn.on {
-            background-color: #2ecc71;
+            background-color: #2ed573;
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
         }
 
         .power-btn.on:hover {
-            background-color: #27ae60;
+            background-color: #26c46a;
         }
 
         .play-btn {
-            background-color: #3498db;
+            background-color: #3742fa;
             border: none;
             width: 60px;
             height: 60px;
@@ -130,11 +167,11 @@
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .play-btn:hover {
-            background-color: #2980b9;
+            background-color: #2f35e1;
             transform: scale(1.05);
         }
 
@@ -144,10 +181,14 @@
             gap: 15px;
             width: 100%;
             max-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
         }
 
         .volume-control i {
             font-size: 1.5rem;
+            color: #ffa502;
         }
 
         .volume-slider {
@@ -165,35 +206,38 @@
             appearance: none;
             width: 22px;
             height: 22px;
-            background: #fff;
+            background: #ffa502;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .now-playing {
-            background-color: rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, rgba(255, 165, 2, 0.2), rgba(255, 165, 2, 0.1));
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             width: 100%;
             text-align: center;
             margin-top: 10px;
+            border-left: 5px solid #ffa502;
         }
 
         .now-playing h3 {
             font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: #f1c40f;
+            margin-bottom: 10px;
+            color: #ffa502;
         }
 
         .song-title {
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
         .song-genre {
             font-style: italic;
             opacity: 0.9;
+            color: #70a1ff;
         }
 
         .genres-section {
@@ -206,6 +250,7 @@
             font-size: 1.5rem;
             border-bottom: 2px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 8px;
+            color: #ffa502;
         }
 
         .genre-buttons {
@@ -216,31 +261,31 @@
         }
 
         .genre-btn {
-            background-color: rgba(52, 152, 219, 0.8);
+            background: linear-gradient(to right, #3498db, #2ecc71);
             border: none;
             color: white;
-            padding: 12px 20px;
+            padding: 12px 24px;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .genre-btn:hover {
-            background-color: rgba(41, 128, 185, 0.9);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
         }
 
         .genre-btn.active {
-            background-color: #e74c3c;
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            box-shadow: 0 0 15px rgba(255, 126, 95, 0.7);
         }
 
         .footer {
             text-align: center;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.4);
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
         }
@@ -275,9 +320,34 @@
         .sun {
             position: absolute;
             font-size: 12rem;
-            color: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.05);
             top: -5%;
             left: 10%;
+        }
+
+        .song-list {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .song-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .song-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .song-item.active {
+            background: rgba(255, 165, 2, 0.2);
+            color: #ffa502;
         }
 
         @media (max-width: 768px) {
@@ -301,23 +371,41 @@
             .genre-buttons {
                 justify-content: center;
             }
+            
+            .song-title {
+                font-size: 1.2rem;
+            }
         }
 
         /* Animación para el indicador de reproducción */
         @keyframes playing {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
         }
 
         .playing-indicator {
             display: inline-block;
             margin-left: 10px;
+            color: #ffa502;
             animation: playing 1.5s infinite;
+        }
+        
+        .loading {
+            display: none;
+            font-style: italic;
+            color: #70a1ff;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
+    <!-- Fondo animado -->
+    <div class="wave-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
     <!-- Decoración tropical -->
     <div class="tropical-decoration">
         <div class="sun"><i class="fas fa-sun"></i></div>
@@ -353,9 +441,14 @@
                 </div>
                 
                 <div class="now-playing">
-                    <h3>Reproduciendo ahora:</h3>
+                    <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
                     <div class="song-title" id="currentSong">Selecciona un género y pulsa Play</div>
                     <div class="song-genre" id="currentGenre">-</div>
+                    <div class="loading" id="loading">Cargando música...</div>
+                </div>
+                
+                <div class="song-list" id="songList">
+                    <!-- Lista de canciones se generará aquí -->
                 </div>
             </div>
             
@@ -368,52 +461,69 @@
         </div>
         
         <div class="footer">
-            <p>Música cortesía de Voz del Shaddai Online | Reproduciendo desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #78e08f;">GitHub Repository</a></p>
-            <p>Diseño tropical con HTML, CSS y JavaScript</p>
+            <p>Música cortesía de Voz del Shaddai Online | Reproduciendo desde: <a href="https://github.com/cl7adv/Voz-del-Shaddai-Online/tree/main/musica" target="_blank" style="color: #70a1ff; text-decoration: none;">GitHub Repository</a></p>
+            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Diseño tropical con HTML, CSS y JavaScript</p>
         </div>
     </div>
 
     <script>
-        // Lista de géneros y canciones (simuladas)
-        // En un caso real, aquí pondrías las URL reales de los archivos de música
+        // Lista de géneros y canciones usando enlaces alternativos ya que GitHub no permite streaming directo
         const musicGenres = {
-            "Salsa": [
-                { title: "Salsa Caliente", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa1.mp3" },
-                { title: "Ritmo Caribeño", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa2.mp3" },
-                { title: "Bailando con Shaddai", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/salsa3.mp3" }
-            ],
-            "Bachata": [
-                { title: "Bachata Romántica", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata1.mp3" },
-                { title: "Suspiros Tropicales", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata2.mp3" },
-                { title: "Noche de Luna", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/bachata3.mp3" }
-            ],
-            "Merengue": [
-                { title: "Merengue Fiestero", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue1.mp3" },
-                { title: "Ritmo Dominicano", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue2.mp3" },
-                { title: "Fiesta en la Playa", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/merengue3.mp3" }
-            ],
-            "Reguetón": [
-                { title: "Flow Caribeño", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton1.mp3" },
-                { title: "Ritmo Urbano", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton2.mp3" },
-                { title: "Vibra Tropical", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/reggaeton3.mp3" }
-            ],
-            "Gospel": [
-                { title: "Alabanza Shaddai", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel1.mp3" },
-                { title: "Cielo en la Tierra", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel2.mp3" },
-                { title: "Fe y Esperanza", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/gospel3.mp3" }
-            ],
-            "Baladas": [
-                { title: "Amor Eterno", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada1.mp3" },
-                { title: "Serenata Tropical", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada2.mp3" },
-                { title: "Recuerdos del Alma", url: "https://github.com/cl7adv/Voz-del-Shaddai-Online/raw/main/musica/balada3.mp3" }
-            ]
+            "Salsa Tropical": {
+                color: "#ff7e5f",
+                songs: [
+                    { title: "Salsa Caliente", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Salsa" },
+                    { title: "Ritmo Caribeño", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", genre: "Salsa" },
+                    { title: "Bailando con Shaddai", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", genre: "Salsa" }
+                ]
+            },
+            "Bachata Romántica": {
+                color: "#3498db",
+                songs: [
+                    { title: "Bachata Romántica", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", genre: "Bachata" },
+                    { title: "Suspiros Tropicales", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", genre: "Bachata" },
+                    { title: "Noche de Luna", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", genre: "Bachata" }
+                ]
+            },
+            "Merengue Fiestero": {
+                color: "#2ecc71",
+                songs: [
+                    { title: "Merengue Fiestero", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", genre: "Merengue" },
+                    { title: "Ritmo Dominicano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", genre: "Merengue" },
+                    { title: "Fiesta en la Playa", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", genre: "Merengue" }
+                ]
+            },
+            "Reguetón Urbano": {
+                color: "#9b59b6",
+                songs: [
+                    { title: "Flow Caribeño", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", genre: "Reguetón" },
+                    { title: "Ritmo Urbano", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3", genre: "Reguetón" },
+                    { title: "Vibra Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3", genre: "Reguetón" }
+                ]
+            },
+            "Gospel Inspirador": {
+                color: "#e74c3c",
+                songs: [
+                    { title: "Alabanza Shaddai", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3", genre: "Gospel" },
+                    { title: "Cielo en la Tierra", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3", genre: "Gospel" },
+                    { title: "Fe y Esperanza", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3", genre: "Gospel" }
+                ]
+            },
+            "Baladas del Alma": {
+                color: "#f1c40f",
+                songs: [
+                    { title: "Amor Eterno", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3", genre: "Balada" },
+                    { title: "Serenata Tropical", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3", genre: "Balada" },
+                    { title: "Recuerdos del Alma", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", genre: "Balada" }
+                ]
+            }
         };
 
         // Variables de estado
         let audioPlayer = new Audio();
         let isPlaying = false;
         let isPoweredOn = false;
-        let currentGenre = "Salsa";
+        let currentGenre = "Salsa Tropical";
         let currentSongIndex = 0;
         let currentVolume = 0.7;
 
@@ -424,6 +534,8 @@
         const currentSongEl = document.getElementById('currentSong');
         const currentGenreEl = document.getElementById('currentGenre');
         const genreButtonsContainer = document.getElementById('genreButtons');
+        const songListContainer = document.getElementById('songList');
+        const loadingEl = document.getElementById('loading');
 
         // Inicializar la emisora
         function initRadio() {
@@ -431,7 +543,10 @@
             for (const genre in musicGenres) {
                 const button = document.createElement('button');
                 button.className = 'genre-btn';
-                if (genre === currentGenre) button.classList.add('active');
+                if (genre === currentGenre) {
+                    button.classList.add('active');
+                    button.style.background = `linear-gradient(to right, ${musicGenres[genre].color}, ${adjustColor(musicGenres[genre].color, 20)})`;
+                }
                 button.textContent = genre;
                 button.addEventListener('click', () => selectGenre(genre));
                 genreButtonsContainer.appendChild(button);
@@ -440,9 +555,37 @@
             // Configurar audio player
             audioPlayer.volume = currentVolume;
             audioPlayer.addEventListener('ended', playNextSong);
+            audioPlayer.addEventListener('error', handleAudioError);
+            audioPlayer.addEventListener('loadstart', () => {
+                loadingEl.style.display = 'block';
+            });
+            audioPlayer.addEventListener('canplay', () => {
+                loadingEl.style.display = 'none';
+            });
             
-            // Actualizar la canción actual
+            // Actualizar la canción actual y lista
             updateCurrentSong();
+            updateSongList();
+            
+            // Establecer un evento para cuando el usuario interactúe (necesario para autoplay en algunos navegadores)
+            document.addEventListener('click', initAudioContext, { once: true });
+        }
+
+        // Función para ajustar color
+        function adjustColor(color, amount) {
+            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+        }
+
+        // Inicializar contexto de audio (necesario para algunos navegadores)
+        function initAudioContext() {
+            // Solo es necesario para navegadores que bloquean autoplay
+            if (audioPlayer && audioPlayer.play) {
+                audioPlayer.play().then(() => {
+                    audioPlayer.pause();
+                }).catch(() => {
+                    // Ignorar error, solo estamos inicializando
+                });
+            }
         }
 
         // Seleccionar un género
@@ -453,10 +596,15 @@
             // Actualizar botones activos
             document.querySelectorAll('.genre-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.textContent === genre) btn.classList.add('active');
+                btn.style.background = '';
+                if (btn.textContent === genre) {
+                    btn.classList.add('active');
+                    btn.style.background = `linear-gradient(to right, ${musicGenres[genre].color}, ${adjustColor(musicGenres[genre].color, 20)})`;
+                }
             });
             
             updateCurrentSong();
+            updateSongList();
             
             // Si está reproduciendo, cambiar a la primera canción del nuevo género
             if (isPlaying && isPoweredOn) {
@@ -466,41 +614,98 @@
 
         // Actualizar la información de la canción actual
         function updateCurrentSong() {
-            const songs = musicGenres[currentGenre];
+            const songs = musicGenres[currentGenre].songs;
             if (songs && songs[currentSongIndex]) {
                 currentSongEl.textContent = songs[currentSongIndex].title;
                 currentGenreEl.textContent = currentGenre;
+                
+                // Actualizar elementos activos en la lista
+                document.querySelectorAll('.song-item').forEach((item, index) => {
+                    item.classList.remove('active');
+                    if (index === currentSongIndex) {
+                        item.classList.add('active');
+                    }
+                });
             }
+        }
+
+        // Actualizar la lista de canciones
+        function updateSongList() {
+            songListContainer.innerHTML = '';
+            const songs = musicGenres[currentGenre].songs;
+            
+            songs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+                if (index === currentSongIndex) {
+                    songItem.classList.add('active');
+                }
+                songItem.innerHTML = `
+                    <i class="fas fa-music" style="margin-right: 10px; color: ${musicGenres[currentGenre].color};"></i>
+                    ${song.title}
+                    <span style="float: right; font-size: 0.8rem; opacity: 0.7;">${song.genre}</span>
+                `;
+                songItem.addEventListener('click', () => {
+                    currentSongIndex = index;
+                    updateCurrentSong();
+                    if (isPlaying && isPoweredOn) {
+                        playCurrentSong();
+                    }
+                });
+                songListContainer.appendChild(songItem);
+            });
+        }
+
+        // Manejar errores de audio
+        function handleAudioError() {
+            console.error("Error al cargar el archivo de audio.");
+            loadingEl.style.display = 'none';
+            currentSongEl.innerHTML = "Error cargando la canción. Intentando siguiente... <i class='fas fa-exclamation-triangle'></i>";
+            
+            // Intentar con la siguiente canción después de un breve retraso
+            setTimeout(playNextSong, 2000);
         }
 
         // Reproducir la canción actual
         function playCurrentSong() {
             if (!isPoweredOn) return;
             
-            const songs = musicGenres[currentGenre];
+            const songs = musicGenres[currentGenre].songs;
             if (!songs || !songs[currentSongIndex]) return;
             
-            // En un caso real, usaríamos la URL real del archivo de música
-            // Para este ejemplo, usaremos un archivo de audio genérico
-            // Si quisieras usar los archivos reales de GitHub, deberías tener las URL correctas
+            loadingEl.style.display = 'block';
+            
+            // Detener audio actual
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            
+            // Asignar nueva fuente
             audioPlayer.src = songs[currentSongIndex].url;
-            audioPlayer.play()
-                .then(() => {
+            
+            // Reproducir
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
                     isPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     currentSongEl.innerHTML = songs[currentSongIndex].title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                    loadingEl.style.display = 'none';
                 })
                 .catch(error => {
                     console.error("Error al reproducir:", error);
-                    // Si hay error, usar audio de prueba
-                    audioPlayer.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-                    audioPlayer.play();
+                    loadingEl.style.display = 'none';
+                    currentSongEl.innerHTML = "Haz clic en play para comenzar";
+                    
+                    // En algunos navegadores necesitamos interacción del usuario
+                    alert("Por favor, haz clic en el botón de play para comenzar la reproducción.");
                 });
+            }
         }
 
         // Reproducir siguiente canción
         function playNextSong() {
-            const songs = musicGenres[currentGenre];
+            const songs = musicGenres[currentGenre].songs;
             currentSongIndex = (currentSongIndex + 1) % songs.length;
             updateCurrentSong();
             playCurrentSong();
@@ -514,8 +719,9 @@
                 powerBtn.classList.add('on');
                 playBtn.disabled = false;
                 playBtn.style.opacity = "1";
-                currentSongEl.textContent = "Selecciona un género y pulsa Play";
+                currentSongEl.textContent = "Selecciona una canción y pulsa Play";
                 currentGenreEl.textContent = "Emisora encendida";
+                document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
             } else {
                 powerBtn.classList.remove('on');
                 playBtn.disabled = true;
@@ -529,6 +735,7 @@
                 
                 currentSongEl.textContent = "Emisora apagada";
                 currentGenreEl.textContent = "-";
+                document.querySelector('.radio-icon').style.animation = 'none';
             }
         }
 
@@ -573,23 +780,13 @@
         // Inicializar cuando la página cargue
         window.addEventListener('DOMContentLoaded', initRadio);
         
-        // Para simular una experiencia de radio, si se activa un género diferente mientras se reproduce,
-        // cambiará automáticamente a la primera canción de ese género
-        function simulateRadio() {
-            if (isPlaying && isPoweredOn) {
-                // Cambiar aleatoriamente de género cada 3 canciones
-                if (currentSongIndex === 0) {
-                    const genres = Object.keys(musicGenres);
-                    const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-                    if (randomGenre !== currentGenre) {
-                        selectGenre(randomGenre);
-                    }
-                }
-            }
-        }
-
-        // Simular cambios automáticos como una radio real
-        setInterval(simulateRadio, 60000);
+        // Cambiar automáticamente de canción cuando termine
+        audioPlayer.addEventListener('ended', playNextSong);
+        
+        // Para actualizar el tiempo de reproducción (opcional)
+        audioPlayer.addEventListener('timeupdate', () => {
+            // Podríamos añadir una barra de progreso aquí si quisiéramos
+        });
     </script>
 </body>
 </html>
