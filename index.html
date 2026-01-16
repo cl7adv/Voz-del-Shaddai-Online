@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voz del Shaddai Online - Música Cristiana</title>
+    <title>Radio Shaddai Caribe - Emisora Cristiana</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            background: linear-gradient(135deg, #1a2980, #26d0ce, #38ada9);
             color: #fff;
             min-height: 100vh;
             display: flex;
@@ -24,17 +24,151 @@
             overflow-x: hidden;
         }
 
+        /* Pantalla de acceso */
+        .access-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .access-screen.hidden {
+            display: none;
+        }
+
+        .access-screen h1 {
+            font-size: 2.5rem;
+            color: #ffa502;
+            margin-bottom: 10px;
+        }
+
+        .access-screen h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #70a1ff;
+        }
+
+        .access-screen p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            background: linear-gradient(to right, #3742fa, #2f35e1);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            min-width: 200px;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .mode-btn i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .mode-btn.oyente {
+            background: linear-gradient(to right, #2ed573, #26c46a);
+        }
+
+        .mode-btn.master {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+        }
+
+        .password-form {
+            display: none;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .password-form.active {
+            display: block;
+        }
+
+        .password-form input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .password-form button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .password-form button:hover {
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Contenedor principal */
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1200px;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 1;
+            display: none;
+        }
+
+        .container.active {
+            display: block;
         }
 
         header {
@@ -56,39 +190,181 @@
             opacity: 0.9;
         }
 
-        .radio-icon {
+        .mode-indicator {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 2rem;
-            color: #fff;
-            animation: pulse 2s infinite;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .mode-indicator.oyente {
+            background: rgba(46, 213, 115, 0.3);
+            border: 1px solid rgba(46, 213, 115, 0.5);
         }
 
-        .main-content {
+        .mode-indicator.master {
+            background: rgba(255, 126, 95, 0.3);
+            border: 1px solid rgba(255, 126, 95, 0.5);
+        }
+
+        .content {
             padding: 30px;
             display: flex;
-            flex-direction: column;
-            gap: 25px;
+            gap: 30px;
         }
 
-        .player-section {
-            background-color: rgba(255, 255, 255, 0.1);
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+        }
+
+        /* Sección Oyente */
+        .oyente-section {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 25px;
+        }
+
+        .oyente-section h2 {
+            font-size: 1.8rem;
+            color: #2ed573;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .oyente-section .radio-icon {
+            font-size: 5rem;
+            color: #2ed573;
+            animation: pulse 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        .oyente-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .oyente-power-btn {
+            background-color: #ff4757;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .oyente-power-btn:hover {
+            background-color: #ff3838;
+            transform: scale(1.05);
+        }
+
+        .oyente-power-btn.on {
+            background-color: #2ed573;
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
+        }
+
+        .oyente-volume-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .oyente-volume-control i {
+            font-size: 2rem;
+            color: #ffa502;
+        }
+
+        .oyente-volume-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .oyente-volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #ffa502;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .oyente-now-playing {
+            background: linear-gradient(to right, rgba(46, 213, 115, 0.2), rgba(46, 213, 115, 0.1));
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            border-left: 5px solid #2ed573;
+        }
+
+        .oyente-now-playing h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2ed573;
+        }
+
+        .oyente-song-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .oyente-song-genre {
+            font-style: italic;
+            opacity: 0.9;
+            color: #70a1ff;
+        }
+
+        /* Sección Master */
+        .master-section {
+            flex: 2;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            display: none;
+            flex-direction: column;
             gap: 20px;
         }
 
-        .player-controls {
+        .master-section.active {
+            display: flex;
+        }
+
+        .master-section h2 {
+            font-size: 1.8rem;
+            color: #ff7e5f;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .master-controls {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -97,7 +373,7 @@
             flex-wrap: wrap;
         }
 
-        .power-btn {
+        .master-power-btn {
             background-color: #ff4757;
             border: none;
             width: 70px;
@@ -110,21 +386,17 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .power-btn:hover {
+        .master-power-btn:hover {
             background-color: #ff3838;
             transform: scale(1.05);
         }
 
-        .power-btn.on {
+        .master-power-btn.on {
             background-color: #2ed573;
             box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
         }
 
-        .power-btn.on:hover {
-            background-color: #26c46a;
-        }
-
-        .play-btn {
+        .master-play-btn {
             background-color: #3742fa;
             border: none;
             width: 60px;
@@ -137,12 +409,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .play-btn:hover {
+        .master-play-btn:hover {
             background-color: #2f35e1;
             transform: scale(1.05);
         }
 
-        .next-btn {
+        .master-next-btn {
             background-color: #ffa502;
             border: none;
             width: 50px;
@@ -155,12 +427,30 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .next-btn:hover {
+        .master-next-btn:hover {
             background-color: #e59400;
             transform: scale(1.05);
         }
 
-        .volume-control {
+        .master-prev-btn {
+            background-color: #ffa502;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .master-prev-btn:hover {
+            background-color: #e59400;
+            transform: scale(1.05);
+        }
+
+        .master-volume-control {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -171,12 +461,12 @@
             border-radius: 50px;
         }
 
-        .volume-control i {
+        .master-volume-control i {
             font-size: 1.5rem;
             color: #ffa502;
         }
 
-        .volume-slider {
+        .master-volume-slider {
             flex-grow: 1;
             -webkit-appearance: none;
             appearance: none;
@@ -186,7 +476,7 @@
             outline: none;
         }
 
-        .volume-slider::-webkit-slider-thumb {
+        .master-volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 22px;
@@ -197,29 +487,29 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
-        .now-playing {
-            background: linear-gradient(to right, rgba(255, 165, 2, 0.2), rgba(255, 165, 2, 0.1));
+        .master-now-playing {
+            background: linear-gradient(to right, rgba(255, 126, 95, 0.2), rgba(255, 126, 95, 0.1));
             border-radius: 10px;
             padding: 20px;
             width: 100%;
             text-align: center;
             margin-top: 10px;
-            border-left: 5px solid #ffa502;
+            border-left: 5px solid #ff7e5f;
         }
 
-        .now-playing h3 {
+        .master-now-playing h3 {
             font-size: 1.3rem;
             margin-bottom: 10px;
-            color: #ffa502;
+            color: #ff7e5f;
         }
 
-        .song-title {
+        .master-song-title {
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .song-genre {
+        .master-song-genre {
             font-style: italic;
             opacity: 0.9;
             color: #70a1ff;
@@ -241,20 +531,29 @@
             transition: width 0.3s;
         }
 
-        .loading {
-            display: none;
-            font-style: italic;
-            color: #70a1ff;
-            margin-top: 10px;
-        }
-
         .song-list-container {
             margin-top: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 15px;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
+        }
+
+        .song-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .song-list-header h4 {
+            color: #ffa502;
+        }
+
+        .song-count {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
         .song-item {
@@ -262,6 +561,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
         }
 
         .song-item:hover {
@@ -271,6 +572,49 @@
         .song-item.active {
             background: rgba(255, 165, 2, 0.2);
             color: #ffa502;
+        }
+
+        .song-number {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .song-name {
+            flex-grow: 1;
+        }
+
+        .song-duration {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .loading {
+            display: none;
+            font-style: italic;
+            color: #70a1ff;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .error {
+            color: #ff4757;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+
+        .status-message {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
         }
 
         .footer {
@@ -316,50 +660,46 @@
             left: 10%;
         }
 
-        .error {
-            color: #ff4757;
-            background: rgba(255, 71, 87, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .status-message {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
+            .access-screen {
+                padding: 20px;
+            }
+            
+            .access-screen h1 {
+                font-size: 2rem;
+            }
+            
+            .mode-btn {
+                min-width: 100%;
+            }
+            
+            .content {
+                padding: 15px;
             }
             
             header h1 {
                 font-size: 2rem;
             }
             
-            .player-controls {
+            .master-controls {
                 flex-direction: column;
                 gap: 15px;
             }
             
-            .volume-control {
+            .master-volume-control {
                 max-width: 100%;
-            }
-            
-            .song-title {
-                font-size: 1.2rem;
             }
         }
 
-        @keyframes playing {
+        @keyframes pulse {
             0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 1; }
             100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .playing-indicator {
@@ -368,61 +708,167 @@
             color: #ffa502;
             animation: playing 1.5s infinite;
         }
+
+        @keyframes playing {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            opacity: 0.5;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" fill="%230099ff" opacity=".25"/></svg>');
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation: wave 15s linear infinite;
+            opacity: 0.5;
+            animation-delay: -5s;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0) translateZ(0) scaleY(1); }
+            50% { transform: translateX(-25%) translateZ(0) scaleY(0.8); }
+            100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+        }
     </style>
 </head>
 <body>
+    <!-- Fondo animado -->
+    <div class="wave-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <!-- Decoración tropical -->
     <div class="tropical-decoration">
         <div class="sun"><i class="fas fa-sun"></i></div>
         <div class="palm-leaf"><i class="fas fa-leaf"></i></div>
         <div class="flower"><i class="fas fa-spa"></i></div>
     </div>
 
-    <div class="container">
+    <!-- Pantalla de acceso -->
+    <div class="access-screen" id="accessScreen">
+        <h1><i class="fas fa-broadcast-tower"></i> Radio Shaddai Caribe</h1>
+        <h2>Emisora Cristiana del Caribe</h2>
+        <p>Selecciona tu modo de acceso para comenzar</p>
+        
+        <div class="mode-selector">
+            <button class="mode-btn oyente" id="oyenteBtn">
+                <i class="fas fa-headphones"></i> Modo Oyente
+            </button>
+            <button class="mode-btn master" id="masterBtn">
+                <i class="fas fa-sliders-h"></i> Modo Master
+            </button>
+        </div>
+        
+        <div class="password-form" id="passwordForm">
+            <input type="password" id="passwordInput" placeholder="Ingresa la clave de acceso">
+            <button id="submitPassword">Acceder</button>
+            <div class="error-message" id="passwordError">Clave incorrecta. Intenta nuevamente.</div>
+        </div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container" id="mainContainer">
         <header>
-            <h1><i class="fas fa-broadcast-tower"></i> Voz del Shaddai Online</h1>
-            <p>Música Cristiana MP3 - Alabanza y Adoración</p>
-            <div class="radio-icon">
-                <i class="fas fa-cross"></i>
+            <h1><i class="fas fa-broadcast-tower"></i> Radio Shaddai Caribe</h1>
+            <p>Emisora Cristiana del Caribe - Música de Alabanza y Adoración</p>
+            <div class="mode-indicator oyente" id="modeIndicator">
+                <i class="fas fa-headphones"></i> Modo Oyente
             </div>
         </header>
 
-        <div class="main-content">
-            <div class="player-section">
-                <div class="player-controls">
-                    <button class="power-btn" id="powerBtn">
+        <div class="content">
+            <!-- Sección Oyente (siempre visible) -->
+            <div class="oyente-section">
+                <h2><i class="fas fa-headphones"></i> Para Oyentes</h2>
+                <div class="radio-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                </div>
+                
+                <div class="oyente-controls">
+                    <button class="oyente-power-btn" id="oyentePowerBtn">
                         <i class="fas fa-power-off"></i>
                     </button>
                     
-                    <button class="play-btn" id="playBtn">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    
-                    <button class="next-btn" id="nextBtn" title="Siguiente canción">
-                        <i class="fas fa-random"></i>
-                    </button>
-                    
-                    <div class="volume-control">
+                    <div class="oyente-volume-control">
                         <i class="fas fa-volume-down"></i>
-                        <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+                        <input type="range" min="0" max="100" value="70" class="oyente-volume-slider" id="oyenteVolumeSlider">
                         <i class="fas fa-volume-up"></i>
                     </div>
                 </div>
                 
-                <div class="now-playing">
-                    <h3><i class="fas fa-headphones"></i> Reproduciendo ahora:</h3>
-                    <div class="song-title" id="currentSong">Selecciona una canción</div>
-                    <div class="song-genre" id="currentGenre">Música Cristiana</div>
+                <div class="oyente-now-playing">
+                    <h3><i class="fas fa-music"></i> En Vivo:</h3>
+                    <div class="oyente-song-title" id="oyenteSongTitle">Radio Shaddai Caribe</div>
+                    <div class="oyente-song-genre" id="oyenteSongGenre">Emisora Cristiana</div>
+                </div>
+            </div>
+
+            <!-- Sección Master (solo para master) -->
+            <div class="master-section" id="masterSection">
+                <h2><i class="fas fa-sliders-h"></i> Panel de Control Master</h2>
+                
+                <div class="master-controls">
+                    <button class="master-power-btn" id="masterPowerBtn">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                    
+                    <button class="master-prev-btn" id="masterPrevBtn">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    
+                    <button class="master-play-btn" id="masterPlayBtn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    
+                    <button class="master-next-btn" id="masterNextBtn">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    
+                    <div class="master-volume-control">
+                        <i class="fas fa-volume-down"></i>
+                        <input type="range" min="0" max="100" value="70" class="master-volume-slider" id="masterVolumeSlider">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                </div>
+                
+                <div class="master-now-playing">
+                    <h3><i class="fas fa-headphones"></i> Reproduciendo:</h3>
+                    <div class="master-song-title" id="masterSongTitle">Selecciona una canción</div>
+                    <div class="master-song-genre" id="masterSongGenre">-</div>
                     <div class="progress-bar">
                         <div class="progress" id="progressBar"></div>
                     </div>
                     <div class="loading" id="loading">Cargando música...</div>
                     <div class="error" id="errorMessage"></div>
                     <div class="status-message" id="statusMessage">
-                        <i class="fas fa-info-circle"></i> Emisora de música cristiana MP3
+                        <i class="fas fa-info-circle"></i> Conectando a la biblioteca de música...
                     </div>
                 </div>
                 
                 <div class="song-list-container">
+                    <div class="song-list-header">
+                        <h4><i class="fas fa-list-music"></i> Biblioteca de Música</h4>
+                        <div class="song-count" id="songCount">0 canciones</div>
+                    </div>
                     <div id="songList">
                         <!-- Lista de canciones se generará aquí -->
                     </div>
@@ -431,181 +877,192 @@
         </div>
         
         <div class="footer">
-            <p><i class="fas fa-cross" style="color: #ffa502;"></i> Música Cristiana MP3 - Alabanza y Adoración</p>
-            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Voz del Shaddai - Bendiciones</p>
+            <p><i class="fas fa-cross" style="color: #ffa502;"></i> Radio Shaddai Caribe - Transmitiendo la Palabra de Dios</p>
+            <p><i class="fas fa-heart" style="color: #ff4757;"></i> Música Cristiana MP3 desde el Caribe</p>
         </div>
     </div>
 
     <script>
-        // Lista de música cristiana MP3 (enlaces reales a música cristiana)
-        const songs = [
-            {
-                title: "Alabanza y Adoración 1",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Alabanza y Adoración 2",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%202.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Bendecid Su Nombre",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Bendecid%20Su%20Nombre.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Canto de Victoria",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Canto%20de%20Victoria.mp3",
-                genre: "Gospel"
-            },
-            {
-                title: "Celebrad a Cristo",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Celebrad%20a%20Cristo.mp3",
-                genre: "Gospel"
-            },
-            {
-                title: "Coritos Cristianos 1",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3",
-                genre: "Coritos"
-            },
-            {
-                title: "Coritos Cristianos 2",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%202.mp3",
-                genre: "Coritos"
-            },
-            {
-                title: "Cuan Grande Es El",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Cuan%20Grande%20Es%20El.mp3",
-                genre: "Himno"
-            },
-            {
-                title: "Digno Es El Cordero",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Digno%20Es%20El%20Cordero.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "El Poder de la Cruz",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/El%20Poder%20de%20la%20Cruz.mp3",
-                genre: "Gospel"
-            },
-            {
-                title: "En La Cruz",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/En%20La%20Cruz.mp3",
-                genre: "Himno"
-            },
-            {
-                title: "Getsemani",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Getsemani.mp3",
-                genre: "Reflexión"
-            },
-            {
-                title: "Gloria a Dios",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Gloria%20a%20Dios.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Grande Es Tu Fidelidad",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Grande%20Es%20Tu%20Fidelidad.mp3",
-                genre: "Himno"
-            },
-            {
-                title: "Hay Poder en la Sangre",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hay%20Poder.mp3",
-                genre: "Gospel"
-            },
-            {
-                title: "Himno a la Santísima Trinidad",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Himno%20a%20la%20Sant%C3%ADsima%20Trinidad.mp3",
-                genre: "Himno"
-            },
-            {
-                title: "Hosanna",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Hosanna.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "La Tierra Canta",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/La%20Tierra%20Canta.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Mi Vida Esta en Ti Señor",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Mi%20Vida%20Esta%20en%20Ti.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "No Hay Dios Tan Grande",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/No%20Hay%20Dios%20Tan%20Grande.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Padre Nuestro",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Padre%20Nuestro.mp3",
-                genre: "Oración"
-            },
-            {
-                title: "Paz en la Tormenta",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Paz%20en%20la%20Tormenta.mp3",
-                genre: "Reflexión"
-            },
-            {
-                title: "Puedes Confiar en Dios",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Puedes%20Confiar.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Renuévame Señor",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Santo Santo Santo",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Santo%20Santo%20Santo.mp3",
-                genre: "Himno"
-            },
-            {
-                title: "Te Alabamos Señor",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Te%20Alabamos%20Se%C3%B1or.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Tu Fidelidad",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Tu%20Fidelidad.mp3",
-                genre: "Alabanza"
-            },
-            {
-                title: "Ven Espíritu Santo",
-                url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Ven%20Esp%C3%ADritu%20Santo.mp3",
-                genre: "Oración"
-            }
-        ];
-
-        // Variables de estado
+        // Variables globales
         let audioPlayer = new Audio();
         let isPlaying = false;
         let isPoweredOn = false;
         let currentVolume = 0.7;
         let currentSongIndex = -1;
+        let allSongs = [];
         let shuffledSongs = [];
-        let isRandomMode = true;
+        let isMasterMode = false;
+        let isFading = false;
         
         // Elementos del DOM
-        const powerBtn = document.getElementById('powerBtn');
-        const playBtn = document.getElementById('playBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const currentSongEl = document.getElementById('currentSong');
-        const currentGenreEl = document.getElementById('currentGenre');
+        const accessScreen = document.getElementById('accessScreen');
+        const mainContainer = document.getElementById('mainContainer');
+        const oyenteBtn = document.getElementById('oyenteBtn');
+        const masterBtn = document.getElementById('masterBtn');
+        const passwordForm = document.getElementById('passwordForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitPassword = document.getElementById('submitPassword');
+        const passwordError = document.getElementById('passwordError');
+        const modeIndicator = document.getElementById('modeIndicator');
+        const masterSection = document.getElementById('masterSection');
+        
+        // Elementos Oyente
+        const oyentePowerBtn = document.getElementById('oyentePowerBtn');
+        const oyenteVolumeSlider = document.getElementById('oyenteVolumeSlider');
+        const oyenteSongTitle = document.getElementById('oyenteSongTitle');
+        const oyenteSongGenre = document.getElementById('oyenteSongGenre');
+        
+        // Elementos Master
+        const masterPowerBtn = document.getElementById('masterPowerBtn');
+        const masterPlayBtn = document.getElementById('masterPlayBtn');
+        const masterPrevBtn = document.getElementById('masterPrevBtn');
+        const masterNextBtn = document.getElementById('masterNextBtn');
+        const masterVolumeSlider = document.getElementById('masterVolumeSlider');
+        const masterSongTitle = document.getElementById('masterSongTitle');
+        const masterSongGenre = document.getElementById('masterSongGenre');
+        const progressBar = document.getElementById('progressBar');
         const loadingEl = document.getElementById('loading');
         const errorMessageEl = document.getElementById('errorMessage');
         const statusMessageEl = document.getElementById('statusMessage');
         const songListContainer = document.getElementById('songList');
-        const progressBar = document.getElementById('progressBar');
+        const songCountEl = document.getElementById('songCount');
 
-        // Función para mezclar canciones aleatoriamente
+        // Función para cambiar de modo
+        function setMode(isMaster) {
+            isMasterMode = isMaster;
+            
+            if (isMaster) {
+                modeIndicator.className = 'mode-indicator master';
+                modeIndicator.innerHTML = '<i class="fas fa-sliders-h"></i> Modo Master';
+                masterSection.classList.add('active');
+                
+                // Cargar canciones si no se han cargado
+                if (allSongs.length === 0) {
+                    loadSongsFromGitHub();
+                }
+            } else {
+                modeIndicator.className = 'mode-indicator oyente';
+                modeIndicator.innerHTML = '<i class="fas fa-headphones"></i> Modo Oyente';
+                masterSection.classList.remove('active');
+            }
+            
+            // Mostrar interfaz principal
+            accessScreen.classList.add('hidden');
+            mainContainer.classList.add('active');
+            
+            // Inicializar controles
+            initAudioControls();
+        }
+
+        // Función para cargar canciones desde GitHub
+        async function loadSongsFromGitHub() {
+            try {
+                showLoading("Conectando a la biblioteca de música...");
+                errorMessageEl.style.display = 'none';
+                
+                // Intentar cargar desde GitHub
+                const apiUrl = 'https://api.github.com/repos/cl7adv/Voz-del-Shaddai-Online/contents/musica';
+                
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Filtrar solo archivos de audio
+                const audioFiles = data.filter(item => 
+                    item.type === 'file' && 
+                    (item.name.toLowerCase().endsWith('.mp3') || 
+                     item.name.toLowerCase().endsWith('.wav') || 
+                     item.name.toLowerCase().endsWith('.ogg') ||
+                     item.name.toLowerCase().endsWith('.m4a'))
+                );
+                
+                if (audioFiles.length === 0) {
+                    throw new Error('No se encontraron archivos de audio en la carpeta música.');
+                }
+                
+                // Crear lista de canciones
+                allSongs = audioFiles.map((file, index) => {
+                    // Determinar género basado en el nombre del archivo
+                    let genre = 'Música Cristiana';
+                    const fileName = file.name.toLowerCase();
+                    
+                    if (fileName.includes('alabanza')) genre = 'Alabanza';
+                    else if (fileName.includes('adoracion')) genre = 'Adoración';
+                    else if (fileName.includes('corito')) genre = 'Coritos';
+                    else if (fileName.includes('gospel')) genre = 'Gospel';
+                    else if (fileName.includes('himno')) genre = 'Himno';
+                    else if (fileName.includes('oracion')) genre = 'Oración';
+                    
+                    return {
+                        id: index,
+                        title: file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/-/g, " "),
+                        url: file.download_url,
+                        genre: genre,
+                        filename: file.name
+                    };
+                });
+                
+                // Mezclar canciones
+                shuffleSongs();
+                
+                // Actualizar interfaz
+                updateSongList();
+                updateSongCount();
+                hideLoading();
+                
+                statusMessageEl.innerHTML = `<i class="fas fa-check-circle"></i> ${allSongs.length} canciones cargadas`;
+                
+                return true;
+                
+            } catch (error) {
+                console.error("Error cargando canciones:", error);
+                errorMessageEl.textContent = `Error: ${error.message}. Usando biblioteca local.`;
+                errorMessageEl.style.display = 'block';
+                
+                // Cargar canciones de respaldo
+                loadBackupSongs();
+                return false;
+            }
+        }
+
+        // Función para cargar canciones de respaldo
+        function loadBackupSongs() {
+            allSongs = [
+                { id: 0, title: "Alabanza y Adoración 1", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Alabanza%20y%20Adoraci%C3%B3n%201.mp3", genre: "Alabanza", filename: "Alabanza y Adoración 1.mp3" },
+                { id: 1, title: "Bendecid Su Nombre", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Bendecid%20Su%20Nombre.mp3", genre: "Alabanza", filename: "Bendecid Su Nombre.mp3" },
+                { id: 2, title: "Canto de Victoria", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Canto%20de%20Victoria.mp3", genre: "Gospel", filename: "Canto de Victoria.mp3" },
+                { id: 3, title: "Coritos 1", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Coritos%201.mp3", genre: "Coritos", filename: "Coritos 1.mp3" },
+                { id: 4, title: "Cuan Grande Es El", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Cuan%20Grande%20Es%20El.mp3", genre: "Himno", filename: "Cuan Grande Es El.mp3" },
+                { id: 5, title: "Digno Es El Cordero", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Digno%20Es%20El%20Cordero.mp3", genre: "Alabanza", filename: "Digno Es El Cordero.mp3" },
+                { id: 6, title: "El Poder de la Cruz", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/El%20Poder%20de%20la%20Cruz.mp3", genre: "Gospel", filename: "El Poder de la Cruz.mp3" },
+                { id: 7, title: "Gloria a Dios", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Gloria%20a%20Dios.mp3", genre: "Alabanza", filename: "Gloria a Dios.mp3" },
+                { id: 8, title: "Grande Es Tu Fidelidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Grande%20Es%20Tu%20Fidelidad.mp3", genre: "Himno", filename: "Grande Es Tu Fidelidad.mp3" },
+                { id: 9, title: "Himno a la Santísima Trinidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Himno%20a%20la%20Sant%C3%ADsima%20Trinidad.mp3", genre: "Himno", filename: "Himno a la Santísima Trinidad.mp3" },
+                { id: 10, title: "La Tierra Canta", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/La%20Tierra%20Canta.mp3", genre: "Alabanza", filename: "La Tierra Canta.mp3" },
+                { id: 11, title: "No Hay Dios Tan Grande", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/No%20Hay%20Dios%20Tan%20Grande.mp3", genre: "Alabanza", filename: "No Hay Dios Tan Grande.mp3" },
+                { id: 12, title: "Paz en la Tormenta", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Paz%20en%20la%20Tormenta.mp3", genre: "Reflexión", filename: "Paz en la Tormenta.mp3" },
+                { id: 13, title: "Renuévame", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Renu%C3%A9vame.mp3", genre: "Alabanza", filename: "Renuévame.mp3" },
+                { id: 14, title: "Santo Santo Santo", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Santo%20Santo%20Santo.mp3", genre: "Himno", filename: "Santo Santo Santo.mp3" },
+                { id: 15, title: "Te Alabamos Señor", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Te%20Alabamos%20Se%C3%B1or.mp3", genre: "Alabanza", filename: "Te Alabamos Señor.mp3" },
+                { id: 16, title: "Tu Fidelidad", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Tu%20Fidelidad.mp3", genre: "Alabanza", filename: "Tu Fidelidad.mp3" },
+                { id: 17, title: "Ven Espíritu Santo", url: "https://raw.githubusercontent.com/cl7adv/Voz-del-Shaddai-Online/main/musica/Ven%20Esp%C3%ADritu%20Santo.mp3", genre: "Oración", filename: "Ven Espíritu Santo.mp3" }
+            ];
+            
+            shuffleSongs();
+            updateSongList();
+            updateSongCount();
+            hideLoading();
+            
+            statusMessageEl.innerHTML = `<i class="fas fa-info-circle"></i> ${allSongs.length} canciones cargadas (modo local)`;
+        }
+
+        // Función para mezclar canciones
         function shuffleSongs() {
-            shuffledSongs = [...songs];
+            shuffledSongs = [...allSongs];
             for (let i = shuffledSongs.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffledSongs[i], shuffledSongs[j]] = [shuffledSongs[j], shuffledSongs[i]];
@@ -618,10 +1075,8 @@
                 shuffleSongs();
             }
             
-            // Tomar la primera canción de la lista mezclada
             const song = shuffledSongs.shift();
             
-            // Si ya no quedan canciones, mezclar de nuevo
             if (shuffledSongs.length === 0) {
                 shuffleSongs();
             }
@@ -629,72 +1084,119 @@
             return song;
         }
 
-        // Función para obtener la siguiente canción secuencial
-        function getNextSequentialSong() {
-            if (currentSongIndex === -1) {
-                currentSongIndex = 0;
-            } else {
-                currentSongIndex = (currentSongIndex + 1) % songs.length;
-            }
-            
-            return songs[currentSongIndex];
+        // Función para obtener el índice de una canción
+        function getSongIndex(song) {
+            return allSongs.findIndex(s => s.id === song.id);
         }
 
-        // Función para actualizar la lista de canciones en la interfaz
+        // Función para actualizar la lista de canciones
         function updateSongList() {
             songListContainer.innerHTML = '';
             
-            songs.forEach((song, index) => {
+            allSongs.forEach((song, index) => {
                 const songItem = document.createElement('div');
                 songItem.className = 'song-item';
-                if (index === currentSongIndex && isPlaying) {
+                if (index === currentSongIndex) {
                     songItem.classList.add('active');
                 }
                 
                 songItem.innerHTML = `
-                    <i class="fas fa-music" style="margin-right: 10px; color: #ffa502;"></i>
-                    ${song.title}
-                    <span style="float: right; font-size: 0.8rem; opacity: 0.7;">${song.genre}</span>
+                    <div class="song-number">${index + 1}</div>
+                    <div class="song-name">
+                        <strong>${song.title}</strong><br>
+                        <small>${song.genre}</small>
+                    </div>
+                    <div class="song-duration">
+                        ${index === currentSongIndex && isPlaying ? '<i class="fas fa-play playing-indicator"></i>' : ''}
+                    </div>
                 `;
                 
                 songItem.addEventListener('click', () => {
-                    // Si estamos en modo aleatorio, cambiar a secuencial para esta selección
-                    const wasRandom = isRandomMode;
-                    isRandomMode = false;
-                    
                     currentSongIndex = index;
                     playCurrentSong();
-                    
-                    // Restaurar modo aleatorio si estaba activo
-                    if (wasRandom) {
-                        setTimeout(() => {
-                            isRandomMode = true;
-                            statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Modo aleatorio activo`;
-                        }, 100);
-                    }
                 });
                 
                 songListContainer.appendChild(songItem);
             });
         }
 
+        // Función para actualizar el contador de canciones
+        function updateSongCount() {
+            songCountEl.textContent = `${allSongs.length} canciones`;
+        }
+
+        // Función para mostrar carga
+        function showLoading(message) {
+            loadingEl.textContent = message;
+            loadingEl.style.display = 'block';
+        }
+
+        // Función para ocultar carga
+        function hideLoading() {
+            loadingEl.style.display = 'none';
+        }
+
+        // Función para fade out (bajar volumen gradualmente)
+        function fadeOut(callback) {
+            if (isFading) return;
+            
+            isFading = true;
+            let vol = currentVolume;
+            const fadeInterval = setInterval(() => {
+                if (vol > 0.1) {
+                    vol -= 0.1;
+                    audioPlayer.volume = vol;
+                } else {
+                    clearInterval(fadeInterval);
+                    audioPlayer.volume = 0;
+                    callback();
+                    isFading = false;
+                }
+            }, 50);
+        }
+
+        // Función para fade in (subir volumen gradualmente)
+        function fadeIn() {
+            if (isFading) return;
+            
+            isFading = true;
+            let vol = 0;
+            audioPlayer.volume = vol;
+            
+            const fadeInterval = setInterval(() => {
+                if (vol < currentVolume) {
+                    vol += 0.1;
+                    audioPlayer.volume = vol;
+                } else {
+                    clearInterval(fadeInterval);
+                    audioPlayer.volume = currentVolume;
+                    isFading = false;
+                }
+            }, 50);
+        }
+
+        // Función para cambiar de canción con fade out/in
+        function changeSongWithFade(newSongIndex) {
+            if (!isPoweredOn) return;
+            
+            fadeOut(() => {
+                // Cambiar a la nueva canción
+                currentSongIndex = newSongIndex;
+                playCurrentSong();
+            });
+        }
+
         // Función para reproducir la canción actual
         function playCurrentSong() {
-            if (!isPoweredOn || songs.length === 0) return;
+            if (!isPoweredOn || allSongs.length === 0) return;
             
-            let song;
-            
-            if (isRandomMode) {
-                // Modo aleatorio
+            // Si no hay canción seleccionada, obtener una aleatoria
+            if (currentSongIndex === -1 || currentSongIndex >= allSongs.length) {
                 const randomSong = getRandomSong();
-                currentSongIndex = songs.findIndex(s => s.title === randomSong.title);
-                song = randomSong;
-                statusMessageEl.innerHTML = `<i class="fas fa-random"></i> Modo aleatorio activo`;
-            } else {
-                // Modo secuencial
-                song = getNextSequentialSong();
-                statusMessageEl.innerHTML = `<i class="fas fa-list-ol"></i> Modo secuencial`;
+                currentSongIndex = getSongIndex(randomSong);
             }
+            
+            const song = allSongs[currentSongIndex];
             
             showLoading(`Cargando: ${song.title}...`);
             
@@ -705,37 +1207,47 @@
             // Asignar nueva fuente
             audioPlayer.src = song.url;
             
-            // Reproducir
+            // Reproducir con fade in
             const playPromise = audioPlayer.play();
             
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     isPlaying = true;
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    currentSongEl.innerHTML = song.title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
-                    currentGenreEl.textContent = song.genre;
+                    
+                    // Actualizar controles master
+                    if (isMasterMode) {
+                        masterPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        masterSongTitle.innerHTML = song.title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
+                        masterSongGenre.textContent = song.genre;
+                        updateSongList();
+                    }
+                    
+                    // Actualizar controles oyente
+                    oyenteSongTitle.textContent = song.title;
+                    oyenteSongGenre.textContent = song.genre;
+                    
                     hideLoading();
                     errorMessageEl.style.display = 'none';
                     
-                    // Actualizar el icono del radio
-                    document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
+                    // Aplicar fade in
+                    fadeIn();
                     
-                    // Actualizar lista
-                    updateSongList();
+                    // Actualizar estado
+                    if (isMasterMode) {
+                        statusMessageEl.innerHTML = `<i class="fas fa-play-circle"></i> Reproduciendo: ${song.title}`;
+                    }
                 })
                 .catch(error => {
                     console.error("Error al reproducir:", error);
                     hideLoading();
                     
                     if (error.name === 'NotAllowedError') {
-                        errorMessageEl.textContent = "Por favor, haz clic en el botón de play para comenzar.";
-                        errorMessageEl.style.display = 'block';
-                    } else if (error.name === 'AbortError') {
-                        errorMessageEl.textContent = "Error de carga. Intentando siguiente canción...";
-                        errorMessageEl.style.display = 'block';
-                        setTimeout(playNextSong, 2000);
+                        if (isMasterMode) {
+                            errorMessageEl.textContent = "Haz clic en el botón de play para comenzar.";
+                            errorMessageEl.style.display = 'block';
+                        }
                     } else {
-                        errorMessageEl.textContent = `Error al cargar "${song.title}". Intentando siguiente canción...`;
+                        errorMessageEl.textContent = `Error al cargar "${song.title}". Saltando a la siguiente canción...`;
                         errorMessageEl.style.display = 'block';
                         setTimeout(playNextSong, 2000);
                     }
@@ -745,150 +1257,143 @@
 
         // Función para reproducir siguiente canción
         function playNextSong() {
-            if (songs.length === 0) return;
+            if (allSongs.length === 0) return;
             
-            playCurrentSong();
+            const nextIndex = (currentSongIndex + 1) % allSongs.length;
+            changeSongWithFade(nextIndex);
         }
 
-        // Función para mostrar estado de carga
-        function showLoading(message) {
-            loadingEl.textContent = message;
-            loadingEl.style.display = 'block';
-            errorMessageEl.style.display = 'none';
+        // Función para reproducir canción anterior
+        function playPrevSong() {
+            if (allSongs.length === 0) return;
+            
+            const prevIndex = currentSongIndex <= 0 ? allSongs.length - 1 : currentSongIndex - 1;
+            changeSongWithFade(prevIndex);
         }
 
-        // Función para ocultar estado de carga
-        function hideLoading() {
-            loadingEl.style.display = 'none';
-        }
-
-        // Alternar encendido/apagado
+        // Función para alternar encendido/apagado
         function togglePower() {
             isPoweredOn = !isPoweredOn;
             
             if (isPoweredOn) {
-                powerBtn.classList.add('on');
-                playBtn.disabled = false;
-                nextBtn.disabled = false;
-                playBtn.style.opacity = "1";
-                nextBtn.style.opacity = "1";
-                
-                // Mezclar canciones al encender
-                shuffleSongs();
-                
-                currentSongEl.textContent = "Listo para reproducir";
-                currentGenreEl.textContent = "Música Cristiana";
-                statusMessageEl.innerHTML = `<i class="fas fa-cross"></i> ${songs.length} canciones cristianas cargadas`;
-                
-                document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
-                
-                // Actualizar lista
-                updateSongList();
-            } else {
-                powerBtn.classList.remove('on');
-                playBtn.disabled = true;
-                nextBtn.disabled = true;
-                playBtn.style.opacity = "0.6";
-                nextBtn.style.opacity = "0.6";
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                
-                if (isPlaying) {
-                    audioPlayer.pause();
-                    isPlaying = false;
-                }
-                
-                currentSongEl.textContent = "Emisora apagada";
-                currentGenreEl.textContent = "-";
-                statusMessageEl.innerHTML = `<i class="fas fa-power-off"></i> Emisora apagada`;
-                document.querySelector('.radio-icon').style.animation = 'none';
-                progressBar.style.width = '0%';
-            }
-        }
-
-        // Alternar reproducción/pausa
-        function togglePlay() {
-            if (!isPoweredOn || songs.length === 0) return;
-            
-            if (!isPlaying) {
-                // Si no hay canción seleccionada, empezar con una
-                if (currentSongIndex === -1) {
-                    playNextSong();
-                } else {
-                    // Reanudar reproducción
-                    const playPromise = audioPlayer.play();
+                // Encender
+                if (isMasterMode) {
+                    masterPowerBtn.classList.add('on');
+                    masterPlayBtn.disabled = false;
+                    masterPrevBtn.disabled = false;
+                    masterNextBtn.disabled = false;
                     
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            isPlaying = true;
-                            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                            currentSongEl.innerHTML = songs[currentSongIndex].title + ' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>';
-                            document.querySelector('.radio-icon').style.animation = 'pulse 1s infinite';
-                        }).catch(error => {
-                            console.error("Error al reanudar:", error);
-                            playCurrentSong();
-                        });
+                    // Si no hay canciones cargadas, cargarlas
+                    if (allSongs.length === 0) {
+                        loadSongsFromGitHub();
+                    } else {
+                        // Reproducir una canción aleatoria
+                        const randomSong = getRandomSong();
+                        currentSongIndex = getSongIndex(randomSong);
+                        playCurrentSong();
                     }
                 }
+                
+                oyentePowerBtn.classList.add('on');
+                statusMessageEl.innerHTML = `<i class="fas fa-power-off"></i> Emisora encendida`;
+                
             } else {
+                // Apagar
+                if (isMasterMode) {
+                    masterPowerBtn.classList.remove('on');
+                    masterPlayBtn.disabled = true;
+                    masterPrevBtn.disabled = true;
+                    masterNextBtn.disabled = true;
+                    masterPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+                
+                oyentePowerBtn.classList.remove('on');
                 audioPlayer.pause();
                 isPlaying = false;
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                currentSongEl.innerHTML = currentSongEl.textContent.replace(' <span class="playing-indicator"><i class="fas fa-volume-up"></i></span>', '');
-                document.querySelector('.radio-icon').style.animation = 'pulse 2s infinite';
+                
+                if (isMasterMode) {
+                    masterSongTitle.textContent = "Emisora apagada";
+                    masterSongGenre.textContent = "-";
+                    statusMessageEl.innerHTML = `<i class="fas fa-power-off"></i> Emisora apagada`;
+                }
+                
+                oyenteSongTitle.textContent = "Radio Shaddai Caribe";
+                oyenteSongGenre.textContent = "Emisora apagada";
             }
         }
 
-        // Cambiar volumen
-        function changeVolume() {
-            currentVolume = volumeSlider.value / 100;
+        // Función para alternar reproducción/pausa
+        function togglePlay() {
+            if (!isPoweredOn || allSongs.length === 0) return;
+            
+            if (!isPlaying) {
+                // Reanudar reproducción
+                const playPromise = audioPlayer.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        masterPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    }).catch(error => {
+                        console.error("Error al reanudar:", error);
+                        playCurrentSong();
+                    });
+                }
+            } else {
+                // Pausar
+                audioPlayer.pause();
+                isPlaying = false;
+                masterPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+
+        // Función para actualizar volumen
+        function updateVolume(volume) {
+            currentVolume = volume / 100;
             audioPlayer.volume = currentVolume;
             
-            // Cambiar icono según el volumen
-            const volumeIcons = document.querySelectorAll('.volume-control i');
-            if (currentVolume === 0) {
-                volumeIcons[0].className = 'fas fa-volume-mute';
-                volumeIcons[1].className = 'fas fa-volume-mute';
-            } else if (currentVolume < 0.5) {
-                volumeIcons[0].className = 'fas fa-volume-down';
-                volumeIcons[1].className = 'fas fa-volume-down';
-            } else {
-                volumeIcons[0].className = 'fas fa-volume-up';
-                volumeIcons[1].className = 'fas fa-volume-up';
+            // Actualizar iconos de volumen
+            const updateVolumeIcons = (icons) => {
+                if (currentVolume === 0) {
+                    icons[0].className = 'fas fa-volume-mute';
+                    icons[1].className = 'fas fa-volume-mute';
+                } else if (currentVolume < 0.5) {
+                    icons[0].className = 'fas fa-volume-down';
+                    icons[1].className = 'fas fa-volume-down';
+                } else {
+                    icons[0].className = 'fas fa-volume-up';
+                    icons[1].className = 'fas fa-volume-up';
+                }
+            };
+            
+            // Actualizar iconos oyente
+            const oyenteIcons = document.querySelectorAll('.oyente-volume-control i');
+            updateVolumeIcons(oyenteIcons);
+            
+            // Actualizar iconos master
+            if (isMasterMode) {
+                const masterIcons = document.querySelectorAll('.master-volume-control i');
+                updateVolumeIcons(masterIcons);
             }
         }
 
-        // Actualizar barra de progreso
+        // Función para actualizar barra de progreso
         function updateProgressBar() {
             if (!audioPlayer.duration || !isPlaying) return;
             
             const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
             progressBar.style.width = `${progress}%`;
             
-            // Actualizar tiempo actual en el estado
-            const currentTime = formatTime(audioPlayer.currentTime);
-            const duration = formatTime(audioPlayer.duration);
-            
-            if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
-                statusMessageEl.innerHTML = `${isRandomMode ? '<i class="fas fa-random"></i> Aleatorio' : '<i class="fas fa-list-ol"></i> Secuencial'} | ${currentTime} / ${duration}`;
+            // Si la canción está por terminar (últimos 5 segundos), preparar siguiente canción
+            if (audioPlayer.duration - audioPlayer.currentTime < 5 && !isFading) {
+                fadeOut(() => {
+                    // La función de cambio de canción se manejará en el evento 'ended'
+                });
             }
         }
 
-        // Formatear tiempo (segundos a MM:SS)
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return "00:00";
-            
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        // Inicializar eventos
-        function initEvents() {
-            powerBtn.addEventListener('click', togglePower);
-            playBtn.addEventListener('click', togglePlay);
-            nextBtn.addEventListener('click', playNextSong);
-            volumeSlider.addEventListener('input', changeVolume);
-            
+        // Función para inicializar controles de audio
+        function initAudioControls() {
             // Configurar audio player
             audioPlayer.volume = currentVolume;
             audioPlayer.addEventListener('ended', playNextSong);
@@ -899,18 +1404,70 @@
                 errorMessageEl.style.display = 'block';
                 setTimeout(playNextSong, 2000);
             });
-            
-            // Mezclar canciones inicialmente
-            shuffleSongs();
-            
-            // Actualizar lista de canciones
-            updateSongList();
-            
-            // Mostrar información inicial
-            statusMessageEl.innerHTML = `<i class="fas fa-cross"></i> Emisora de música cristiana MP3 - ${songs.length} canciones`;
         }
 
-        // Inicializar la aplicación cuando cargue la página
+        // Inicializar eventos
+        function initEvents() {
+            // Botones de modo
+            oyenteBtn.addEventListener('click', () => setMode(false));
+            masterBtn.addEventListener('click', () => {
+                passwordForm.classList.add('active');
+            });
+            
+            // Validar contraseña
+            submitPassword.addEventListener('click', () => {
+                if (passwordInput.value === 'karpincho') {
+                    setMode(true);
+                } else {
+                    passwordError.style.display = 'block';
+                    passwordInput.value = '';
+                }
+            });
+            
+            // Permitir Enter para enviar contraseña
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    submitPassword.click();
+                }
+            });
+            
+            // Controles oyente
+            oyentePowerBtn.addEventListener('click', togglePower);
+            oyenteVolumeSlider.addEventListener('input', () => {
+                updateVolume(oyenteVolumeSlider.value);
+                // Sincronizar con master si está en modo master
+                if (isMasterMode) {
+                    masterVolumeSlider.value = oyenteVolumeSlider.value;
+                }
+            });
+            
+            // Controles master
+            masterPowerBtn.addEventListener('click', togglePower);
+            masterPlayBtn.addEventListener('click', togglePlay);
+            masterPrevBtn.addEventListener('click', playPrevSong);
+            masterNextBtn.addEventListener('click', playNextSong);
+            masterVolumeSlider.addEventListener('input', () => {
+                updateVolume(masterVolumeSlider.value);
+                // Sincronizar con oyente
+                oyenteVolumeSlider.value = masterVolumeSlider.value;
+            });
+            
+            // Inicializar controles de audio
+            initAudioControls();
+            
+            // Cargar canciones inicialmente (para modo oyente)
+            loadSongsFromGitHub().then(() => {
+                // Si se cargan canciones, establecer un mensaje inicial
+                oyenteSongTitle.textContent = "Radio Shaddai Caribe";
+                oyenteSongGenre.textContent = `${allSongs.length} canciones disponibles`;
+                
+                if (isMasterMode) {
+                    statusMessageEl.innerHTML = `<i class="fas fa-check-circle"></i> ${allSongs.length} canciones listas`;
+                }
+            });
+        }
+
+        // Inicializar cuando cargue la página
         window.addEventListener('DOMContentLoaded', initEvents);
     </script>
 </body>
